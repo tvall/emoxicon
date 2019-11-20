@@ -1,0 +1,65 @@
+---
+title: "DADA Walkthrough 2019"
+author: "Tara L. Valladares"
+date: "`R sys.date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{example1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r, echo=TRUE}
+library(emoxicon)
+  data(emotions)
+  data(wapo)
+  
+wapo_scored <- emoxicon(wapo$text, lexicon = "emotions_weights")
+head(wapo_scored[c(3:10)])
+
+wapo.RM<-rasch_beta(wapo_scored)
+
+ppar.wapo <- eRm::person.parameter(wapo.RM)
+fit.wapo <-  eRm::itemfit(ppar.wapo) # Bad fitting: Inspired, Annoyed
+fit.pers <-  eRm::PersonMisfit(ppar.wapo)
+
+library(mirt)
+mirt::empirical_plot(wapo.RM[["X"]], which.items = 1:8)
+
+table(rowSums(wapo.RM[["X"]]))
+
+```
+
+```{r, echo=TRUE}
+
+```
+
+
+```{r, echo=TRUE}
+library(emoxicon)
+  data(emotions)
+  data(trolls)
+  
+trolls_scored <- emoxicon(trolls$text)
+head(trolls_scored[c(3:10)])
+
+trolls.RM<-rasch_beta(trolls_scored)
+
+ppar.trolls <- eRm::person.parameter(trolls.RM)
+fit.trolls <-  eRm::itemfit(ppar.trolls) # Bad fitting: Inspired, Annoyed
+fit.pers <-  eRm::PersonMisfit(ppar.trolls)
+
+library(mirt)
+mirt::empirical_plot(trolls.RM[["X"]], which.items = 1:8)
+
+table(rowSums(trolls.RM[["X"]]))
+
+```
