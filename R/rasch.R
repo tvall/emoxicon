@@ -45,25 +45,26 @@ rasch <- function(scores, groups = NULL, ...){
   groupV <- groups
 
 
-  if("emoxicon" %in% class(scores) & "emotions" %in% class(scores)){
-    class_emoxicon <- TRUE
-    scores.raw <- scores
-    scores <- scores[,c("AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
-                       "INSPIRED", "SAD")]
-  }
+  # if("emoxicon" %in% class(scores) & "emotions" %in% class(scores)){
+  #   class_emoxicon <- TRUE
+  #   scores.raw <- scores
+  #   scores <- scores[,c("AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
+  #                      "INSPIRED", "SAD")]
+  # }else{
+    scores <- scores[which(sapply(scores, class)=="numeric"|sapply(scores, class)=="integer")]
+  # }
 
   if(!all(apply(scores, 2, function(x) {length(unique(na.omit(x))) == 2} ))){
-    scores_all <- apply(scores, 2,function(x){ifelse(x< mean(x, na.rm = TRUE), 0,1)})
+    scores_all <- apply(scores, 2,function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
     message("Data was not dichotomized. Mean split performed.")
   }
 
   # Run an overall Rasch model
 
   rasch_fit <- eRm::RM(scores_all,...)
-
-  if(exists("class_emoxicon")){
-    rasch_fit$raw.data <- scores.raw
-  }
+  # if(exists("class_emoxicon")){
+  #   rasch_fit$raw.data <- scores.raw
+  # }
 
   # model summary, item measures, fit measures, ability measures, item fit,
   # plot functions for this class - the llr plot
@@ -82,15 +83,39 @@ rasch <- function(scores, groups = NULL, ...){
     rasch_groups <- lapply(unique(groupV)[group_lengths>=30],function(x){
       tryCatch({
         y<-apply(scores[which(groupV==x),], 2,
-                 function(x){ifelse(x< mean(x, na.rm = TRUE), 0,1)})
+                 function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
         eRm::RM(y,...) # here we need to probably change it so that we store everyones group in y and subset by y here
       },
       error = function(e)
         e)
     })
 
-    # bad <- which(sapply(rasch_groups, function(x){inherits(x, "simpleError")}))
-    zeros <- which(sapply((1:length(rasch_groups)), function(x){rasch_groups[[x]]$npar})!=(ncol(scores)-1))
+    # index models that failed
+    bad <- which(sapply(rasch_groups, function(x){inherits(x, "simpleError")}))
+
+    # index models where one or more categories were not estimated
+    # if more than one,
+    zeros <- (1:length(rasch_groups))[-bad][sapply((1:length(rasch_groups))[-bad],
+                    function(x){
+                      rasch_groups[[x]]$npar != (ncol(scores)-1)
+                      })]
+    xx <- lapply(zeros, function(z){
+      y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][-bad][z]),], 2,
+               function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
+      apply(y, 2,mean)
+    })
+
+
+    y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][22]),], 2,
+             function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
+    RM(y)
+
+
+
+    # zeros2 <-sapply((1:length(rasch_groups))[-bad],
+    #                                                function(x){
+    #                                                  rasch_groups[[x]]$npar != (ncol(scores)-1)
+    #                                                })
 
     dif<-Reduce(function(x, y) merge(x, y, all=TRUE),
               lapply(1:length(rasch_groups), function (x){t(as.data.frame(
