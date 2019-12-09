@@ -83,39 +83,46 @@ rasch <- function(scores, groups = NULL, ...){
       message("Rasch models were not run for groups with less than 30 observations")
     }
 
-    rasch_groups <- lapply(unique(groupV)[group_lengths>=30],function(x){
+    g30 <- unique(groupV)[group_lengths>=30]
+
+    rasch_groups <- lapply(g30,function(x){
       tryCatch({
         y<-apply(scores[which(groupV==x),], 2,
                  function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
         eRm::RM(y,...) # here we need to probably change it so that we store everyones group in y and subset by y here
       },
       error = function(e)
-        e)
+        e,
+      warning = function(w)
+        w
+      )
     })
 
     # index models that failed
-    bad <- which(sapply(rasch_groups, function(x){inherits(x, "simpleError")}))
+    err <- which(sapply(rasch_groups, function(x){inherits(x, "error")}))
+    warn <- which(sapply(rasch_groups, function(x){inherits(x, "warning")}))
+
+    errors[["errors"]] <- rasch_groups[err]
+    names(errors[["errors"]] ) <- paste("individual model ", err,": ", g30[err])
+
+    errors[["warnings"]] <- rasch_groups[warn]
+    names(errors[["warnings"]] ) <- paste0("individual model ", warn,": ", g30[warn])
 
     # index models where one or more categories were not estimated
     # if more than one,
-    zeros <- (1:length(rasch_groups))[-bad][sapply((1:length(rasch_groups))[-bad],
+    zeros <- (1:length(rasch_groups))[-err][sapply((1:length(rasch_groups))[-err],
                     function(x){
                       rasch_groups[[x]]$npar != (ncol(scores)-1)
                       })]
-    # xx <- lapply(zeros, function(z){
-    #   y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][-bad][z]),], 2,
-    #            function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-    #   apply(y, 2,mean)
-    # })
 
 
-    # y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][22]),], 2,
-    #          function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-    # erm::RM(y)
+    y<-apply(scores[which(groupV==g30[579]),], 2,
+             function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
+    erm::RM(y)
 
 
 
-    # zeros2 <-sapply((1:length(rasch_groups))[-bad],
+    # zeros2 <-sapply((1:length(rasch_groups))[-err],
     #                                                function(x){
     #                                                  rasch_groups[[x]]$npar != (ncol(scores)-1)
     #                                                })
@@ -127,14 +134,14 @@ rasch <- function(scores, groups = NULL, ...){
     # remove lines with all NA's/model didnt converge
 
     # add identifiers
-    row.names(dif) <- unique(groupV)[group_lengths>=30]
+    row.names(dif) <- g30
 
     dif.order <- as.data.frame(t(apply(dif, 1, rank, ties.method= "random", na.last = "keep")))
     colnames(dif.order) <- gsub(pattern="beta ", x=colnames(dif.order), "")
     # dif.order$group <- # need to store the group name here
   }
+  individual_models <- list(rasch_groups, dif.order, errors)
 
-  list(rasch_fit == rasch_fit, rasch_groups == rasch_groups, dif.order == dif.order,
-       errors = errors)
+  list(rasch_fit == rasch_fit, individual_models == individual_models)
 
 }
