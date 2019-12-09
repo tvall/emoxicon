@@ -35,6 +35,9 @@
 
 rasch <- function(scores, groups = NULL, ...){
 
+  #set up error list
+  errors <- vector("list")
+
   # if(!is.null(groups)){
   #   if(!(groups %in% colnames(scores))){
   #     warning("groups is not a column name in the scores dataframe")
@@ -121,13 +124,17 @@ rasch <- function(scores, groups = NULL, ...){
               lapply(1:length(rasch_groups), function (x){t(as.data.frame(
                 c(x,-1*(rasch_groups[[x]]$betapar))))}))[-1]# negative b/c these are betas
 
-    dif[is.na(dif)]<- 999
+    # remove lines with all NA's/model didnt converge
 
-    dif.order <- as.data.frame(t(apply(dif, 1, rank, ties.method= "random")))
+    # add identifiers
+    row.names(dif) <- unique(groupV)[group_lengths>=30]
+
+    dif.order <- as.data.frame(t(apply(dif, 1, rank, ties.method= "random", na.last = "keep")))
     colnames(dif.order) <- gsub(pattern="beta ", x=colnames(dif.order), "")
     # dif.order$group <- # need to store the group name here
   }
 
-  list(rasch_fit == rasch_fit, rasch_groups == rasch_groups, dif.order == dif.order)
+  list(rasch_fit == rasch_fit, rasch_groups == rasch_groups, dif.order == dif.order,
+       errors = errors)
 
 }
