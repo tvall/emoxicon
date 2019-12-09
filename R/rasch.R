@@ -99,16 +99,16 @@ rasch <- function(scores, groups = NULL, ...){
                     function(x){
                       rasch_groups[[x]]$npar != (ncol(scores)-1)
                       })]
-    xx <- lapply(zeros, function(z){
-      y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][-bad][z]),], 2,
-               function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-      apply(y, 2,mean)
-    })
+    # xx <- lapply(zeros, function(z){
+    #   y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][-bad][z]),], 2,
+    #            function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
+    #   apply(y, 2,mean)
+    # })
 
 
-    y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][22]),], 2,
-             function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-    RM(y)
+    # y<-apply(scores[which(groupV==unique(groupV)[group_lengths>=30][22]),], 2,
+    #          function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
+    # erm::RM(y)
 
 
 
@@ -119,7 +119,7 @@ rasch <- function(scores, groups = NULL, ...){
 
     dif<-Reduce(function(x, y) merge(x, y, all=TRUE),
               lapply(1:length(rasch_groups), function (x){t(as.data.frame(
-                c(x,-(rasch_groups[[x]]$betapar))))}))[-1]# negative b/c these are betas
+                c(x,-1*(rasch_groups[[x]]$betapar))))}))[-1]# negative b/c these are betas
 
     dif[is.na(dif)]<- 999
 
