@@ -85,51 +85,61 @@ rasch <- function(scores, groups = NULL, ...){
 
     g30 <- unique(groupV)[group_lengths>=30]
 
-    rasch_groups <- lapply(g30,function(x){
-      tryCatch({
-        y<-apply(scores[which(groupV==x),], 2,
-                 function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-        eRm::RM(y,...) # here we need to probably change it so that we store everyones group in y and subset by y here
-      },
-      error = function(e)
-        e,
-      warning = function(w)
-        w
-      )
-    })
+    indv_model <-
+      function(x) {
+        group <- apply(scores[which(groupV == x),], 2,
+                   function(x) {
+                     ifelse(x <= mean(x, na.rm = TRUE), 0, 1)
+                   })
+        eRm::RM(group)
+      }
 
-    # index models that failed
-    err <- which(sapply(rasch_groups, function(x){inherits(x, "error")}))
-    warn <- which(sapply(rasch_groups, function(x){inherits(x, "warning")}))
+    tryCatch.W.E <- function(expr)
+    {
+      W <- NULL
+      w.handler <- function(w){ # warning handler
+        W <<- w
+        invokeRestart("muffleWarning")
+      }
+      list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
+                                       warning = w.handler),
+           warning = W)
+    }
 
-    errors[["errors"]] <- rasch_groups[err]
-    names(errors[["errors"]] ) <- paste("individual model ", err,": ", g30[err])
+    rasch_groups <- lapply(g30[1:23], function(x) c(group=x, tryCatch.W.E(indv_model(x))))
 
-    errors[["warnings"]] <- rasch_groups[warn]
-    names(errors[["warnings"]] ) <- paste0("individual model ", warn,": ", g30[warn])
+
+
+
+    # index issues
+    err <- which(sapply(rasch_groups, function(x){inherits(x[["value"]], "error")}))
+    warn <- which(sapply(rasch_groups, function(x){inherits(x[["warning"]], "warning")}))
+
+    # errors[["errors"]] <- rasch_groups[err]
+    # names(errors[["errors"]] ) <- paste("individual model ", err,": ", g30[err])
+
+    # errors[["warnings"]] <- rasch_groups[warn]
+    # names(errors[["warnings"]] ) <- paste0("individual model ", warn,": ", g30[warn])
 
     # index models where one or more categories were not estimated
     # if more than one,
-    zeros <- (1:length(rasch_groups))[-err][sapply((1:length(rasch_groups))[-err],
-                    function(x){
-                      rasch_groups[[x]]$npar != (ncol(scores)-1)
-                      })]
+    # zeros <- (1:length(rasch_groups))[-err][sapply((1:length(rasch_groups))[-err],
+    #                 function(x){
+    #                   rasch_groups[[x]]$npar != (ncol(scores)-1)
+    #                   })]
 
-
-    y<-apply(scores[which(groupV==g30[579]),], 2,
-             function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-    erm::RM(y)
-
-
-
-    # zeros2 <-sapply((1:length(rasch_groups))[-err],
-    #                                                function(x){
-    #                                                  rasch_groups[[x]]$npar != (ncol(scores)-1)
-    #                                                })
 
     dif<-Reduce(function(x, y) merge(x, y, all=TRUE),
               lapply(1:length(rasch_groups), function (x){t(as.data.frame(
-                c(x,-1*(rasch_groups[[x]]$betapar))))}))[-1]# negative b/c these are betas
+                c(x,-1*(rasch_groups[[x]][["value"]]$betapar))))}))[-1]# negative b/c these are betas
+
+    # When the issue that there was a full 0/1 item line,
+    # it can be assumed that this is due to all 0's because of how the mean
+    # split is calculated. You must be above the mean to get a 1;
+    # everyone can't be above the mean.
+    # Therefore, items w/ these errors recieve the "max" difficulty
+
+
 
     # remove lines with all NA's/model didnt converge
 
