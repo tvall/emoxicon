@@ -10,8 +10,6 @@
 #'
 #' @param scores A dataframe containing the emotion scores
 #'
-#' @param groups To run separate rasch models by group,
-#' specify the name of the variable that contains the group identifiers
 #'
 #' @param ... Additional arguments to be passed to \code{\link[eRm]{RM}}
 #'
@@ -38,36 +36,22 @@ rasch <- function(scores, groups = NULL, ...){
   #set up error list
   errors <- vector("list")
 
-  # if(!is.null(groups)){
-  #   if(!(groups %in% colnames(scores))){
-  #     warning("groups is not a column name in the scores dataframe")
-  #   }
-  #   groupV <- scores[[groups]]
-  #   scores <- scores[,!(colnames(scores)%in%groups)]
-  # }
-  groupV <- groups
+  if(!is.null("groups")){
+    if(length(groups) != nrow(scores)){
+      error("The length of groups does not match the number of rows of data")
+    }
+  }
 
+  scores <- scores[which(sapply(scores, class)=="numeric"|sapply(scores, class)=="integer")]
 
-  # if("emoxicon" %in% class(scores) & "emotions" %in% class(scores)){
-  #   class_emoxicon <- TRUE
-  #   scores.raw <- scores
-  #   scores <- scores[,c("AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
-  #                      "INSPIRED", "SAD")]
-  # }else{
-    scores <- scores[which(sapply(scores, class)=="numeric"|sapply(scores, class)=="integer")]
-  # }
-
+  # check for/resolve dicotomization
   if(!all(apply(scores, 2, function(x) {length(unique(na.omit(x))) == 2} ))){
     scores_all <- apply(scores, 2,function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
     message("Data was not dichotomized. Mean split performed.")
   }
 
   # Run an overall Rasch model
-
   rasch_fit <- eRm::RM(scores_all,...)
-  # if(exists("class_emoxicon")){
-  #   rasch_fit$raw.data <- scores.raw
-  # }
 
   # model summary, item measures, fit measures, ability measures, item fit,
   # plot functions for this class - the llr plot
@@ -77,23 +61,26 @@ rasch <- function(scores, groups = NULL, ...){
 
   # Category Ordering by groups
 
-  if(exists("groupV")){
-    group_lengths<-sapply(unique(groupV), function(x){NROW(scores[which(groupV==x),])}) #count lengths
+  if(exists("groups")){
+
+    #count lengths; Rasch models should have a minimum of 30 observations
+    group_lengths<-sapply(unique(groups), function(x){NROW(scores[which(groups==x),])})
     if(sum(group_lengths<30)>0){
       message("Rasch models were not run for groups with less than 30 observations")
     }
+    g30 <- unique(groups)[group_lengths>=30]
 
-    g30 <- unique(groupV)[group_lengths>=30]
-
+    # function for individual dichtomoziation and RM
     indv_model <-
       function(x) {
-        group <- apply(scores[which(groupV == x),], 2,
+        group <- apply(scores[which(groups == x),], 2,
                    function(x) {
                      ifelse(x <= mean(x, na.rm = TRUE), 0, 1)
                    })
         eRm::RM(group)
       }
 
+    # function to catch errors and warnings
     tryCatch.W.E <- function(expr)
     {
       W <- NULL
@@ -106,6 +93,7 @@ rasch <- function(scores, groups = NULL, ...){
            warning = W)
     }
 
+    # run individual models
     rasch_groups <- lapply(g30[1:23], function(x) c(group=x, tryCatch.W.E(indv_model(x))))
 
 
