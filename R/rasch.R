@@ -88,19 +88,19 @@ rasch <- function(scores, groups = NULL, ...){
         W <<- w
         invokeRestart("muffleWarning")
       }
-      list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
+      list(model = withCallingHandlers(tryCatch(expr, error = function(e) e),
                                        warning = w.handler),
            warning = W)
     }
 
     # run individual models
-    rasch_groups <- lapply(g30[1:23], function(x) c(group=x, tryCatch.W.E(indv_model(x))))
+    rasch_groups <- lapply(g30, function(x) c(group=x, tryCatch.W.E(indv_model(x))))
 
 
 
 
     # index issues
-    err <- which(sapply(rasch_groups, function(x){inherits(x[["value"]], "error")}))
+    err <- which(sapply(rasch_groups, function(x){inherits(x[["model"]], "error")}))
     warn <- which(sapply(rasch_groups, function(x){inherits(x[["warning"]], "warning")}))
 
     # errors[["errors"]] <- rasch_groups[err]
@@ -119,7 +119,7 @@ rasch <- function(scores, groups = NULL, ...){
 
     dif<-Reduce(function(x, y) merge(x, y, all=TRUE),
               lapply(1:length(rasch_groups), function (x){t(as.data.frame(
-                c(x,-1*(rasch_groups[[x]][["value"]]$betapar))))}))[-1]# negative b/c these are betas
+                c(x,-1*(rasch_groups[[x]][["model"]]$betapar))))}))[-1]# negative b/c these are betas
 
     # When the issue that there was a full 0/1 item line,
     # it can be assumed that this is due to all 0's because of how the mean
@@ -127,6 +127,22 @@ rasch <- function(scores, groups = NULL, ...){
     # everyone can't be above the mean.
     # Therefore, items w/ these errors recieve the "max" difficulty
 
+    # rasch_groups[[130]][["warning"]][["message"]]
+    # x <- sapply(warn, function(x) rasch_groups[[x]][["warning"]][["message"]])
+    # x<-c(x, "phrase",
+    #      "\nThe following items were excluded due to complete 0/full responses:\nHAPPY \nEnd",
+    #      "\nBeginning \nThe following items were excluded due to complete 0/full responses:\nHAPPY \nEnd",
+    #      "\nBeginning \nThe following items were excluded due to complete 0/full responses:\nHAPPY SAD \nEnd HAPPY")
+    #
+    mes<- stringr::str_extract(x,
+                                 "(\nThe following items were excluded due to complete 0/full responses:\n).*"
+                                 )
+    mes<- stringr::str_extract_all(mes, gsub(", ","|",toString(colnames(scores))),
+                                 simplify=FALSE)
+    mes
+
+
+    dif[warn,]
 
 
     # remove lines with all NA's/model didnt converge
