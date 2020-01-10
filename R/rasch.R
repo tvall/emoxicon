@@ -80,19 +80,6 @@ rasch <- function(scores, groups = NULL, ...){
         eRm::RM(group)
       }
 
-    # function to catch errors and warnings
-    tryCatch.W.E <- function(expr)
-    {
-      W <- NULL
-      w.handler <- function(w){ # warning handler
-        W <<- w
-        invokeRestart("muffleWarning")
-      }
-      list(model = withCallingHandlers(tryCatch(expr, error = function(e) e),
-                                       warning = w.handler),
-           warning = W)
-    }
-
     # run individual models
     rasch_groups <- lapply(g30, function(x) c(group=x, tryCatch.W.E(indv_model(x))))
 
@@ -127,22 +114,15 @@ rasch <- function(scores, groups = NULL, ...){
     # everyone can't be above the mean.
     # Therefore, items w/ these errors recieve the "max" difficulty
 
-    # rasch_groups[[130]][["warning"]][["message"]]
-    # x <- sapply(warn, function(x) rasch_groups[[x]][["warning"]][["message"]])
-    # x<-c(x, "phrase",
-    #      "\nThe following items were excluded due to complete 0/full responses:\nHAPPY \nEnd",
-    #      "\nBeginning \nThe following items were excluded due to complete 0/full responses:\nHAPPY \nEnd",
-    #      "\nBeginning \nThe following items were excluded due to complete 0/full responses:\nHAPPY SAD \nEnd HAPPY")
-    #
-    mes<- stringr::str_extract(x,
+    mes<- stringr::str_extract(sapply(warn, function(x) rasch_groups[[x]][["warning"]][["message"]]),
                                  "(\nThe following items were excluded due to complete 0/full responses:\n).*"
                                  )
     mes<- stringr::str_extract_all(mes, gsub(", ","|",toString(colnames(scores))),
                                  simplify=FALSE)
-    mes
 
-
-    dif[warn,]
+    for(i in 1:nrow(dif[warn,])){
+      dif[warn,][i,paste("beta",mes[[i]])] <- 999
+    }
 
 
     # remove lines with all NA's/model didnt converge
