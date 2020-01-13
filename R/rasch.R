@@ -13,7 +13,7 @@
 #' @param groups An optional vector of group identifers the same length as \code{scores}.
 #' If provided, individual Rasch models will be run by group.
 #'
-#' @param return.models logical. Should all models for the groups be returned?
+#' @param return_models logical. Should all models for the groups be returned?
 #'
 #' @param ... Additional arguments to be passed to \code{\link[eRm]{RM}}
 #'
@@ -29,15 +29,13 @@
 #' @references
 #'
 #' @importFrom eRm RM
-#' @importFrom stringr str_extract str_extract_all
 #'
 #' @export
 #'
 #'
 
 
-rasch <- function(scores, groups = NULL, return.models = TRUE,
-                  ...) {
+rasch <- function(scores, groups = NULL, return_models = TRUE,...) {
 
   errors <- vector("list")
 
@@ -51,7 +49,7 @@ rasch <- function(scores, groups = NULL, return.models = TRUE,
     scores[which(sapply(scores, class) == "numeric" |
                    sapply(scores, class) == "integer")]
 
-  # check for/resolve dicotomization
+  # check for & resolve dicotomization
   if (!all(apply(scores, 2, function(x) {
     length(unique(na.omit(x))) == 2}))) {
     scores_all <-
@@ -64,17 +62,22 @@ rasch <- function(scores, groups = NULL, return.models = TRUE,
   # Run an overall Rasch model
   rasch_fit <- eRm::RM(scores_all, ...)
 
-  # model summary, item measures, fit measures, ability measures, item fit,
-  # plot functions for this class - the llr plot
+  if (exists("groups")) {
+    category_output <- category_order(scores=scores, groups=groups,
+                                      return_models = return_models)
+    output <- list(full_model = rasch_fit,
+                   category_order = category_output$category_order)
 
-  # separate function for the entropy/TI (can call it within this function)
-
-
-  category_output <- category_output()
-
-  output <- list(full_model = rasch_fit, category_order = category_output$dif.order)
-  if (return.models == TRUE) {
-    output$group_models <- category_output$rasch_groups
+    if (return_models == TRUE) {
+      output$group_models <- category_output$group_models
+  }} else{
+    output <- list(full_model = rasch_fit)
   }
+
   output
 }
+
+# model summary, item measures, fit measures, ability measures, item fit,
+# plot functions for this class - the llr plot
+
+# separate function for the entropy/TI (can call it within this function)
