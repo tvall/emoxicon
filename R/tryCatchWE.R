@@ -16,5 +16,5 @@ tryCatch.W.E <- function(expr)
   }
   list(model = withCallingHandlers(tryCatch(expr, error = function(e) e),
                                    warning = w.handler),
-       warning = W)
+       warnings = W)
 }
