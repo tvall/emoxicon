@@ -51,7 +51,7 @@ rasch <- function(scores, groups = NULL, return.models = TRUE, ...){
   # check for/resolve dicotomization
   if(!all(apply(scores, 2, function(x) {length(unique(na.omit(x))) == 2} ))){
     scores_all <- apply(scores, 2,function(x){ifelse(x<= mean(x, na.rm = TRUE), 0,1)})
-    message("Data was not dichotomized. Mean split performed.")
+    message("Mean split performed to dichotomize data.")
   }
 
   # Run an overall Rasch model
