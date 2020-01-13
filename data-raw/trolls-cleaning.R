@@ -39,3 +39,6 @@ trolls<-do.call(rbind, trolls.clean)
 trolls$content<- as.character(trolls$content)
 
 usethis::use_data(trolls, overwrite = TRUE)
+
+set.seed(1)
+tinyTrolls <- trolls[which(trolls$author%in%sample(unique(trolls$author), size=50)),]
