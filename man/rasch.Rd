@@ -4,13 +4,15 @@
 \alias{rasch}
 \title{Estimation of Rasch Models for Emoxicon}
 \usage{
-rasch(scores, groups = NULL, ...)
+rasch(scores, groups = NULL, return.models = TRUE, ...)
 }
 \arguments{
 \item{scores}{A dataframe containing the emotion scores}
 
-\item{groups}{To run separate rasch models by group,
-specify the name of the variable that contains the group identifiers}
+\item{groups}{An optional vector of group identifers the same length as \code{scores}.
+If provided, individual Rasch models will be run by group.}
+
+\item{return.models}{logical. Should all models for the groups be returned?}
 
 \item{...}{Additional arguments to be passed to \code{\link[eRm]{RM}}}
 }

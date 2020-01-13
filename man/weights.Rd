@@ -14,7 +14,7 @@
 data(weights)
 }
 \description{
-A matrix containing words (n = 175592) and the emotion weights associated with each word.
+A matrix containing words (n = 175,592) and the emotion weights associated with each word.
 This dataset is the raw version of the 'DepecheMood++' lexicon developed by
 Araque, Gatti, Staiano, and Guerini (2018). For proper scoring, text should not be
 stemmed prior to using this lexicon. This version of the lexicon does not
