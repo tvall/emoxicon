@@ -10,6 +10,10 @@
 #'
 #' @param scores A dataframe containing the emotion scores
 #'
+#' @param groups An optional vector of group identifers the same length as \code{scores}.
+#' If provided, individual Rasch models will be run by group.
+#'
+#' @param return.models logical. Should all models for the groups be returned?
 #'
 #' @param ... Additional arguments to be passed to \code{\link[eRm]{RM}}
 #'
@@ -25,23 +29,23 @@
 #' @references
 #'
 #' @importFrom eRm RM
+#' @importFrom stringr str_extract str_extract_all
 #'
 #' @export
 #'
 #'
 
 
-rasch <- function(scores, groups = NULL, ...){
+rasch <- function(scores, groups = NULL, return.models = TRUE, ...){
 
   #set up error list
   errors <- vector("list")
 
   if(!is.null("groups")){
     if(length(groups) != nrow(scores)){
-      error("The length of groups does not match the number of rows of data")
+      stop("The length of groups does not match the number of rows of data")
     }
   }
-
   scores <- scores[which(sapply(scores, class)=="numeric"|sapply(scores, class)=="integer")]
 
   # check for/resolve dicotomization
@@ -83,18 +87,9 @@ rasch <- function(scores, groups = NULL, ...){
     # run individual models
     rasch_groups <- lapply(g30, function(x) c(group=x, tryCatch.W.E(indv_model(x))))
 
-
-
-
     # index issues
     err <- which(sapply(rasch_groups, function(x){inherits(x[["model"]], "error")}))
     warn <- which(sapply(rasch_groups, function(x){inherits(x[["warning"]], "warning")}))
-
-    # errors[["errors"]] <- rasch_groups[err]
-    # names(errors[["errors"]] ) <- paste("individual model ", err,": ", g30[err])
-
-    # errors[["warnings"]] <- rasch_groups[warn]
-    # names(errors[["warnings"]] ) <- paste0("individual model ", warn,": ", g30[warn])
 
     # index models where one or more categories were not estimated
     # if more than one,
@@ -132,10 +127,12 @@ rasch <- function(scores, groups = NULL, ...){
 
     dif.order <- as.data.frame(t(apply(dif, 1, rank, ties.method= "random", na.last = "keep")))
     colnames(dif.order) <- gsub(pattern="beta ", x=colnames(dif.order), "")
-    # dif.order$group <- # need to store the group name here
   }
   individual_models <- list(rasch_groups, dif.order, errors)
 
-  list(rasch_fit == rasch_fit, individual_models == individual_models)
-
+  if(return.models == TRUE){
+    list(rasch_fit == rasch_fit, individual_models == individual_models, dif.order = dif.order)
+  } else{
+    list(rasch_fit == rasch_fit, dif.order = dif.order)
+  }
 }
