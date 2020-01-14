@@ -97,24 +97,24 @@ Sys.time()-t
 
 ## Small trolls
 t<-Sys.time()
-smalltrolls_scored <- emoxicon(text=smallTrolls$content, lexicon = "emotions",
+tinyTrolls_scored <- emoxicon(text=tinyTrolls$content, lexicon = "emotions",
                           exclude = c("hilary", "hillary", "russia", "russian",
                                       "trump", "bernie", "clinton", "rt"))
 Sys.time()-t
 group_lengths <-
-  sapply(unique(smallTrolls$author), function(x) {
-    NROW(smalltrolls_scored[which(smallTrolls$author == x), ])
+  sapply(unique(tinyTrolls$author), function(x) {
+    NROW(tinyTrolls_scored[which(tinyTrolls$author == x), ])
   })
 
 
 
 t<-Sys.time()
-st_rasch<- rasch(scores= smalltrolls_scored, groups = smallTrolls$author, return_models = TRUE)
+st_rasch<- rasch(scores= tinyTrolls_scored, groups = tinyTrolls$author, return_models = TRUE)
 Sys.time()-t
 
 
 t<-Sys.time()
-xx<-category_order(scores = smalltrolls_scored[c("AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE",
-                                                 "HAPPY", "INSPIRED", "SAD")], groups= smallTrolls$author)
+xx<-category_order(scores = tinyTrolls_scored[c("AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE",
+                                                 "HAPPY", "INSPIRED", "SAD")], groups= tinyTrolls$author)
 Sys.time()-t
 
