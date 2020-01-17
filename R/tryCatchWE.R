@@ -1,8 +1,7 @@
-#' Run a function, catch errors, keep output
+#' Catch errors and warnings
 #'
-#' Allows you to run a function, catch any errors and warnings,
-#' and then rerun the function. The end results is a list of
-#' all messages and the function output, if applicable.
+#' Catch any errors and warnings and then rerun the function if necessary.
+#' The returns all messages and the function output.
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #' @noRd
