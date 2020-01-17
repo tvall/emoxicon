@@ -9,7 +9,6 @@
 #'
 
 category_order <- function(scores, groups, return_models=TRUE){
-  # Category Ordering by groups
     group_lengths <-
       sapply(unique(groups), function(x) {
         NROW(scores[which(groups == x), ])
@@ -62,13 +61,15 @@ category_order <- function(scores, groups, return_models=TRUE){
           group_models[[x]][["warning"]][["message"]]),
         "(\nThe following items were excluded due to complete 0/full responses:\n).*"
       )
-    mes <-
-      stringr::str_extract_all(mes, gsub(", ", "|", toString(colnames(scores))),
-                               simplify = FALSE)
-
-    for (i in 1:nrow(dif[warn, ])) {
-      dif[warn, ][i, paste("beta", mes[[i]])] <- 999
+    if(length(mes>0)){
+       mes <-
+        stringr::str_extract_all(mes, gsub(", ", "|", toString(colnames(scores))),
+                                 simplify = FALSE)
+      for (i in 1:nrow(dif[warn, ])) {
+        dif[warn, ][i, paste("beta", mes[[i]])] <- 999
+      }
     }
+
     row.names(dif) <- g30
 
     category_order <-

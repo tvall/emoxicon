@@ -1,27 +1,24 @@
 #' Category plots
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>
-#' @noRd
+#'
+#' @export
 #'
 #' @importFrom reshape2 melt
+#' @import ggplot2
 #'
 #'
 
-setMethod("plot", signature = )
-dol<-melt(dif.order)
-levels(dol$variable)<- category
-str(dol)
+catplot<- function(categorys, ...){
+  meltcats<-reshape2::melt(categorys, variable.name="Category", value.name="Order")
 
-describe(dif.order)
+  meltcats$Category <- factor(meltcats$Category)
 
-library(ggplot2)
-mt <- ggplot(dol[which(dol$accountType=="Right"),],
-             aes(value, colour = factor(variable), fill=factor(variable))) +
-  geom_histogram()
+  mt <- ggplot(meltcats,
+               aes(Order, colour = Category, fill=Category)) +
+    geom_histogram() + facet_grid(. ~ Category, scales = "fixed") +
+    ggtitle("Category Order Plot")
 
-mt + facet_grid(. ~ variable, scales = "fixed") +ggtitle("Right Trolls")
-
-mt2 <- ggplot(dol[which(dol$accountType=="Left"),], aes(value, colour = factor(variable), fill=factor(variable))) +
-  geom_histogram()
-
-mt2 + facet_grid(. ~ variable, scales = "fixed")+ggtitle("Left Trolls")
+  mt
+}
+# setMethod("plot", signature = )

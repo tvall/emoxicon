@@ -92,10 +92,14 @@ Sys.time()-t
 group2 <- trolls$author
 
 t<-Sys.time()
-x<- emoxicon::rasch(scores= trolls_scored, groups = group2, return_models = TRUE)
+x<- rasch(scores= trolls_scored, groups = group2, return_models = TRUE)
 Sys.time()-t
 
 ## Small trolls
+data(trolls)
+set.seed(1)
+tinyTrolls <- trolls[which(trolls$author%in%sample(unique(trolls$author), size=50)),]
+
 t<-Sys.time()
 tinyTrolls_scored <- emoxicon(text=tinyTrolls$content, lexicon = "emotions",
                           exclude = c("hilary", "hillary", "russia", "russian",
@@ -109,7 +113,7 @@ group_lengths <-
 
 
 t<-Sys.time()
-st_rasch<- rasch(scores= tinyTrolls_scored, groups = tinyTrolls$author, return_models = TRUE)
+st_rasch<- emoxicon::rasch(scores= tinyTrolls_scored, groups = tinyTrolls$author, return_models = TRUE)
 Sys.time()-t
 
 
@@ -118,3 +122,5 @@ xx<-category_order(scores = tinyTrolls_scored[c("AFRAID", "AMUSED", "ANGRY", "AN
                                                  "HAPPY", "INSPIRED", "SAD")], groups= tinyTrolls$author)
 Sys.time()-t
 
+categorys<-st_rasch$category_order
+catplot(categorys = categorys)
