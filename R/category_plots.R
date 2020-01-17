@@ -21,4 +21,3 @@ catplot<- function(categorys, ...){
 
   mt
 }
-# setMethod("plot", signature = )
