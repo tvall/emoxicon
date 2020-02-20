@@ -1,5 +1,7 @@
 #' Category plots
 #'
+#' @param categories Category orders produced from \code{rasch}
+#'
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #'
 #' @export

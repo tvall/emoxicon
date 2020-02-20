@@ -12,7 +12,7 @@ Depends: R (>= 3.5.0)
 License: GPL (>= 3.0)
 Encoding: UTF-8
 LazyData: true
-Imports: dplyr (>= 0.7.8), stats, eRm, stringr, reshape2
+Imports: dplyr (>= 0.7.8), stats, eRm, stringr, reshape2, ggplot2
 Suggests: 
     knitr,
     rmarkdown,
