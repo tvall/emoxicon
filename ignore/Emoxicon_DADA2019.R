@@ -123,4 +123,5 @@ xx<-category_order(scores = tinyTrolls_scored[c("AFRAID", "AMUSED", "ANGRY", "AN
 Sys.time()-t
 
 categorys<-st_rasch$category_order
-catplot(categorys = categorys)
+m<-catplot(categorys = categorys)
+
