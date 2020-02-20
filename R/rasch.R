@@ -77,8 +77,3 @@ rasch <- function(scores, groups = NULL, return_models = TRUE,...) {
 
   output
 }
-
-# model summary, item measures, fit measures, ability measures, item fit,
-# plot functions for this class - the llr plot
-
-# separate function for the entropy/TI (can call it within this function)

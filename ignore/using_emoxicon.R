@@ -21,3 +21,10 @@ Sys.time()-t
 
 # look at a category plot
 catplot(tt_rasch$category_order)
+
+
+# Still to do:
+# model summary, item measures, fit measures, ability measures, item fit,
+# the llr plot
+
+# separate function for the entropy/TI (can call it within this function)
