@@ -1,7 +1,7 @@
 #' Estimation of Rasch Models for Emoxicon
 #'
 #' Runs a Rasch model using the emotion scores from \code{emoxicon}.
-#' If the data is not already dichotomous, a median split will be performed.
+#' If the data is not already dichotomous, a mean split will be performed.
 #'
 #' @details
 #' When the data is generated using \code{emoxicon} and the default emotions lexicon,
@@ -54,9 +54,9 @@ rasch <- function(scores, groups = NULL, return_models = TRUE,...) {
     length(unique(na.omit(x))) == 2}))) {
     scores_all <-
       apply(scores, 2, function(x) {
-        ifelse(x <= median(x, na.rm = TRUE), 0, 1)
+        ifelse(x <= mean(x, na.rm = TRUE), 0, 1)
       })
-    message("Median split performed to dichotomize data.")
+    message("Mean split performed to dichotomize data.")
   }
 
   # Run an overall Rasch model
