@@ -11,8 +11,8 @@
 #'
 #'
 
-catplot<- function(categorys, ...){
-  meltcats<-reshape2::melt(categorys, variable.name="Category", value.name="Order")
+catplot<- function(categories, ...){
+  meltcats<-reshape2::melt(categories, variable.name="Category", value.name="Order")
 
   meltcats$Category <- factor(meltcats$Category)
 
