@@ -36,11 +36,11 @@
 #'
 
 
-rasch <- function(scores, groups = NULL, return_models = TRUE,...) {
+rasch <- function(scores, groups, return_models = TRUE,...) {
 
   errors <- vector("list")
 
-  if (!is.null("groups")) {
+  if (!missing("groups")) {
     if (length(groups) != nrow(scores)) {
       stop("The length of groups does not match the number of rows of data")
     }
@@ -63,7 +63,7 @@ rasch <- function(scores, groups = NULL, return_models = TRUE,...) {
   # Run an overall Rasch model
   rasch_fit <- eRm::RM(scores_all, ...)
 
-  if (exists("groups")) {
+  if (!missing("groups")) {
     category_output <- category_order(scores=scores, groups=groups,
                                       return_models = return_models)
     output <- list(full_model = rasch_fit,
