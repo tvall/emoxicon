@@ -1,4 +1,4 @@
-#' run individual rasch models based on group
+#' Run individual rasch models based on group
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #' @noRd
