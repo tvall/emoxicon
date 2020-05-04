@@ -17,7 +17,7 @@ category_order <- function(scores, groups, return_models=TRUE){
     if (sum(group_lengths < 30) > 0) {
       message("Rasch models were not run for groups with less than 30 observations")
     }
-    g30 <- unique(groups)[group_lengths >= 30]
+    g30 <- unique(groups)[group_lengths >= 29]
 
     # individual dichtomoziation and RM
     indv_model <-

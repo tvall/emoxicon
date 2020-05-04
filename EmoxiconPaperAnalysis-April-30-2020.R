@@ -1,0 +1,409 @@
+library(knitr)
+
+purl("EmoxiconPaperAnalysis.Rmd", output = "EmoxiconPaperAnalysis-April-30-2020.R", documentation = 0) # Extract R code from Rmd document and discard all text chunks
+library(emoxicon)
+library(eRm)
+library(ggplot2)
+library(boot)
+library(infotheo)
+library(psych)
+library(mirt)
+
+## code to prepare `trolls` dataset
+
+### not run ###
+# trolls_raw <- vector("list", ndoc)
+# for(i in 1:ndoc){
+#   trolls_raw[[i]]<- read.csv(paste0("../russian-troll-tweets-master/IRAhandle_tweets_", i,".csv"),
+#               stringsAsFactors = FALSE)
+# }
+# trolls<-vector("list",ndoc)
+# for(i in 1:ndoc){
+#   trolls[[i]]<- trolls_raw[[i]][which(trolls_raw[[i]]$language == "English"),]
+# }
+# 
+# # Remove retweets
+# trolls.clean <- lapply(trolls,function(x){
+#   x<-x[which(x$retweet == 0),]
+# } )
+# 
+# # clean data
+# trolls.clean <- lapply(trolls.clean, function(y){
+#   content<- y$content
+#   content<- stringi::stri_trans_general(content, "latin-ascii")
+#   content<- gsub("&amp", "and", content)
+#   content<- gsub("http[^[:space:]]*", "", content) # remove links
+#   content<- tolower(content)
+#   content<- gsub("^rt.*", "", content) # remove reposts
+# 
+#   results<- cbind(content, y[,c("author", "publish_date", "followers", "updates","account_type")])
+#   results<- results[which(results$account_type=="Left"|
+#                             results$account_type=="Right"),]
+#   results<- subset(results, content !="") #remove empty tweets
+# })
+# 
+# trolls<-do.call(rbind, trolls.clean)
+# trolls$content<- as.character(trolls$content)
+
+
+exclude <-c("hilary", "hillary", "russia", "russian",
+            "trump","donald", "bernie", "sanders","clinton", "rt",
+            "obama", "barack", "america", "president",
+            "black", "white", "racist")
+
+(exclude %in% emotions$word)
+
+# Load data from Emoxicon package
+data(trolls)
+
+# Create vector of unique author names w/ more than 30 tweets, for later
+author.small <- unique(trolls[c("author", "account_type")])
+author.small <-  author.small[order(author.small$author),] # this is necessary b/c table() puts it into alphabetical order
+author.small<- author.small[as.vector(table(trolls$author) > 29),]
+
+# Run Emoxicon
+exclude <-c("hilary", "hillary", "russia", "russian",
+            "trump", "bernie", "clinton", "rt")
+trolls_scored <- emoxicon(text=trolls$content, lexicon = "emotions",
+                          exclude = exclude)
+
+# Run Rasch models
+
+trolls_models <- rasch(scores= trolls_scored, groups = trolls$author, return_models = TRUE)
+
+# Confirm that author.small matches the individual trolls_models
+x <- sapply(trolls_models$group_models, function(z){z$group})
+
+# If all are true, then both match contents
+length(x) == length(author.small$author)
+sum(x %in% author.small$author) == length(x)
+sum(author.small$author %in% x) == length(author.small$author)
+
+# If true, then the order is also the same
+z<-rep(NA, length(trolls_models$group_model))
+for(i in 1:length(trolls_models$group_model)){
+  z[i] <- trolls_models$group_models[[i]]$group == author.small$author[i]
+}
+all(z)
+
+
+# Fit
+summary(trolls_models$full_model)
+
+pparameters <- eRm::person.parameter(trolls_models$full_model)
+
+pfit <- eRm::personfit(pparameters)
+ifit <- eRm::itemfit(pparameters)
+pmis <- eRm::PersonMisfit(pparameters)
+
+ifit
+pmis
+
+
+# infit/outfit plots by theta-----
+plotdat <- data.frame(theta = as.factor(pparameters$thetapar[[1]]),
+                      infitZ =pfit$p.infitZ,
+                      outfitZ =pfit$p.outfitZ,
+                      se = pparameters$se.theta$NAgroup1)
+levels(plotdat$theta) <- round(as.numeric(levels(plotdat$theta)),2)
+
+ggplot(data = plotdat, aes(x = theta, y=infitZ)) +
+  # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
+  geom_violin() + geom_hline(yintercept = c(2,-2), col="#D55E00") +
+  ylim(-3,3) + ggtitle("Standardized Infit")
+
+ggplot(data = plotdat, aes(x = theta, y=outfitZ)) +
+  # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
+  geom_violin() + geom_hline(yintercept = c(2,-2), col="#D55E00") +
+  ylim(-3,3) + ggtitle("Standardized Outfit")
+
+ggplot(data = unique(plotdat), aes(x = theta, y=se)) +
+  # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
+  geom_point() + ggtitle("Standard Error of the Estimate")
+
+# fit plots -----
+# person item map
+plotPImap(trolls_models$full_model, sorted = TRUE)
+
+# check if high and low scores are the same
+lrres.rasch <- LRtest(trolls_models$full_model, splitcr = "median")
+plotGOF(lrres.rasch, tlab = "item",
+        conf = list(ia = FALSE, col = "blue", lty = "dotted"),
+        smooline= list(gamma = .95, col = "black", lty = "dashed"))
+
+# check if left and right trolls are the same
+lrres <- LRtest(trolls_models$full_model, splitcr = trolls$account_type)
+plotGOF(lrres, tlab = "item",
+        conf = list(ia = FALSE, col = "red", lty = "dotted"),
+        smooline = list(gamma = .95, col = "black", lty = "dashed"))
+
+# Look at empiracal plots, ICCs
+
+plotICC(trolls_models$full_model,1, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,2, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,3, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,4, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,5, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,6, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,7, empICC = list("raw", type="b",col = "blue", lty = 2))
+plotICC(trolls_models$full_model,8, empICC = list("raw", type="b",col = "blue", lty = 2))
+
+
+
+# Look at empirical plots - total scores
+library(mirt)
+empirical_plot(trolls_models$full_model$X
+               ,1)
+empirical_plot(trolls_models$full_model$X
+               ,2)
+empirical_plot(trolls_models$full_model$X
+               ,3)
+empirical_plot(trolls_models$full_model$X
+               ,4)
+empirical_plot(trolls_models$full_model$X
+               ,5)
+empirical_plot(trolls_models$full_model$X
+               ,6)
+empirical_plot(trolls_models$full_model$X
+               ,7)
+empirical_plot(trolls_models$full_model$X
+               ,8)
+
+# create vector to subset left models that is in the correct order
+modsL <- sapply(trolls_models$group_models, function(x) x$group) # extract groups
+modsL <- modsL %in% author.small$author[which(author.small$account_type == "Left")] # match
+
+# Run fit functions on all models individually
+manymods_pparameters <- lapply(trolls_models$group_models, function(x){
+  eRm::person.parameter(x$model)
+})
+manymods_pfit <- lapply(1:length(trolls_models$group_models), function(x){
+  eRm::personfit(manymods_pparameters[[x]])
+})
+manymods_ifit <- lapply(1:length(trolls_models$group_models), function(x){
+  eRm::itemfit(manymods_pparameters[[x]])
+})
+manymods_pmis <- lapply(1:length(trolls_models$group_models), function(x){
+  eRm::PersonMisfit(manymods_pparameters[[x]])
+})
+manymods_pmis_total <- sapply(manymods_pmis, function(x){x$PersonMisfit})
+
+summary(manymods_pmis_total)
+summary(manymods_pmis_total[modsL])
+summary(manymods_pmis_total[!modsL])
+
+# look at misfitting items within individual models
+manymods_ifit_total <- sapply(1:length(manymods_ifit), function(i){
+  p <- pchisq(manymods_ifit[[i]]$i.fit, df=manymods_ifit[[i]]$i.df-1, lower.tail=FALSE)
+  x <- t(as.data.frame(ifelse(p<=.05,TRUE, FALSE)))
+  items <- data.frame(model=trolls_models$group_models[[i]]$group,
+                      x,
+                      stringsAsFactors = FALSE,
+                      row.names = trolls_models$group_models[[i]]$group)
+  z<-c("model","AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
+       "INSPIRED", "SAD")
+  if(ncol(items) < 9){
+    items[,z[which(!z%in% colnames(items))]]<-NA
+  }
+  items
+}, simplify = F)
+x<-do.call(rbind, manymods_ifit_total)
+head(x)
+summary(x)
+
+round(colSums(x[,-1], na.rm = T)/nrow(x),2)
+
+round(colSums(x[modsL,-1], na.rm = T)/nrow(x[modsL,]),2)
+round(colSums(x[!modsL,-1], na.rm = T)/nrow(x[!modsL,]),2)
+
+
+
+# Item category ordering -----
+
+# create vectors of left and right trolls
+catleft <- row.names(trolls_models$category_order) %in%
+  author.small[which(author.small$account_type == "Left"), "author"]
+catright <- row.names(trolls_models$category_order) %in%
+  author.small[which(author.small$account_type == "Right"), "author"]
+
+# check
+x<-row.names(trolls_models$category_order)[catleft]
+sum(!x %in% trolls$author[which(trolls$account_type == "Left")])
+
+x<-row.names(trolls_models$category_order)[catright]
+sum(!x %in% trolls$author[which(trolls$account_type == "Right")])
+
+table(author.small$account_type)["Left"] == sum(catleft)
+table(author.small$account_type)["Right"] == sum(catright)
+
+
+# category plots
+catplots <- catplot(trolls_models$category_order)
+
+catplotsL <- catplot(trolls_models$category_order[catleft,])
+catplotsR <- catplot(trolls_models$category_order[catright,])
+
+catplots + ggtitle("Category Order Plot - All Trolls")
+catplotsL + ggtitle("Category Order Plot - Left Trolls")
+catplotsR  + ggtitle("Category Order Plot - Right Trolls")
+
+describe(trolls_models$category_order)
+describe(trolls_models$category_order[catright,])
+describe(trolls_models$category_order[catleft,])
+
+dat<- data.frame(
+  cbind(trolls_models$category_order,
+        group=catleft))
+
+aggregate(. ~ group,dat, FUN=mean) # false = right
+
+# t tests
+ttests<-lapply(colnames(trolls_models$category_order), function(i){
+  t.test(trolls_models$category_order[catright,i],
+         trolls_models$category_order[catleft,i])
+})
+# pvalues
+cat("\n pvalues for t test \n")
+sapply(1:length(colnames(trolls_models$category_order)), function(num){
+  rbind(colnames(trolls_models$category_order)[num],
+        round(ttests[[num]]$p.value,2))
+})
+
+
+# distribution tests
+kstests<-suppressWarnings(lapply(colnames(trolls_models$category_order), function(i){
+  ks.test(trolls_models$category_order[catright,i],
+          trolls_models$category_order[catleft,i])
+}))
+# pvalues
+cat("\n pvalues for KS test \n")
+sapply(1:length(colnames(trolls_models$category_order)), function(num){
+  rbind(colnames(trolls_models$category_order)[num],
+        round(kstests[[num]]$p.value,2))
+})
+
+
+
+# Mutual Information -----
+
+min_info<-vector(mode = "numeric")
+j<-500
+for(j in 1:j){
+  n<-400
+  ranMi<-matrix(nrow=n, ncol=8)
+  for(i in 1:n){
+    ranMi[i,] <- sample(1:8, 8,replace = FALSE)}
+  min_info[j]<-multiinformation(ranMi)
+}
+summary(min_info)
+
+# Calculate mutual information per group
+
+multiinformation(trolls_models$category_order)
+multiinformation(trolls_models$category_order[catright,])
+multiinformation(trolls_models$category_order[catleft,])
+
+# bootstrap CI for mutual information
+mi <- function(data, indices) {
+  d <- data[indices,] # allows boot to select sample
+  mi<- multiinformation(data[indices,])
+  return((mi))
+}
+boot.left <-boot(trolls_models$category_order
+                 [which(catleft),],
+                 statistic = mi, R=1000)
+boot.left
+bci.left<-boot.ci(boot.left, conf = .95, type = "norm")
+
+
+boot.right <-boot(trolls_models$category_order
+                  [which(catright),],
+                  statistic = mi, R=1000)
+boot.right
+bci.right<-boot.ci(boot.right, conf = .95, type = "norm")
+
+
+
+# plot
+
+plotdat2 <- data.frame(
+  MI = c(multiinformation(trolls_models$category_order[which(catright),]),
+             multiinformation(trolls_models$category_order[which(catleft),])),
+  ci.low =  c(bci.right$normal[2],
+             bci.left$normal[2]),
+  ci.high =  c(bci.right$normal[3],
+             bci.left$normal[3]),
+  Group = c("Right", "Left")
+)
+plotdat2
+ggplot(data = plotdat2) + geom_point(aes(x=Group, y=MI), color = c("Red", "Blue")) +
+  geom_hline(yintercept = min_info, linetype="dashed") +
+  geom_errorbar(aes(ymin=ci.low, ymax=ci.high, x = Group), colour="black", width=.1) +
+  ggtitle("Mutual Information by Group w/ 95% CI") + ylim(0,12) +
+  # annotate("text", label="Maximum value (minimum info)",
+  #          x=1, y=min_info+.3,
+  #          size=4, fontface="italic") +
+  ylab("Mutual Information")
+
+
+# Diversity -----
+# Gini Coefficient
+# FYI, it fails when all responses are zero, row gets NA
+
+
+# Gini by tweet
+gini_trolls_tweets <- data.frame(full = apply(trolls_scored[,c(-1,-2)],1,reldist::gini),
+                                 dich = apply(trolls_models$full_model$X,1,reldist::gini),
+                                 group = trolls$account_type)
+# Gini by author
+gini_trolls_author <-
+  data.frame(
+    full = sapply(unique(trolls$author), function(group) {
+      x <- trolls_scored[trolls$author == group, ]
+      if(ncol(x) != 10){NA}else{
+        reldist::gini(colSums(x[, c("AFRAID",
+                                    "AMUSED",
+                                    "ANGRY",
+                                    "ANNOYED",
+                                    "DONT_CARE",
+                                    "HAPPY",
+                                    "INSPIRED",
+                                    "SAD")]))}
+    }),
+
+    dich = sapply(unique(trolls$author), function(group) {
+      x <- trolls_models$full_model$X[trolls$author == group, ]
+      if(length(x) <= 8){z<-NA}else{
+        reldist::gini(colSums(x[, c("AFRAID",
+                                    "AMUSED",
+                                    "ANGRY",
+                                    "ANNOYED",
+                                    "DONT_CARE",
+                                    "HAPPY",
+                                    "INSPIRED",
+                                    "SAD")]))}
+    }),
+    group = unique(trolls[trolls$author %in% unique(trolls$author),c("author","account_type")])$account_type,
+    author = unique(trolls$author)
+  )
+
+# Average gini by tweet within authors
+gini_trolls_tweets_average <- do.call(rbind, lapply(unique(trolls$author), function(auth){
+  x <- gini_trolls_tweets[trolls$author == auth, ]
+  averages <- data.frame(
+    full = mean(na.omit(x$full)),
+    dich = mean(na.omit(x$dich)),
+    author = as.character(auth),
+    group = x$group[1],
+    stringsAsFactors = FALSE
+  )
+  averages
+}))
+
+
+
+
+t.test(full ~ group, gini_trolls_tweets)
+t.test(full ~ group, gini_trolls_author)
+t.test(full ~ group, gini_trolls_tweets_average)
+
