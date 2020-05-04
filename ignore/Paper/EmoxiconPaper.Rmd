@@ -1,0 +1,380 @@
+---
+title             : "Russian Trolls & Emoxicon"
+shorttitle        : "Emoxicon"
+
+author: 
+  - name          : "Tara L. Valladares"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    email         : "tls8vx@virginia.edu"
+  - name          : "Hudson Golino"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "University of Virginia"
+
+authornote: |
+  This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. 1842490. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
+
+abstract: |
+  This will be the abstract.
+  
+bibliography      : trolls.bib
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_word
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# source("EmoxiconPaperAnalysis-April-30-2020.R")
+load("EmoxiconPaperAnalysis-April-30-2020-dat.RData")
+```
+
+Introduction
+============
+
+Text comprises the majority of information in the world. By and large,
+human communication relies heavily upon digital messages sent through
+email, text messaging, and social media platforms. Developing methods
+that can analyze unstructured text is therefore critical in numerous
+fields, including psychology, political science, and economics.
+Specifically, the need for methods of text analysis grows as the broad
+spectrum influence of social media platforms such as Facebook and
+Twitter increases. As social media platforms are frequent sites of both
+information and disinformation campaigns, efforts to identify and
+understand these processes are limited by the available tools. In this
+paper, we will introduce a new method of emotion extraction and describe
+an application to a dataset.
+
+State Sponsored Disinformation and Russian Trolls
+-------------------------------------------------
+
+State sponsored disinformation campaigns are not a new phenomenon.
+Purposeful efforts to spread false information and \"fake news\" have
+been documented since ancient Egypt and Rome. With the rise of the
+internet and social media, such campaigns can be conducted at a level
+and size that was previously impossible. The Russian state commonly
+employs disinformation campaigns in an effort to influence foreign
+politics. These campaigns utilize a variety of strategies to sow
+discord, including online media manipulation, cyber-espionage, and
+falsely inciting protests in the real world
+[@richey2018russia; @linvill2019ira].
+
+The term *trolls* or *sock puppet* accounts is commonly used to
+described social media accounts that claim to be some person from a
+certain background or position, while actually being under direct
+control of a hidden third party. This is similar but in contrast to
+*bots* which perform similar actions to trolls but are directed by a
+computer program rather than a real person. Both trolls and bots have
+been extensively used by Russia, and other governments, to manipulate
+social media and political discourse around the world.
+
+During the 2016 U.S. presidential election, Russian troll farms posed as
+U.S. natives on Twitter in an attempt to influence political discourse
+and opinion. This eventually lead to the United States Justice
+Department inditing 13 Russian individuals and three Russian entities on
+charges relating to interference in the presidential election
+[@wapoRussian2018]. The Internet Research Agency (IRA), a company based
+in St. Petersburg, was among the companies charged and has been a
+primary focus of investigations into state-sponsored Russian
+interference in U.S. politics [@schiff2018trolls]. After the Justice
+Department released the Twitter handles associated with the IRA, Clemson
+university researchers Darren Linvill and Patrick Warren downloaded all
+tweets associated with these accounts and made the dataset publicly
+available for researchers [@linvill2019original]. The full dataset
+consists of nearly 3 million tweets from 2,800 accounts.
+
+The content of the Russian troll tweets ranges widely.
+[@linvill2019original] documented four major categories of
+English-language accounts that were active before the 2016 election:
+right trolls, left trolls, news feeds, and hashtag gamers. The majority
+of tweets from all accounts were deemed innocuous camouflage tweets;
+that is, the tweets were not political, but were instead contained
+mundane interactions with followers or references to popular culture
+[@linvill2019ira]. Political tweets from right-wing accounts largely
+supported Donald Trump as the presidential nominee and attacked Hilary
+Clinton. Political tweets from left-wing accounts largely attacked
+Trump, while less frequently either attacked or supported Clinton. There
+were apparent differences in how the account categories tweeted, though.
+For example, the right-trolls had less camouflage tweets than the
+left-trolls. It was estimated that over half of tweets from left-troll
+accounts were camouflage tweets, compared to less than 15% of tweets
+from right-troll accounts [@linvill2019ira]. This suggests that left and
+right troll accounts were employing different strategies in their
+attempts at political influence.
+
+Because both typical human communication and disinformation campaigns
+commonly occur on mediums characterized by brief segments of texts
+(e.g., tweets), there is a great need for flexible, low-computation
+methods of emotion detection that reliably work on relatively short
+documents.
+
+Brief history of emotion extraction
+-----------------------------------
+
+An enormous amount of work has been dedicated to extracting sentiment
+and emotion from text. As is common in many developing fields, the
+nomenclature of techniques can be unclear. Sentiment analysis is often
+used as a catchall term to describe the measurement of any feeling in
+text, no matter how complex. Here, we will separate the extraction of
+emotion from that of sentiment. Sentiment analysis is the process by
+which sentiment, i.e., positive and negative opinions, is extracted from
+text. Emotion detection focuses on the extraction of emotional
+categories, such as happiness, anger, or pride. The distinction between
+the sentiment and emotion can lie on a continuum, depending how features
+are extracted and utilized. Competing theories and methods may
+conceptualize emotions as distinct categories or as lying on related
+continuums. When categorical, the emotion categories generally include
+anger, disgust, fear, joy, sadness, and surprise, and sometimes trust
+and anticipation
+[@mohammad2016sentiment; @ekman1992emotions; @hirat2015survey; @strapparava2008learning].
+When continuous, popular theories describe emotions as lying on three
+dimensional vectors constructed from arousal, valence, and dominance
+[@russell2003affect].
+
+### Emotion Lexicons
+
+Lexicons form the basis of most methods of emotion detection. Lexicons
+are dictionaries that contain features (such as words or punctuation),
+the category they belong to, and their designated score. Lexicons vary
+in their size, complexity, and focus. They may be manually created
+through annotation or created automatically through machine learning.
+
+Lexicon-based analyses are limited by the lexicon's size and complexity.
+In general, the larger the lexicon, the more robust the scoring. Smaller
+lexicons may be poor matches to a target text if there is little overlap
+in words. Significant bias can occur when a target text is poorly
+matched to the lexicon. For this reason, domain-specific lexicons can
+give better results than general lexicons, though the creation of
+lexicons for every domain and genre is a monumental task. The majority
+of lexicons are created or seeded through hand annotation
+[@mohammad2016sentiment]. While human generated lexicons have validity
+advantages, they will be naturally limited in size and by responder
+biases.
+
+### Bag-of-words
+
+Bag-of-words (BOW) is a method of cleaning and organizing text that is
+commonly used alongside lexicons. In BOW, all grammar and word placement
+is discarded to create an orderless "bag" of word counts. BOW is thus a
+method of extracting the word frequency. Lexicon-scored and frequency
+data can be analyzed through simple sum scores or with more complex
+methods. While BOW and lexicons can serve in standalone analyses,
+machine learning frequently makes use of BOW and lexicons to create
+features.
+
+Though relatively crude, bag-of-words can produce compelling results on
+its own or in combination with machine learning techniques.
+[@dasilva2014tweet] found that BOW combined with standard machine
+learning algorithms produced accuracy rates of tweet sentiment
+classification around 70-80%. There, the addition of sentiment lexicons
+always improved classification rates.
+
+Aims
+----
+
+The purpose of the current study is to introduce a novel method of
+emotion detection, termed Emoxicon, and detail its application to a
+dataset of tweets sent by Russian Trolls.
+
+Methods
+=======
+
+Emoxicon
+--------
+
+Emoxicon is a method of analyzing the emotional content of text. The
+Emoxicon method primarily consists of two parts: emotion scoring and
+Rasch modeling.
+
+### Lexicon Scoring
+
+Lexicon-based analyses are limited by the lexicon's size and complexity.
+In general, the larger the lexicon, the more robust the scoring. Smaller
+lexicons may be poor matches to a target text if there is little overlap
+in words and significant bias can occur when a target text is poorly
+matched to the lexicon. We used the DepecheMood++ lexicon created by
+[@araque2018depechemood]. DepecheMood++ is an emotion lexicon that
+contains roughly 37 thousand terms and their associated probability
+weights for 8 emotion categories. The lexicon was created by scraping
+data from the news website Rappler which features a native \"*Mood
+Meter*\" widget on each article. Readers of the site are encourage to
+select one of eight reactions (Afraid, Amused, Angry, Annoyed, Don't
+Care, Happy, Inspired, or Sad) to the article. DepecheMood++ has several
+features that make it particularly useful. First, DepecheMood++ was
+naively crowdsourced; it did not rely on hand-annotation by
+knowledgeable participants. Second, DepecheMood++ is much larger than
+other commonly used lexicons. Previous work has shown that the
+Depechemood++ lexicon performs as well or better than other emotion
+lexicons [@araque2018depechemood; @staiano2014depechemood]
+
+A simple bag-of-words method is applied to score the emotional content
+of a given document. In the original lexicon, each word is assigned a
+weight for each of the eight dimensions. Here, the lexicon is condensed;
+each word in the lexicon becomes associated with the emotion category
+with the highest probability weight. Then, each tweet is assigned a sum
+score of how many words are most highly associated with each emotion
+category.
+
+### The Rasch Model
+
+The Rasch model is used to evaluate the relative probability of the an
+emotion weight appearing in a given tweet. By using the Rasch model, we
+are able to analyze the fit of the emotion weights to the document. The
+Rasch model originated in the field of psychometrics to relate scales
+and questionnaires to the underlying latent trait [@Rasch1960]. The
+Rasch model is a logistic model that places persons and items on the
+same scale to calculate the probability of a given person endorsing a
+given item. Fundamentally, the Rasch model can be used to generate
+latent trait scores for entities that produces a set of responses
+determined by an underlying latent trait. The basic form of the Rasch
+model for dichotomous items, as adapted from [@Rasch1960], is:
+
+$$\textit{P}(\textit{X}_{ij} = 1 | \theta_i, \beta_j) = \dfrac{exp(\theta_i - \beta_j)}{ 1 + exp(\theta_i - \beta_j)}$$
+
+Where $\theta$ represents the trait level of person $i$ and $beta$
+represents the difficulty or location of item $j$. In Emoxicon, tweets
+take the place of persons and emotional scores are represented as items.
+Each tweet is scored based on how many words are present from each
+emotion category. A mean split was performed on the emotion word counts
+within each emotion category to dummy code each tweet as 1 (high) or 0
+(low) for each category. For example, a tweet with a relatively high
+amount of \"Happy\" words would receive a 1 for the \"Happy\" item. The
+dichotomized scores are run through the Rasch model to produce trait
+scores for the tweets and 'item' locations for the emotion categories.
+
+An underlying assumption of the Rasch model is unidimensionality, which is the requirement that there is only underlying latent trait driving all responses. In standard applications of the Rasch model, this is a trait such as math ability. Here, we propose that the dimension that the text is scored on is *emotional voice* of the author. 
+
+Under the Rasch model, items receive estimates of their relative difficulty on the latent dimension. These difficulties have meaningful order. An item with a lower difficulty is more likely to be endorsed than an item with a higher difficulty. If a high difficulty item is endorsed, it is also likely that the lower diffculty items will *also* be endorsed. Deviation from these assumptions will produce poor model fit. Thus, when the Rasch model is used to score emotion data, the item difficulties are also estimates of conditional probability. That is, if an emotion label recieves a high difficulty, this implies that the emotion label is both rare and generally appears alongside the lower difficulty items. This conditional fit underlies the intepretation of the latent dimension as the emotional voice of the author. 
+
+
+
+Russian Trolls Dataset
+----------------------
+
+The Russian Trolls Twitter Dataset was collected by XXX. 
+
+From the total dataset, we included only English-language trolls labeled as Left-wing (\"Left\") or Right-wing (\"Right\").  Retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
+
+paragraph about why we focused on authored tweets
+
+
+We removed words that we hypothesized to specifically associate with the topic and not than emotional content. For example, the words \"Hillary,\" \"Clinton,\" and
+\"Trump\" are present in the Depechmood++ lexicon. These words were not
+scored as we believed that such words did not accurately represent their
+respective emotion categories in this circumstance. That is, Right and
+Left trolls may use the word \"Trump\" just as frequently, but that word
+does not have the same relationship to the tweets true true emotional
+content for each group. As these words were used frequently, they also
+would artificially inflate their respective category \"easiness\". 
+See Appendix 1 for a full list of removed words.
+
+Distribution of tweets (table?)
+
+
+Study Methods and Aims
+-------------
+The purpose of the study was to use the *Emoxicon* method to assess differences in emotion expression between left-wing and right-wing Russian Twitter troll accounts. 
+
+INSERT PARAGRAPH HERE ABOUT WHY THAT IS IMPORTANT - USE OF OF EMOTION AND MANIPULATION
+
+
+To this end, we ran two separate but complimentary applications of the *Emoxicon* method to the Russian Trolls dataset. First, we ran one overarching Rasch model including all cleaned tweets from both left-wing and right-wing trolls. In this strategy, we are able to identify differences between left-wing and right-wing trolls in the majority of the authored tweets. However, these broad group-level differences obscur the actions of less productive accounts and are largely dominated by a handful of mega-accounts with thousands of self-authored tweets. To compliment the overall model, we also ran individual Rasch models for Twitter accounts. This stratgey allows us to examine differences between accounts regardless of their productivity. For the individual models, only accounts with at least 30 tweets were included to sufficiently fit each Rasch model [@linacre1994samplesize]. Each method used the same data scored with the Depechemood++ lexicon [@araque2018depechemood]. All models and fit statistics were produced using the R package eRm [@eRm2020].
+
+The main variable of interest was the estimated item parameters produced by the Rasch model, specfically the item difficulties. In the overarching model, we used Andersen's likelihood ratio test in the eRm pacakge to identify differences in item difficulties between left-wing and right-wing trolls. In the individual models, we examined the distribution of the item difficulties using Kolmogorov-Smirnov and t-tests. In addition, we evaluated the consistency of the item difficulties with the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
+
+Because the mean of either the person or item parameters of the Rasch model must be set to zero before estimation, item parameters are
+not directly comparable across separate Rasch models. Therefore to
+compare the relative difficulties between models, item parameters from
+the individual models were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. The distribution of the ranks could then be examined for consistency within and differences between Right and Left trolls. If an individual account did not use any words from a specific emotion category, that emotion category was given the rank of 8 (hardest to endorse). This occurred most frequently for \"Happy\" (n = xxx) and then xxx.
+
+Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`.
+
+Results
+=======
+
+Overall Rasch Model
+-------------------
+
+```{r}
+# library(emoxicon)
+
+```
+
+We fit a Rasch model
+
+To check for multidimensionality, we performed a principle components analysis on the Rasch model residuals. The largest eigenvalue was `r round(rasch_pca$pca$eigen.values[1],2)`, indicating that there was not a signficiant impact of mulitdimensionality on the model fit [@linacre1998rfa].
+
+model fit 
+person fit 
+item fit 
+item distribution 
+person distribution
+
+
+
+Individual Rasch Models
+-----------------------
+
+We fit `r length(trolls_models$group_models)` Rasch models for each of the individual twitter handles with more than 30 authored tweets.
+
+person/item distribution
+
+model fit 
+
+person fit s
+
+item fit
+
+### Category Ordering
+
+For all individual models, the hardest category was XXX and the easiest
+category was XXX (Table XX).
+
+### Gini Index (Emodiveristy)
+
+### Mutual Information
+
+### Prediction
+
+Discussion
+==========
+
+Interpretation
+--------------
+
+The differences in emotion expression may be linked to different methods of eliciting emotion. Different purposes, topics eliciting different emotions
+
+It is critical to interpret the results of this study in context of its methods. Emotion is not a universal, context-free phenomenon; statements that are neutral in one context may elicit powerful reactions in another. The emotion categories delinated in the Depechemood++ lexicon were sourced from a specific time and group membership. When a tweet is rated highly on *Happy*, it does not imply that all readers of the tweet would have the same reaction, above and beyond whatever "error" is present in our scoring system. This may be even more true when dealing with highly politically and emotionally charged content that was written to elicit strong emotion reactions.
+
+We propose that differences in emotion expression in this study should rightly be interpreted as differences in how one, perhaps neutral, subset of readers may react. We do not believe that these differences are not true or present in reality - rather that it is an overstep to assume that every person who reads a left-wing troll tweet is more likely to react with anger than if they read a right-wing troll tweet.
+
+
+
+
+Future Directions
+-----------------
+
+Limitations
+-----------
+
+Conclusions
+-----------
+
+
+Words removed from Lexicon
+==========================
+
+`r exclude`

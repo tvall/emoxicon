@@ -74,6 +74,6 @@ rasch <- function(scores, groups, return_models = TRUE,...) {
   }} else{
     output <- list(full_model = rasch_fit)
   }
-
+  class(output) <- append(class(output),"emoxrasch")
   output
 }
