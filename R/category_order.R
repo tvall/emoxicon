@@ -37,11 +37,11 @@ category_order <- function(scores, groups, return_models=TRUE){
     # index issues
     err <-
       which(sapply(group_models, function(x) {
-        inherits(x[["model"]], "error")
+        inherits(x$model, "error")
       }))
     warn <-
       which(sapply(group_models, function(x) {
-        inherits(x[["warning"]], "warning")
+        inherits(x$warning, "warning")
       }))
 
     dif <- Reduce(function(x, y)
@@ -55,18 +55,30 @@ category_order <- function(scores, groups, return_models=TRUE){
     # Due to how the the mean spit is conducted, if there is an item
     # with complete 0/full responses, it will always be a complete 0 line.
 
+    # mes <-
+    #   stringr::str_extract(
+    #     sapply(warn, function(x)
+    #       group_models[[x]]$warning[["message"]]),
+    #     "(\nThe following items were excluded due to complete0/full responses:\n).*"
+    #   )
+
     mes <-
       stringr::str_extract(
-        sapply(warn, function(x)
-          group_models[[x]][["warning"]][["message"]]),
-        "(\nThe following items were excluded due to complete 0/full responses:\n).*"
+        stringr::str_replace_all(
+          sapply(warn, function(x)
+            group_models[[x]]$warning[["message"]]),
+          "(\n)"," "
+        ),
+        "(The following items were excluded due to complete 0/full responses:).*"
       )
+
+
     if(length(mes>0)){
-       mes <-
+       mes2 <-
         stringr::str_extract_all(mes, gsub(", ", "|", toString(colnames(scores))),
                                  simplify = FALSE)
       for (i in 1:nrow(dif[warn, ])) {
-        dif[warn, ][i, paste("beta", mes[[i]])] <- 999
+        dif[warn, ][i, paste("beta", mes2[[i]])] <- 999
       }
     }
 
