@@ -1,6 +1,8 @@
 #' Category plots
 #'
 #' @param categories Category orders produced from \code{rasch}
+#' @param cat_labels Optional category labels in the style of c(`colname1` = "newlabel1", `colname2` = "newlabel2").
+#' If not specified, labels will be taken from the category column names
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #'
@@ -11,14 +13,20 @@
 #'
 #'
 
-catplot<- function(categories, ...){
+catplot<- function(categories, cat_labels, ...){
   meltcats<-reshape2::melt(categories, variable.name="Category", value.name="Order")
 
   meltcats$Category <- factor(meltcats$Category)
 
+  if(missing("cat_labels")){
+    cat_labels <- unique(meltcats$Category)
+  }
+
   mt <- ggplot(meltcats,
                aes(Order, colour = Category, fill=Category)) +
-    geom_histogram() + facet_grid(. ~ Category, scales = "fixed") +
+    geom_histogram() + facet_grid(. ~ Category,
+                                  labeller = as_labeller(cat_labels),
+                                  scales = "fixed") +
     ggtitle("Category Order Plot")
 
   mt
