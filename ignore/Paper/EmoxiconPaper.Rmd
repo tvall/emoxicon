@@ -7,6 +7,7 @@ author:
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
     email         : "tls8vx@virginia.edu"
+    address       : "Postal address"
   - name          : "Hudson Golino"
     affiliation   : "1"
 
@@ -15,7 +16,7 @@ affiliation:
     institution   : "University of Virginia"
 
 authornote: |
-  This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. 1842490. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
+  "This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. 1842490. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation."
 
 abstract: |
   This will be the abstract.
@@ -37,9 +38,14 @@ output            : papaja::apa6_word
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-# source("EmoxiconPaperAnalysis-April-30-2020.R")
-load("EmoxiconPaperAnalysis-April-30-2020-dat.RData")
+library(bookdown)
+library(gridExtra)
+library(papaja)
+library(ggplot2)
+knitr::opts_chunk$set(echo = FALSE)
+
+# source("EmoxiconPaperAnalysis.Rmd")
+load("EmoxiconPaperAnalysis-May-7-2020-dat.RData")
 ```
 
 Introduction
@@ -97,7 +103,7 @@ available for researchers [@linvill2019original]. The full dataset
 consists of nearly 3 million tweets from 2,800 accounts.
 
 The content of the Russian troll tweets ranges widely.
-[@linvill2019original] documented four major categories of
+@linvill2019original documented four major categories of
 English-language accounts that were active before the 2016 election:
 right trolls, left trolls, news feeds, and hashtag gamers. The majority
 of tweets from all accounts were deemed innocuous camouflage tweets;
@@ -114,6 +120,9 @@ accounts were camouflage tweets, compared to less than 15% of tweets
 from right-troll accounts [@linvill2019ira]. This suggests that left and
 right troll accounts were employing different strategies in their
 attempts at political influence.
+
+
+reference Hudson's EGA paper [@golino2020ega]
 
 Because both typical human communication and disinformation campaigns
 commonly occur on mediums characterized by brief segments of texts
@@ -187,7 +196,10 @@ Aims
 
 The purpose of the current study is to introduce a novel method of
 emotion detection, termed Emoxicon, and detail its application to a
-dataset of tweets sent by Russian Trolls.
+dataset of tweets sent by Russian Trolls. *Emoxicon* combines lexicon scoring with Rasch modeling to understand the distribution and probability of emotion categories.
+
+INSERT PARAGRAPH HERE ABOUT WHY THAT IS IMPORTANT - USE OF OF EMOTION AND MANIPULATION
+
 
 Methods
 =======
@@ -260,11 +272,9 @@ An underlying assumption of the Rasch model is unidimensionality, which is the r
 Under the Rasch model, items receive estimates of their relative difficulty on the latent dimension. These difficulties have meaningful order. An item with a lower difficulty is more likely to be endorsed than an item with a higher difficulty. If a high difficulty item is endorsed, it is also likely that the lower diffculty items will *also* be endorsed. Deviation from these assumptions will produce poor model fit. Thus, when the Rasch model is used to score emotion data, the item difficulties are also estimates of conditional probability. That is, if an emotion label recieves a high difficulty, this implies that the emotion label is both rare and generally appears alongside the lower difficulty items. This conditional fit underlies the intepretation of the latent dimension as the emotional voice of the author. 
 
 
+Data Pre-processing
+-------------------
 
-Russian Trolls Dataset
-----------------------
-
-The Russian Trolls Twitter Dataset was collected by XXX. 
 
 From the total dataset, we included only English-language trolls labeled as Left-wing (\"Left\") or Right-wing (\"Right\").  Retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
 
@@ -284,21 +294,17 @@ See Appendix 1 for a full list of removed words.
 Distribution of tweets (table?)
 
 
-Study Methods and Aims
+Analysis Plan
 -------------
-The purpose of the study was to use the *Emoxicon* method to assess differences in emotion expression between left-wing and right-wing Russian Twitter troll accounts. 
 
-INSERT PARAGRAPH HERE ABOUT WHY THAT IS IMPORTANT - USE OF OF EMOTION AND MANIPULATION
+We ran two separate but complimentary applications of the *Emoxicon* method to the Russian Trolls dataset. First, we ran one overarching Rasch model including all cleaned tweets from both left-wing and right-wing trolls. In this strategy, we are able to identify differences between left-wing and right-wing trolls in the majority of the authored tweets. However, these broad group-level differences obscur the actions of less productive accounts and are largely dominated by a handful of mega-accounts with thousands of self-authored tweets. To compliment the overall model, we also ran individual Rasch models for Twitter accounts. This stratgey allows us to examine differences between accounts regardless of their productivity. For the individual models, only accounts with at least 30 tweets were included to sufficiently fit each Rasch model [@linacre1994samplesize]. Each method used the same data scored with the Depechemood++ lexicon [@araque2018depechemood]. All models and fit statistics were produced using the R package eRm [@eRm2020].
 
+The main variable of interest was the estimated item parameters produced by the Rasch model, specfically the item difficulties. In the overarching model, we used Andersen's likelihood ratio test in the eRm pacakge to identify differences in item difficulties between left-wing and right-wing trolls. 
 
-To this end, we ran two separate but complimentary applications of the *Emoxicon* method to the Russian Trolls dataset. First, we ran one overarching Rasch model including all cleaned tweets from both left-wing and right-wing trolls. In this strategy, we are able to identify differences between left-wing and right-wing trolls in the majority of the authored tweets. However, these broad group-level differences obscur the actions of less productive accounts and are largely dominated by a handful of mega-accounts with thousands of self-authored tweets. To compliment the overall model, we also ran individual Rasch models for Twitter accounts. This stratgey allows us to examine differences between accounts regardless of their productivity. For the individual models, only accounts with at least 30 tweets were included to sufficiently fit each Rasch model [@linacre1994samplesize]. Each method used the same data scored with the Depechemood++ lexicon [@araque2018depechemood]. All models and fit statistics were produced using the R package eRm [@eRm2020].
+Because the mean of either the person or item parameters of the Rasch model must be set to zero before estimation, item parameters are not directly comparable across individual Rasch models. Therefore to compare the relative difficulties between models, item parameters from the individual models were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. Ties in rank were broken randomly. The distribution of the ranks could then be examined for consistency within and differences between Right and Left trolls. If an individual account did not use any words from a specific emotion category, that emotion category was given the rank of 8 (hardest to endorse). 
 
-The main variable of interest was the estimated item parameters produced by the Rasch model, specfically the item difficulties. In the overarching model, we used Andersen's likelihood ratio test in the eRm pacakge to identify differences in item difficulties between left-wing and right-wing trolls. In the individual models, we examined the distribution of the item difficulties using Kolmogorov-Smirnov and t-tests. In addition, we evaluated the consistency of the item difficulties with the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
+To evalute the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution tests and t-tests. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
 
-Because the mean of either the person or item parameters of the Rasch model must be set to zero before estimation, item parameters are
-not directly comparable across separate Rasch models. Therefore to
-compare the relative difficulties between models, item parameters from
-the individual models were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. The distribution of the ranks could then be examined for consistency within and differences between Right and Left trolls. If an individual account did not use any words from a specific emotion category, that emotion category was given the rank of 8 (hardest to endorse). This occurred most frequently for \"Happy\" (n = xxx) and then xxx.
 
 Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`.
 
@@ -307,11 +313,6 @@ Results
 
 Overall Rasch Model
 -------------------
-
-```{r}
-# library(emoxicon)
-
-```
 
 We fit a Rasch model
 
@@ -328,7 +329,7 @@ person distribution
 Individual Rasch Models
 -----------------------
 
-We fit `r length(trolls_models$group_models)` Rasch models for each of the individual twitter handles with more than 30 authored tweets.
+We fit `r length(trolls_models$group_models)` Rasch models for each of the individual twitter handles with at least 30 authored tweets. Among these models, there were `r table(err_models)[["HAPPY"]]` models with full zero responses for the category \"Happy\" and `r table(err_models)[["AFRAID"]]` model with full zero responses for the category *Afraid*. 
 
 person/item distribution
 
@@ -340,8 +341,17 @@ item fit
 
 ### Category Ordering
 
-For all individual models, the hardest category was XXX and the easiest
-category was XXX (Table XX).
+For all individual models across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)`% of models.
+
+(ref:fig-catplots) This is the figure caption.
+
+As you can see, this is a graph (@ref:fig-catplots). (ref:fig-catplots)
+
+```{r catplots, fig.cap = "This is also a figure caption", fig.height=6}
+grid.arrange(catplotsR + theme(text = element_text(size=12)), 
+             catplotsL + theme(text = element_text(size=7)), ncol=1)
+```
+
 
 ### Gini Index (Emodiveristy)
 
@@ -351,6 +361,9 @@ category was XXX (Table XX).
 
 Discussion
 ==========
+
+
+*Happy* was the hardest emotion category for both left-wing or right-wing trolls when examining the total number of tweets and the individual models.
 
 Interpretation
 --------------

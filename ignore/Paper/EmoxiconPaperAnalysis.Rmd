@@ -10,6 +10,7 @@ output: html_document
 ```{r setup, include=FALSE}
 # library(knitr)
 # purl("ignore/Paper/EmoxiconPaperAnalysis.Rmd", output = "EmoxiconPaperAnalysis-April-30-2020.R", documentation = 0) # Extract R code from Rmd document and discard all text chunks
+library(papaja)
 library(emoxicon)
 library(eRm)
 library(ggplot2)
@@ -314,14 +315,24 @@ table(author.small$account_type)["Right"] == sum(catright)
 
 
 # category plots
-catplots <- catplot(trolls_models$category_order)
 
-catplotsL <- catplot(trolls_models$category_order[catleft,])
-catplotsR <- catplot(trolls_models$category_order[catright,])
 
-catplots + ggtitle("Category Order Plot - All Trolls")
-catplotsL + ggtitle("Category Order Plot - Left Trolls")
-catplotsR  + ggtitle("Category Order Plot - Right Trolls")
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", 
+                "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+# catplots + ggtitle("Category Order Plot - All Trolls")
+catplotsL<-  catplot(trolls_models$category_order[catleft,]) +
+  ggtitle("Category Order Plot - Left-wing Trolls") + 
+  theme_apa() + scale_fill_manual(values=cbbPalette) +
+  scale_colour_manual(values=cbbPalette) + theme(legend.position = "none")
+
+catplotsL
+
+catplotsR<- catplot(trolls_models$category_order[catright,]) + 
+  ggtitle("Category Order Plot - Right-wing Trolls") + 
+  theme_apa() + scale_fill_manual(values=cbbPalette) +
+  scale_colour_manual(values=cbbPalette) + theme(legend.position = "none")
+
+catplotsR
 
 describe(trolls_models$category_order)
 describe(trolls_models$category_order[catright,])
@@ -534,7 +545,21 @@ library(pairwise)
 pers <- pers(pair(trolls_models$full_model$X))
 # Perform the PCA
 rasch_pca <- rfa(pers)
-plot(rasch_pca, com = 1)
+```
 
-rasch_pca$pca$eigen.values
+```{r}
+
+x<-which(sapply(trolls_models$group_models, function(x) !is.null(x$warnings)))
+
+z<- vector("list", length(x))
+for(i in 1:length(x)){
+  z[[i]]<-(trolls_models$group_models[[x[i]]]$warnings)
+}
+
+err_models<-sapply(z, function(x){ stringr::str_extract_all(x, gsub(", ", "|", toString(c("AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", 
+"HAPPY", "INSPIRED", "SAD"))),
+                                 simplify = FALSE)})
+err_models<-do.call(rbind, err_models)
+table(err_models)
+
 ```
