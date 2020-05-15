@@ -317,20 +317,51 @@ table(author.small$account_type)["Right"] == sum(catright)
 # category plots
 
 
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", 
+cbbPalette <- c("#E69F00", "#999999", "#56B4E9", 
                 "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 # catplots + ggtitle("Category Order Plot - All Trolls")
-catplotsL<-  catplot(trolls_models$category_order[catleft,]) +
+
+lab1 <- c(`AMUSED` = "Amused", `ANGRY` = "Angry", `ANNOYED` = "Annoyed", `DONT_CARE` = "Don't Care", `INSPIRED` = "Inspired", `SAD` = "Sad", `AFRAID` = "Afraid", `HAPPY` = "Happy")
+
+dat_text_R <- data.frame(
+  # label = c("Amused", "Angry", "Annoyed", "Don't Care", 
+  #           "Inspired", "Sad", "Afraid", "Happy"),
+  label = c(" ", "\u002A \u2020", "\u002A \u2020", " \u2020", " ", "\u002A \u2020", "\u002A \u2020", " "),
+  Category   = colnames(trolls_models$category_order),
+  x     = c(5),
+  y     = c(400)
+)
+
+dat_text_L <- data.frame(
+  # label = c("Amused", "Angry", "Annoyed", "Don't Care", 
+  #           "Inspired", "Sad", "Afraid", "Happy"),
+  label = c(" ", "\u002A \u2020", "\u002A \u2020", " \u2020", " ", "\u002A \u2020", "\u002A \u2020", " "),
+  Category   = colnames(trolls_models$category_order),
+  x     = c(5),
+  y     = c(150)
+)
+
+catplotsL<-  catplot(trolls_models$category_order[catleft,],
+                     cat_labels = lab1) +
   ggtitle("Category Order Plot - Left-wing Trolls") + 
   theme_apa() + scale_fill_manual(values=cbbPalette) +
-  scale_colour_manual(values=cbbPalette) + theme(legend.position = "none")
+  scale_colour_manual(values=cbbPalette) + theme(legend.position = "none")   +
+                 geom_text(
+                 data    = dat_text_L,
+                 mapping = aes(x = x, y = y, label = label), color = 'black'
+               )
 
 catplotsL
 
-catplotsR<- catplot(trolls_models$category_order[catright,]) + 
+catplotsR<- catplot(trolls_models$category_order[catright,],
+                    cat_labels = lab1) + 
   ggtitle("Category Order Plot - Right-wing Trolls") + 
   theme_apa() + scale_fill_manual(values=cbbPalette) +
-  scale_colour_manual(values=cbbPalette) + theme(legend.position = "none")
+  scale_colour_manual(values=cbbPalette) + theme(legend.position = "none") +
+                geom_text(
+                 data    = dat_text_R,
+                 mapping = aes(x = x, y = y, label = label), color = 'black'
+               )
 
 catplotsR
 
@@ -353,11 +384,12 @@ ttests<-lapply(colnames(trolls_models$category_order), function(i){
   t.test(trolls_models$category_order[catright,i],
          trolls_models$category_order[catleft,i])
 })
+names(ttests) <- colnames(trolls_models$category_order)
 # pvalues
 cat("\n pvalues for t test \n")
 sapply(1:length(colnames(trolls_models$category_order)), function(num){
   rbind(colnames(trolls_models$category_order)[num],
-        round(ttests[[num]]$p.value,2))
+        round(ttests[[num]]$p.value,3))
 })
 
 
@@ -366,11 +398,12 @@ kstests<-suppressWarnings(lapply(colnames(trolls_models$category_order), functio
   ks.test(trolls_models$category_order[catright,i],
           trolls_models$category_order[catleft,i])
 }))
+names(kstests) <- colnames(trolls_models$category_order)
 # pvalues
 cat("\n pvalues for KS test \n")
 sapply(1:length(colnames(trolls_models$category_order)), function(num){
   rbind(colnames(trolls_models$category_order)[num],
-        round(kstests[[num]]$p.value,2))
+        round(kstests[[num]]$p.value,3))
 })
 
 

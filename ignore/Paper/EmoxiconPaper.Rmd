@@ -16,7 +16,7 @@ affiliation:
     institution   : "University of Virginia"
 
 authornote: |
-  "This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. 1842490. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation."
+  This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. 1842490. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
 
 abstract: |
   This will be the abstract.
@@ -42,10 +42,12 @@ library(bookdown)
 library(gridExtra)
 library(papaja)
 library(ggplot2)
-knitr::opts_chunk$set(echo = FALSE)
+library(emoxicon)
+library(citr)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, warn = FALSE)
 
 # source("EmoxiconPaperAnalysis.Rmd")
-load("EmoxiconPaperAnalysis-May-7-2020-dat.RData")
+load("EmoxiconPaperAnalysis-May-14-2020-dat.RData")
 ```
 
 Introduction
@@ -303,7 +305,7 @@ The main variable of interest was the estimated item parameters produced by the 
 
 Because the mean of either the person or item parameters of the Rasch model must be set to zero before estimation, item parameters are not directly comparable across individual Rasch models. Therefore to compare the relative difficulties between models, item parameters from the individual models were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. Ties in rank were broken randomly. The distribution of the ranks could then be examined for consistency within and differences between Right and Left trolls. If an individual account did not use any words from a specific emotion category, that emotion category was given the rank of 8 (hardest to endorse). 
 
-To evalute the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution tests and t-tests. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
+To evalute the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution tests and Welch t-tests. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
 
 
 Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`.
@@ -341,15 +343,58 @@ item fit
 
 ### Category Ordering
 
-For all individual models across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)`% of models.
+Figure \ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)*100`% of accounts. 
+There were significant mean and distributional differences between left-wing and right-wing trolls for the categories 
+*Angry* (*t*(`r ttests$ANGRY$parameter`) = `r ttests$ANGRY$statistic`, *p* < .001; D = `r kstests$ANGRY$statistic`, *p* = < .001), 
+*Annoyed* (*t*(`r ttests$ANNOYED$parameter`) = `r ttests$ANNOYED$statistic`, *p* < .001; D = `r kstests$ANNOYED$statistic`, *p* < .001), 
+*Sad* (*t*(`r ttests$SAD$parameter`) = `r ttests$SAD$statistic`, *p* < .001; D = `r kstests$SAD$statistic`, *p* < .001), 
+and *Afraid* (*t*(`r ttests$AFRAID$parameter`) = `r ttests$AFRAID$statistic`, *p* < .001; D = `r kstests$AFRAID$statistic`, *p* < .001; see Table\ \@ref(tab:msdcat) for means and standard deviations). The category *Don't Care* showed distributional differences (; D = `r kstests$DONT_CARE$statistic`, *p* = 0.049), but not mean differences. There were no differences in the item difficulty orders for the categorys *Amused*, *Inspired*, or *Happy*.
 
-(ref:fig-catplots) This is the figure caption.
 
-As you can see, this is a graph (@ref:fig-catplots). (ref:fig-catplots)
+```{r msdcat}
 
-```{r catplots, fig.cap = "This is also a figure caption", fig.height=6}
-grid.arrange(catplotsR + theme(text = element_text(size=12)), 
-             catplotsL + theme(text = element_text(size=7)), ncol=1)
+msdcat <- data.frame("Category" = c("Amused","Angry","Annoyed","Don't Care","Inspired",
+                                    "Sad", "Afraid", "Happy"),
+                     "Mean (SD) - Right-Wing" = paste0(
+                                format(round(colMeans(
+                                  trolls_models$category_order[catright,]),2), nsmall=2),
+                                         " (",
+                                format(round(apply(
+                                  trolls_models$category_order[catright,],2,sd),2), nsmall=2),
+                                        ")"),
+                      "Mean (SD) - Left-Wing" = paste0(
+                                format(round(colMeans(
+                                  trolls_models$category_order[catleft,]),2), nsmall=2),
+                                         " (",
+                                format(round(apply(
+                                  trolls_models$category_order[catleft,],2,sd),2), nsmall=2),
+                                        ")"), stringsAsFactors = F
+                     )
+colnames(msdcat) <- c("Category", "Mean (SD) - Right-Wing",  "Mean (SD) - Left-Wing")
+
+
+apa_table(
+  msdcat
+  , caption = "Means and Standard Deviations of Emotion Category Orders"
+  # , note = "This table was created with apa_table()."
+  , escape = TRUE
+)
+```
+
+
+(ref:fig-catplots) The distributions of emotion categories within accounts when ordered from 1 (easiest) to 8 (hardest). \u002A indicates significant differences between left-wing and right-wing accounts based on *t* tests. \u2020 indicates significant differences based on Kolmogorov-Smirnov distribution tests.
+
+
+```{r catplots, fig.cap = "(ref:fig-catplots)", fig.height=5.5}
+
+grid.arrange(catplotsR + theme(text = element_text(size=rel(8)),
+                               strip.text.x = element_text(size = 5.5),
+                               axis.title.x = element_blank()), 
+             
+             catplotsL + theme(text = element_text(size=rel(8)),
+                               strip.text.x = element_text(size = 5.5)),
+             ncol=1)
+
 ```
 
 
@@ -390,4 +435,4 @@ Conclusions
 Words removed from Lexicon
 ==========================
 
-`r exclude`
+`r paste(exclude)`
