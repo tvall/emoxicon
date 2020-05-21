@@ -452,7 +452,7 @@ grid.arrange(catplotsR + theme(text = element_text(size=rel(8)),
 
 ### Mutual Information
 
-As a baseline, we used bootstrapping to calculate the average amount of mutual information for 
+As a baseline, we used bootstrapping to calculate the average amount of mutual information among  `r j` interations.
 
 ### Prediction
 
