@@ -47,14 +47,13 @@ library(citr)
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, warn = FALSE)
 
 # source("EmoxiconPaperAnalysis.Rmd")
-load("EmoxiconPaperAnalysis-May-14-2020-dat.RData")
+load("EmoxiconPaperAnalysis-May-21-2020-dat.RData")
 ```
 
 Introduction
 ============
 
-Text comprises the majority of information in the world. By and large,
-human communication relies heavily upon digital messages sent through
+Human communication relies heavily upon digital messages sent through
 email, text messaging, and social media platforms. Developing methods
 that can analyze unstructured text is therefore critical in numerous
 fields, including psychology, political science, and economics.
@@ -269,7 +268,7 @@ amount of \"Happy\" words would receive a 1 for the \"Happy\" item. The
 dichotomized scores are run through the Rasch model to produce trait
 scores for the tweets and 'item' locations for the emotion categories.
 
-An underlying assumption of the Rasch model is unidimensionality, which is the requirement that there is only underlying latent trait driving all responses. In standard applications of the Rasch model, this is a trait such as math ability. Here, we propose that the dimension that the text is scored on is *emotional voice* of the author. 
+An underlying assumption of the Rasch model is unidimensionality, which is the requirement that there is only one underlying latent trait driving all responses. In standard applications of the Rasch model, this is a trait such as math ability. Here, we propose that the dimension that the text is scored on is *emotional voice* of the author. 
 
 Under the Rasch model, items receive estimates of their relative difficulty on the latent dimension. These difficulties have meaningful order. An item with a lower difficulty is more likely to be endorsed than an item with a higher difficulty. If a high difficulty item is endorsed, it is also likely that the lower diffculty items will *also* be endorsed. Deviation from these assumptions will produce poor model fit. Thus, when the Rasch model is used to score emotion data, the item difficulties are also estimates of conditional probability. That is, if an emotion label recieves a high difficulty, this implies that the emotion label is both rare and generally appears alongside the lower difficulty items. This conditional fit underlies the intepretation of the latent dimension as the emotional voice of the author. 
 
@@ -277,24 +276,9 @@ Under the Rasch model, items receive estimates of their relative difficulty on t
 Data Pre-processing
 -------------------
 
+The purpose of this analysis is to examine differences in tweets written by the IRA among the left-wing and the right-wing troll accounts. We will refer to such tweets as *authored* content. By removing non-authored tweets, we ensure that all the tweets support the goals of the accounts and do not belong to accounts with other "voices." To this end, we included only English-language troll accounts labeled as Left-wing (\"Left\") or Right-wing (\"Right\") by @linvill2019original. URLs, Retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
 
-From the total dataset, we included only English-language trolls labeled as Left-wing (\"Left\") or Right-wing (\"Right\").  Retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
-
-paragraph about why we focused on authored tweets
-
-
-We removed words that we hypothesized to specifically associate with the topic and not than emotional content. For example, the words \"Hillary,\" \"Clinton,\" and
-\"Trump\" are present in the Depechmood++ lexicon. These words were not
-scored as we believed that such words did not accurately represent their
-respective emotion categories in this circumstance. That is, Right and
-Left trolls may use the word \"Trump\" just as frequently, but that word
-does not have the same relationship to the tweets true true emotional
-content for each group. As these words were used frequently, they also
-would artificially inflate their respective category \"easiness\". 
-See Appendix 1 for a full list of removed words.
-
-Distribution of tweets (table?)
-
+Because the Depechmood++ lexicon was sourced from news articles, it contains emotion associations for a number of politically relevant words, such as \"Hillary,\" \"Clinton,\" and \"Trump\". We removed a small set of topically relevant terms that we anitcipated had different connotations between the left-wing and right-wing accounts (see the appendix for a full list of removed words). That is, left-wing and right-wing trolls may use the word \"Trump\" just as frequently, but that word does not have the same relationship to the tweets true emotional content for each group. As these words were used often, they also would artificially inflate their respective category \"easiness\". 
 
 Analysis Plan
 -------------
@@ -305,45 +289,111 @@ The main variable of interest was the estimated item parameters produced by the 
 
 Because the mean of either the person or item parameters of the Rasch model must be set to zero before estimation, item parameters are not directly comparable across individual Rasch models. Therefore to compare the relative difficulties between models, item parameters from the individual models were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. Ties in rank were broken randomly. The distribution of the ranks could then be examined for consistency within and differences between Right and Left trolls. If an individual account did not use any words from a specific emotion category, that emotion category was given the rank of 8 (hardest to endorse). 
 
-To evalute the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution tests and Welch t-tests. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
+To evalute the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution and Welch t-tests. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using mutual information, and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
+
+Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`. See table\ \@ref(tab:tweetTab) for more information on tweet distribution of the final sample.
 
 
-Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`.
+```{r tweetTab}
+
+# rows - left wing and right wing
+tweetTab<- data.frame(
+  "x" = c("Left-wing, all accounts","Left-wing, 30+ tweets", "Right-wing, all accounts","Right-wing, 30+ tweets"),
+  "Accounts, n" = c(table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]],
+                    sum(catleft),
+                    table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]],
+                    sum(catright)),
+  "Total Tweets" = c(sum(trolls$account_type == "Left"),
+                tweets30left,
+                sum(trolls$account_type == "Right"),
+                tweets30right),
+  "Minimum" = c(min(table(trolls[which(trolls$account_type=="Left"),"author"])),
+                30,
+                min(table(trolls[which(trolls$account_type=="Right"),"author"])),
+                30),
+  
+  "2nd Quartile" = c(quantile(table(trolls[which(trolls$account_type=="Left"),"author"]))[2],
+                     quantile(table(trolls[which(trolls$author %in%
+                           author.small[which(author.small$account_type == "Left"), 
+                                        "author"]),"author"]))[2],
+                     quantile(table(trolls[which(trolls$account_type=="Right"),"author"]))[2],
+                     quantile(table(trolls[which(trolls$author %in%
+                           author.small[which(author.small$account_type == "Right"), 
+                                        "author"]),"author"]))[2]),
+  
+  "Median" = c(quantile(table(trolls[which(trolls$account_type=="Left"),"author"]))[3],
+                     quantile(table(trolls[which(trolls$author %in%
+                           author.small[which(author.small$account_type == "Left"), 
+                                        "author"]),"author"]))[3],
+                     quantile(table(trolls[which(trolls$account_type=="Right"),"author"]))[3],
+                     quantile(table(trolls[which(trolls$author %in%
+                           author.small[which(author.small$account_type == "Right"), 
+                                        "author"]),"author"]))[3]),
+  
+  "3rd Quartile" = c(quantile(table(trolls[which(trolls$account_type=="Left"),"author"]))[4],
+                     quantile(table(trolls[which(trolls$author %in%
+                           author.small[which(author.small$account_type == "Left"), 
+                                        "author"]),"author"]))[4],
+                     quantile(table(trolls[which(trolls$account_type=="Right"),"author"]))[4],
+                     quantile(table(trolls[which(trolls$author %in%
+                           author.small[which(author.small$account_type == "Right"), 
+                                        "author"]),"author"]))[4]),
+  
+  "Maximum" = c(max(table(trolls[which(trolls$account_type=="Left"),"author"])),
+                max(table(trolls[which(trolls$account_type=="Left"),"author"])),
+                max(table(trolls[which(trolls$account_type=="Right"),"author"])),
+                 max(table(trolls[which(trolls$account_type=="Right"),"author"])))
+)
+colnames(tweetTab) <- c("x", "Accounts, n", "Total Tweets", "Minimum", "2nd Quartile", "Median", 
+                        "3rd Quartile", "Maximum")
+
+apa_table(
+  tweetTab
+  , caption = "Distribution of Tweets in Accounts"
+  , note = "Tweets removed during pre-processing are not included."
+  , escape = TRUE
+)
+
+
+```
 
 Results
 =======
 
-Overall Rasch Model
+Overarching Rasch Model
 -------------------
 
-We fit a Rasch model
-
-To check for multidimensionality, we performed a principle components analysis on the Rasch model residuals. The largest eigenvalue was `r round(rasch_pca$pca$eigen.values[1],2)`, indicating that there was not a signficiant impact of mulitdimensionality on the model fit [@linacre1998rfa].
+### Model Fit
+Overall model fit for the full Rasch model was appropriate. XXX% of tweets showed significant misfit based on M_{2} misfit statistics; person misfit was low. The items XXXXXXX misfit. To check for multidimensionality, we performed a principle components analysis on the Rasch model residuals. The largest eigenvalue was `r round(rasch_pca$pca$eigen.values[1],2)`, indicating that there was not a signficiant impact of mulitdimensionality on the model fit [@linacre1998rfa].
 
 model fit 
-person fit 
-item fit 
-item distribution 
-person distribution
 
+
+
+Items were generally well-matched to tweet scores (see Figure XXXX for the person-item map). In the full Rasch model, XXXX was the easiest item with the lowest difficulty, while *Happy* was the item with the highest difficulty. The difficulties of items XXX XXX XXX were estimated to be relatively close to one another, indicating that the probabilities of many words from these categoreis appearing in a given tweet was relatively similar.
+
+
+
+### Left-wing and Right-wing Differences
+
+The Andersen's likelihood ratio test showed significant differences between the Left-wing and Right-wing trolls. Follow-up analyses indicated that these differences were largest for categories XXXXX (see Figure XXXX).
 
 
 Individual Rasch Models
 -----------------------
 
+### Model Fit
 We fit `r length(trolls_models$group_models)` Rasch models for each of the individual twitter handles with at least 30 authored tweets. Among these models, there were `r table(err_models)[["HAPPY"]]` models with full zero responses for the category \"Happy\" and `r table(err_models)[["AFRAID"]]` model with full zero responses for the category *Afraid*. 
 
-person/item distribution
+The average percentage of misfitting persons was XXX% (sd) for left-wing accounts and XXX% (sd) for right-wing accounts. Item misfit was also generally low (Table XXX). Of note, [where did categories misfit or not]. Overall, the measures of model fit were appropriate.
+
 
 model fit 
 
-person fit s
-
-item fit
 
 ### Category Ordering
 
-Figure \ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)*100`% of accounts. 
+Figure\ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)*100`% of accounts. 
 There were significant mean and distributional differences between left-wing and right-wing trolls for the categories 
 *Angry* (*t*(`r ttests$ANGRY$parameter`) = `r ttests$ANGRY$statistic`, *p* < .001; D = `r kstests$ANGRY$statistic`, *p* = < .001), 
 *Annoyed* (*t*(`r ttests$ANNOYED$parameter`) = `r ttests$ANNOYED$statistic`, *p* < .001; D = `r kstests$ANNOYED$statistic`, *p* < .001), 
@@ -401,6 +451,8 @@ grid.arrange(catplotsR + theme(text = element_text(size=rel(8)),
 ### Gini Index (Emodiveristy)
 
 ### Mutual Information
+
+As a baseline, we used bootstrapping to calculate the average amount of mutual information for 
 
 ### Prediction
 
