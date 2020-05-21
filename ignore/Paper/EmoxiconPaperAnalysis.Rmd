@@ -96,8 +96,7 @@ author.small <-  author.small[order(author.small$author),] # this is necessary b
 author.small<- author.small[as.vector(table(trolls$author) > 29),]
 
 # Run Emoxicon
-exclude <-c("hilary", "hillary", "russia", "russian",
-            "trump", "bernie", "clinton", "rt")
+
 trolls_scored <- emoxicon(text=trolls$content, lexicon = "emotions",
                           exclude = exclude)
 
@@ -421,7 +420,7 @@ First, I ran a quick simulation to determine the minimum amount of mutual inform
 min_info<-vector(mode = "numeric")
 j<-500
 for(j in 1:j){
-  n<-400
+  n<-length(trolls_models$group_models)
   ranMi<-matrix(nrow=n, ncol=8)
   for(i in 1:n){
     ranMi[i,] <- sample(1:8, 8,replace = FALSE)}
@@ -593,6 +592,5 @@ err_models<-sapply(z, function(x){ stringr::str_extract_all(x, gsub(", ", "|", t
 "HAPPY", "INSPIRED", "SAD"))),
                                  simplify = FALSE)})
 err_models<-do.call(rbind, err_models)
-table(err_models)
 
 ```
