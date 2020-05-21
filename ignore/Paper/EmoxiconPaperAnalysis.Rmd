@@ -417,16 +417,16 @@ First, I ran a quick simulation to determine the minimum amount of mutual inform
 ```{r mutual info}
 # Mutual Information -----
 
-min_info<-vector(mode = "numeric")
-j<-500
-for(j in 1:j){
-  n<-length(trolls_models$group_models)
-  ranMi<-matrix(nrow=n, ncol=8)
-  for(i in 1:n){
-    ranMi[i,] <- sample(1:8, 8,replace = FALSE)}
-  min_info[j]<-multiinformation(ranMi)
-}
-summary(min_info)
+# Random MI
+
+n<-length(trolls_models$group_models)
+ranMi <- matrix(nrow=n, ncol=8)
+for(i in 1:n){
+  ranMi[i,] <- sample(1:8, 8,replace = FALSE)}
+
+boot.random <- boot(ranMi,
+                    statistic = mi, R=1000)
+bci.random<-boot.ci(boot.random, conf = .95, type = "norm")
 
 # Calculate mutual information per group
 
@@ -440,6 +440,7 @@ mi <- function(data, indices) {
   mi<- multiinformation(data[indices,])
   return((mi))
 }
+
 boot.left <-boot(trolls_models$category_order
                  [which(catleft),],
                  statistic = mi, R=1000)
@@ -468,7 +469,7 @@ plotdat2 <- data.frame(
 )
 plotdat2
 ggplot(data = plotdat2) + geom_point(aes(x=Group, y=MI), color = c("Red", "Blue")) +
-  geom_hline(yintercept = min_info, linetype="dashed") +
+  geom_hline(yintercept = boot.random$t0, linetype="dashed") +
   geom_errorbar(aes(ymin=ci.low, ymax=ci.high, x = Group), colour="black", width=.1) +
   ggtitle("Mutual Information by Group w/ 95% CI") + ylim(0,12) +
   # annotate("text", label="Maximum value (minimum info)",
