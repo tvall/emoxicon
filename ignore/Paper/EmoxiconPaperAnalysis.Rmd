@@ -201,14 +201,14 @@ ICCs look great. Always monotonically increasing.
 ```{r icc}
 # Look at empiracal plots, ICCs
 
-plotICC(trolls_models$full_model,1, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,2, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,3, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,4, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,5, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,6, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,7, empICC = list("raw", type="b",col = "blue", lty = 2))
-plotICC(trolls_models$full_model,8, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,1, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,2, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,3, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,4, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,5, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,6, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,7, empICC = list("raw", type="b",col = "blue", lty = 2))
+# plotICC(trolls_models$full_model,8, empICC = list("raw", type="b",col = "blue", lty = 2))
 
 ```
 
@@ -219,23 +219,23 @@ Here we are plotting reduced total raw scores against the proportion of people w
 ```{r empirical plots}
 
 # Look at empirical plots - total scores
-library(mirt)
-empirical_plot(trolls_models$full_model$X
-               ,1)
-empirical_plot(trolls_models$full_model$X
-               ,2)
-empirical_plot(trolls_models$full_model$X
-               ,3)
-empirical_plot(trolls_models$full_model$X
-               ,4)
-empirical_plot(trolls_models$full_model$X
-               ,5)
-empirical_plot(trolls_models$full_model$X
-               ,6)
-empirical_plot(trolls_models$full_model$X
-               ,7)
-empirical_plot(trolls_models$full_model$X
-               ,8)
+# library(mirt)
+# empirical_plot(trolls_models$full_model$X
+#                ,1)
+# empirical_plot(trolls_models$full_model$X
+#                ,2)
+# empirical_plot(trolls_models$full_model$X
+#                ,3)
+# empirical_plot(trolls_models$full_model$X
+#                ,4)
+# empirical_plot(trolls_models$full_model$X
+#                ,5)
+# empirical_plot(trolls_models$full_model$X
+#                ,6)
+# empirical_plot(trolls_models$full_model$X
+#                ,7)
+# empirical_plot(trolls_models$full_model$X
+#                ,8)
 ```
 
 ## Individual model fit statistics
@@ -279,14 +279,24 @@ manymods_ifit_total <- sapply(1:length(manymods_ifit), function(i){
   }
   items
 }, simplify = F)
-x<-do.call(rbind, manymods_ifit_total)
-head(x)
-summary(x)
 
-round(colSums(x[,-1], na.rm = T)/nrow(x),2)
 
-round(colSums(x[modsL,-1], na.rm = T)/nrow(x[modsL,]),2)
-round(colSums(x[!modsL,-1], na.rm = T)/nrow(x[!modsL,]),2)
+manymod_ifit_total<-do.call(rbind, manymods_ifit_total)
+
+manymod_ifit_tab <- as.data.frame(rbind(
+  paste0(round(colSums(manymod_ifit_total[modsL,-1], 
+              na.rm = T)/nrow(manymod_ifit_total[modsL,]),2)*100,"%"),
+  paste0(round(colSums(manymod_ifit_total[!modsL,-1], 
+              na.rm = T)/nrow(manymod_ifit_total[!modsL,]),2)*100,"%")
+))
+colnames(manymod_ifit_tab) <- c("Afraid", "Amused", "Angry", "Annoyed",
+                                "Don't Care", "Happy", "Inspired", "Sad")
+
+manymod_ifit_tab$Group <- c("Left-wing", "Right-wing")
+
+manymod_ifit_tab<-manymod_ifit_tab[,c( "Group","Afraid", "Amused", "Angry",
+                                       "Annoyed","Don't Care", "Happy",
+                                       "Inspired", "Sad")]
 
 
 ```
@@ -551,6 +561,8 @@ t.test(full ~ group, gini_trolls_tweets)
 t.test(full ~ group, gini_trolls_author)
 t.test(full ~ group, gini_trolls_tweets_average)
 
+ginitweetresults<-t.test(full ~ group, gini_trolls_tweets)
+giniauthorresults<-t.test(full ~ group, gini_trolls_author)
 ```
 
 ## Notes
