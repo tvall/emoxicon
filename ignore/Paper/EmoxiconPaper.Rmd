@@ -111,13 +111,13 @@ The IRA twitter data was made accessible by FiveThirtyEight and the researchers 
 The topics tweeted about by the Russian troll accounts ranges widely.
 @linvill2019original consolidated the data and documented four major categories of English-language accounts that were active before the 2016 election: right-wing trolls, left-wing trolls, news feed accounts, and hashtag gamers. In the current analysis, we focused on only tweets from right-wing and left-wing troll accounts. 
 
-The right-wing and left-wing troll accounts were actively involved in the creation and dissemination of polticized content and propaganda [@zannettou2019disinformation]. Political tweets from right-wing accounts generally followed popular conservative talking points of the time, supporting Donald Trump as the presidential nominee and attacking Hilary Clinton. Other popular right-wing topics included anti-Islam sentiment and terrorism, liberal media bias, gun rights, and supporting the police  [@golino2020ega]. Political tweets from left-wing accounts largely attacked Trump, but they less frequently either attacked or supported Clinton [@linvill2019original]. A small number of accounts supported Bernie Sanders. The left-wing accounts largely tweeted from a pro "Black Lives Matter" perspective, focusing on topics such as police brutality, racism in America, current events involving the deaths of black Americans (e.g., Trayvon Martin, Ferguson and Michael Brown), and popular black musicians and media [@golino2020ega]. Approximately half of the left-wing troll tweets were from accounts that specifically posed as Black Americans [@freelon2020black]. Thus, the right-wing and left-wing trolls tweeted from opposite ends of the political spectrum and with few overlapping topics. 
+The right-wing and left-wing troll accounts were actively involved in the creation and dissemination of polticized content and propaganda [@zannettou2019disinformation]. Political tweets from right-wing accounts generally followed popular conservative talking points of the time, supporting Donald Trump as the presidential nominee and attacking Hillary Clinton. Other popular right-wing topics included anti-Islam sentiment and terrorism, liberal media bias, gun rights, and supporting the police  [@golino2020ega]. Political tweets from left-wing accounts largely attacked Trump, but they less frequently either attacked or supported Clinton [@linvill2019original]. A small number of accounts supported Bernie Sanders. The left-wing accounts largely tweeted from a pro "Black Lives Matter" perspective, focusing on topics such as police brutality, racism in America, current events involving the deaths of black Americans (e.g., Trayvon Martin, Ferguson and Michael Brown), and popular black musicians and media [@golino2020ega]. Approximately half of the left-wing troll tweets were from accounts that specifically posed as Black Americans [@freelon2020black]. Thus, the right-wing and left-wing trolls tweeted from opposite ends of the political spectrum and with few overlapping topics. 
 
 <!-- It is notable that a majority of the Russian left-wing troll accounts were specifically posing as black Americans instead of the many other diverse and divisive liberal perspectives, such as LGBTQ+, muslim, or feminist voices [@freelon2020black].  -->
 
 Notabely, the majority of tweets from both accounts were deemed innocuous camouflage tweets by @linvill2019ira. These camouflage tweets were not overtly political but instead consisted of mundane interactions with followers or references to popular culture. There were apparent differences in how the account categories tweeted, though. For example, the right-wing trolls had less camouflage tweets than the left-wing trolls; over half of tweets from left-wing troll accounts were camouflage tweets, compared to less than 15% of tweets from right-wing troll accounts [@linvill2019ira]. This suggests that left-wing and right-wing troll accounts were not only talking about different subjects but also employing different strategies in their attempts at political influence. 
 
-It is widely understood that social media misinformation campaigns pose a signficiant threat to representative democracies worldwide [@sunstein2018republic; @diresta2019tactics], though the final impact of the IRA's actions on the US 2016 election has been debated [for contrast, see @boyd2018characterizingIRA]. Nonetheless, extensive research has focused on how, why, where, and with whom the IRA-linked accounts spread misinformation, which will be explored further in the next section.
+It is widely understood that social media misinformation campaigns pose a signficiant threat to representative democracies worldwide [@sunstein2018republic; @diresta2019tactics], though the final impact of the IRA's actions on the US 2016 election has been debated [for dissenting opinions see @boyd2018characterizingIRA and @zannettou2019disinformation]. Nonetheless, extensive research has focused on how, why, where, and with whom the IRA-linked accounts spread misinformation, which will be explored further in the next section.
 <!-- [e.g., @bail2020trolls; @stewart2018retweet; @zannettou2019disinformation].  -->
 Understanding the role that both Twitter and troll accounts play is critical in identifying and understanding disinformation campaigns and limiting the impact of malicious actors in shaping public opinon. 
 
@@ -128,20 +128,25 @@ Social media has cemented itself as a major player in the American political pro
 
 Though Twitter can be a highly valuable source of information for its users, its unmoderated content is not read and spread in unbiased setting. As a whole, social media users tend to follow and interact with accounts that hold similar political beliefs, forming "echo chambers" online [@del2016spreading; @tornberg2018echo; @garrett2009echo]. Highly active social media users tend to be more polarized and to follow fewer sources of information [@schmidt2017anatomy; @bessi2015trend]. Politically active twitter users rarely retweet content from accounts or news sources from different political parties. In @boutet2012retweet the majority of all interactions on Twitter occurred between users with homologous polticial views. While users largely retweet homologous opinions, user-to-user mentions (i.e., tagging another user in a tweet) frequently cross political lines [@boutet2012retweet; @conover2011retweet]. This cross-over exposure may not reliably prevent polarization though, especially if users are interacting with opposing, polarizing content from either real or troll accounts [@karlsen2017echo; @yardi2010dynamic]. In fact, a handful of studies have found a "backfire" response where exposure to opposing views increases polarization [@bail2018exposure; @nyhan2010corrections]. 
 
-Emotion plays a significant role in driving public opinion and online political discourse [@peng2017interplay; @gonzalez2012emotions; @mackuen2010civic]. gonzalez2012emotions found that shifts in emotional arousal on a political discourse forum were linked to corresponding shifts in public opinion. On Twitter, influential users are more likely to tweet more negatively, and more emotional tweets are more likely to spread further and faster [@dang2013influentials; @brady2017emotion]. The use of moral-emotional language increases message spread from the political leaders to their followers [@brady2019ideological]. Similarly, politicians with extreme ideological positions also tend to have more Twitter followers [@hong2016politicalpolar]. 
+Emotion plays a significant role in driving public opinion and online political discourse [@peng2017interplay; @gonzalez2012emotions; @mackuen2010civic]. @gonzalez2012emotions found that shifts in emotional arousal on a political discourse forum were linked to corresponding shifts in public opinion. On Twitter, influential users are more likely to tweet more negatively, and more emotional tweets are more likely to spread further and faster [@dang2013influentials; @brady2017emotion]. In @brady2017emotion, adding a single moral-emotional word to a tweet increased the expected sharing rate by 17%-24%, depending on the topic. The use of moral-emotional language is also associated with message spread from the political leaders to their followers [@brady2019ideological]. Similarly, politicians with extreme ideological positions also tend to have more Twitter followers [@hong2016politicalpolar]. 
 
-Specific emotion categories have been identified as contributing to information spread. For example, the use of anger and disgust may be especially impactful among conservative political figures on Twitter [@brady2019ideological]. This may be driven by either reader characteristics or the topic. For example in @brady2017emotion, words reflecting anger increased sharing for climate change tweets, while positive emotions increased sharing for same-sex marriage. The impact of emotion on the spread of ideas is not limited to Twitter; one study using data from The New York Times found that articles that elicited stronger emotional arousal (i.e., awe, anger, and anxiety) were more likely to be shared [@berger2012nyt]. @guerini2015emotions found that similar emotions (annoyed, angry, and inspired) also increased the likelihood that an article on the news website Rappler.com was spread. Further, moral-emotional language may have more of an impact in spreading ideas within-groups than between-groups, contributing to polarization and the "echo chamber" effect [@brady2017emotion]. Anger, specifically, may also increase partisan beliefs and susceptibility to misinformation [@suhay2018role; @wollebaek2019anger; @mackuen2010civic]. In total, the available evidence strongly supports the role of emotion in spreading political information, though topics may be particularly advantaged when linked to different emotions.
+Specific emotion categories have been identified as contributing to information spread. For example, the use of anger and disgust may be especially impactful among conservative political figures on Twitter [@brady2019ideological]. This may be driven by either reader characteristics or the topic. For example in @brady2017emotion, anger words increased sharing for climate change tweets, while positive emotions increased sharing for same-sex marriage.  The impact of emotion on the spread of ideas is not limited to Twitter and may be a more general phenomenon. One study using data from The New York Times found that articles which elicited stronger emotional arousal (i.e., awe, anger, and anxiety) were more likely to be shared; the odds that an article made the top shared list increased by 34% for every one standard deviation increase in anger, 30% for awe, and 21% for anxiety [@berger2012nyt]. @guerini2015emotions found that similar emotions (annoyed, angry, and inspired) also increased the likelihood that an article on the news website Rappler.com was shared or commented on. Further, moral-emotional language may have more of an impact in spreading ideas within-groups than between-groups, contributing to polarization and the "echo chamber" effect [@brady2017emotion]. Anger, specifically, may also increase partisan beliefs and susceptibility to misinformation [@suhay2018role; @wollebaek2019anger; @mackuen2010civic]. In total, the available evidence supports the role of emotion in spreading political ideas and information, though the impact of specfic emotions may be context dependent.
 
 
 <!-- It is clear that emotion plays a critical role in shaping political thought online.  -->
-Current research on the activites of Russian IRA accounts suggests that they leveraged both the role of emotion and current echo chamber landscape to spread political misinformation. @zannettou2019disinformation showed that the Russian troll tweets are more negative and less positive than tweets from random subset of twitter users. In fact, some of the most popular IRA tweets were also the most racist and offensive [@freelon2020russian]. In addition, Twitter users with more homologous social networks were more likely to interact with troll accounts [@bail2020trolls] and troll accounts largely interacted with users already within their political cluster [@stewart2018retweet, @freelon2020russian]. The IRA troll accounts were retweeted more by conservatives than liberals [@badawy2018analyzing], though it is unclear if this is due to IRA content or user characteristics. 
+Current research on the activites of Russian IRA accounts suggests that they leveraged both the role of emotion and current echo chamber landscape to spread political misinformation. @zannettou2019disinformation showed that Russian troll tweets are more negative and less positive than tweets from random subset of one thousand twitter users with similar posting activity. In fact, some of the most popular IRA tweets were also the most racist and offensive [@freelon2020russian]. 
+
+Twitter estimates that by early 2018, approximately 1.4 million users (2% of active users) had interacted with IRA accounts [@twitter2018update]. @bail2020trolls surveyed 1,200 active twitter users who identified as either a Republican or a Democrat and found that 9% had interacted with IRA accounts and 11.3% directly engaged with them. These higher percentages suggest that partisans were more likely to interact with IRA accounts. In the same study, stronger political interest and more homologous social networks were also associated with higher likelihood of IRA interactions. Other research also suggests that troll accounts largely interacted with users already within their political cluster [@stewart2018retweet; @freelon2020russian]. In addition, conservatives may be more likely to retweet IRA content than liberals [@badawy2018analyzing; @bail2020trolls], though it is unclear if this is due to either the IRA's actions or user characteristics. 
+
+
+### Evaluating Emotion in Text
+
+
+
 
 because emotion is helpful, it can also be a tool
 
 We do not have a thorough understanding of the IRA accounts' use of emotion. 
-
-
-### Paragraph about methods of studying emotion in text
 
 Because both typical human communication and disinformation campaigns
 commonly occur on mediums characterized by brief segments of texts
@@ -149,24 +154,21 @@ commonly occur on mediums characterized by brief segments of texts
 methods of emotion detection that reliably work on relatively short
 documents.
 
-Aims
-----
 
 The purpose of the current study is to introduce a novel method of
 emotion detection, termed Emoxicon, and detail its application to a
-dataset of tweets sent by Russian Trolls. *Emoxicon* combines lexicon scoring with Rasch modeling to understand the distribution and probability of emotion categories.
+dataset of tweets sent by IRA Twitter accounts. Emoxicon combines lexicon scoring with Rasch modeling to understand the distribution and probability of emotion categories.
 
 
 Emoxicon
 ========
 
-*Emoxicon* is a novel method of analyzing the emotional content of text. By combining lexicon-based scoring with Rasch modeling, emoxicon provides a low-computation analysis of the probability that different emotions categorioes appear within text. Lexicon-based analysis methods are commonly used to identify emotion within text [@gonzalez2012emotions; @peng2017interplay; @brady2017emotion]. Our contribution lies in the use of Rasch models to quantify the distribution and likelihood of the co-occurance of emotions and the "emotional voice" of the author. 
-
+Emoxicon is a novel method of analyzing the emotional content of text. By combining lexicon-based scoring with Rasch modeling, emoxicon provides a low-computation analysis of the probability that different emotions categorioes appear within text. Lexicon-based analyses are already well-established methods used to identify emotion within text [@gonzalez2012emotions; @peng2017interplay; @brady2017emotion]. Our contribution lies in the use of Rasch models to quantify the distribution and likelihood of the co-occurance of emotions and the "emotional voice" of the author. Emoxicon is a two part method that starts by scoring data using an emotion lexicon and then models the distribution of the emotion categories using the Rasch model.
 
 ### Lexicon Scoring
 
 We used the DepecheMood++ lexicon created by
-[@araque2018depechemood]. Lexicons form the basis of most methods of emotion detection. Lexicons are dictionaries that contain features (such as words or punctuation), the category they belong to, and their designated score. DepecheMood++ is a high-coverage emotion lexicon that
+@araque2018depechemood. Lexicons form the basis of most methods of emotion detection. Lexicons are dictionaries that contain features (such as words or punctuation), the category they belong to, and their designated score. DepecheMood++ is a high-coverage emotion lexicon that
 contains roughly 37,000 terms and their associated probability
 weights for 8 emotion categories. The lexicon was created by scraping
 data from the news website Rappler which features a native "Mood
@@ -187,8 +189,7 @@ category. This aids in the scoring of the text and reduces noise in the Rasch mo
 ### Rasch Model Analysis
 
 The Rasch model is used to evaluate the relative probability of an
-emotion weight appearing in a given tweet [@Rasch1960]. By using the Rasch model, we
-are able to analyze the fit of the emotion weights to the document. The
+emotion weight appearing in a given tweet [@Rasch1960]. By using the Rasch model, we are able to analyze the fit of the emotion weights to the document. The
 Rasch model originated in the field of psychometrics to relate scales
 and questionnaires to the underlying latent trait. The
 Rasch model is a logistic model that places persons and items on the
@@ -196,7 +197,7 @@ same scale to calculate the probability of a given person endorsing a
 given item. Fundamentally, the Rasch model can be used to generate
 latent trait scores for entities that produces a set of responses
 determined by an underlying latent trait. The basic form of the Rasch
-model for dichotomous items, as adapted from [@Rasch1960], is:
+model for dichotomous items, as adapted from @Rasch1960, is:
 
 $$\textit{P}(\textit{X}_{ij} = 1 | \theta_i, \beta_j) = \dfrac{exp(\theta_i - \beta_j)}{ 1 + exp(\theta_i - \beta_j)}$$
 
@@ -215,7 +216,12 @@ An underlying assumption of the Rasch model is unidimensionality, which is the r
 
 Under the Rasch model, items receive estimates of their relative frequency of occurence on the latent dimension, also known as item difficulty or location. These estimates have meaningful order. An item with a lower estimate is more likely to be endorsed than an item with a higher estimate. If an item with a high estimate is endorsed, it is also likely that the lower estimate items will also be endorsed. Deviation from these assumptions will produce poor model fit. The item estimates are thus also estimates of conditional probability. That is, if an emotion label recieves a high estimate, this implies that the emotion label is both rare and generally appears alongside the lower difficulty items. If more rarely endorsed items do no co-occur with more commonly endorsed items, item and model fit will be poor. This conditional fit underlies the intepretation of the latent dimension as the emotional voice of the author. 
 
+Aims
+----
 
+Here, summerize, briefly, the aims of the study. We want to use Emoxicon to quantify the emotions present in troll tweets.
+
+One of the aims is just to map out the distribution of emotion.
 
 Methods
 =======
@@ -225,7 +231,7 @@ Data Pre-processing
 
 The purpose of this analysis is to examine differences in tweets written by the IRA among the left-wing and the right-wing troll accounts. We will refer to such tweets as *authored* content. By removing non-authored tweets, we ensure that all the tweets support the goals of the accounts and do not belong to accounts with other "voices." To this end, we included only English-language troll accounts labeled as Left-wing (\"Left\") or Right-wing (\"Right\") by @linvill2019original. URLs, Retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
 
-Because the Depechmood++ lexicon was sourced from news articles, it contains emotion associations for a number of politically relevant words, such as \"Hillary,\" \"Clinton,\" and \"Trump\". We removed a small set of topically relevant terms that we anticipated had different affective associations between the left-wing and right-wing accounts (see the Appendix for a full list of removed words). That is, left-wing and right-wing trolls may use the word \"Trump\" just as frequently, but that word does not have the same relationship to the tweets true emotional content for each group. As these words were used often, they also would artificially inflate their respective category frequency. Similarly, multiword hashtags (e.g., "#blacklivesmatter") were not split up and scored to prevent misleading category inflation as the emotional valence of the whole hashtag was likely not a sum of its parts. 
+Because the Depechmood++ lexicon was sourced from news articles, it contains emotion associations for a number of politically relevant words, such as \"Hillary,\" \"Clinton,\" and \"Trump\". We removed a small set of topically relevant terms that we anticipated had different affective associations between the left-wing and right-wing accounts (see the Appendix for a full list of removed words). That is, left-wing and right-wing trolls may use the word \"Trump\" just as frequently, but that word does not have the same relationship to the tweets true emotional content for each group. As these words were used often, they also would artificially inflate their respective category frequency. Similarly, we did not split up multiword hashtags (e.g., "#blacklivesmatter") to prevent misleading category inflation; the emotional valence of the whole hashtag was likely not a sum of its parts. 
 
 Analysis Plan
 -------------
@@ -238,7 +244,7 @@ Because the mean of either the person or item parameters of the Rasch model must
 
 To evalute the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution and Welch t-tests [@corder2014nonparametric]. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using multiinformation (total correlation) from the R package infotheo [@meyer2008infotheo], and the diversity of the emotion labels using the gini coefficient [@ong2018emodiversity].
 
-Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`. See Table\ \@ref(tab:tweetTab) for more information on tweet distribution of the final sample.
+Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`. See Table\ \@ref(tab:tweetTab) for more information on the distribution of the final sample of tweets.
 
 
 ```{r tweetTab}
@@ -457,10 +463,12 @@ We also bootstrapped the average multiinformation among a random ordering of the
 Discussion
 ==========
 
+How did emoxicon perform? Did this study support our claims that it is a good method?
 
 
+Which emotions were most common? Does this link up to the previous research on virality and emotions?
 
-*Happy* was the hardest emotion category for both left-wing or right-wing trolls when examining the total number of tweets and the individual models.
+*Happy* was the hardest emotion category for both left-wing or right-wing trolls when examining the total number of tweets and the individual models. 
 
 Of note, the emotion categories with that showed misfit most often (*Amused*, *Happy*, and *Inspired*) were also the categories that generally did not show differences between Left-wing and Right-wing trolls.
 
@@ -469,9 +477,6 @@ Interpretation
 
 The differences in emotion expression may be linked to different methods of eliciting emotion. Different purposes, topics eliciting different emotions
 
-It is critical to interpret the results of this study in context of its methods. Emotion is not a universal, context-free phenomenon; statements that are neutral in one context may elicit powerful reactions in another. The emotion categories delinated in the Depechemood++ lexicon were sourced from a specific time and group membership. When a tweet is rated highly on *Happy*, it does not imply that all readers of the tweet would have the same reaction. This may be even more true when dealing with highly politically and emotionally charged content that was written to elicit strong emotion reactions.
-
-We propose that differences in emotion expression in this study should rightly be interpreted as differences in how one, perhaps neutral, subset of readers may react. We do not believe that these differences are not true or present in reality - rather that it is an overstep to assume that every person who reads a left-wing troll tweet is more likely to react with anger than if they read a right-wing troll tweet.
 
 
 Future Directions
@@ -479,6 +484,11 @@ Future Directions
 
 Limitations
 -----------
+
+It is critical to interpret the results of this study in context of its methods. Emotion is not a universal, context-free phenomenon; statements that are neutral in one context may elicit powerful reactions in another. The emotion categories delinated in the Depechemood++ lexicon were sourced from a specific time and group membership. When a tweet is rated highly on *Happy*, it does not imply that all readers of the tweet would have the same reaction. This may be even more true when dealing with highly politically and emotionally charged content that was written to elicit strong emotion reactions.
+
+We propose that differences in emotion expression in this study should rightly be interpreted as differences in how one, perhaps neutral, subset of readers may react. We do not believe that these differences are not true or present in reality - rather that it is an overstep to assume that every person who reads a left-wing troll tweet is more likely to react with anger than if they read a right-wing troll tweet.
+
 
 Conclusions
 -----------

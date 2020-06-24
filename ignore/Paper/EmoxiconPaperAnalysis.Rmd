@@ -607,3 +607,20 @@ err_models<-sapply(z, function(x){ stringr::str_extract_all(x, gsub(", ", "|", t
 err_models<-do.call(rbind, err_models)
 
 ```
+### Prediction
+
+```{r}
+library(lme4)
+lmdat <- cbind(trolls, trolls_scored)
+lmdat$rawscore <- rowSums(trolls_models$full_model$X)
+lmdat$followers_scale <- scale(lmdat$followers)
+lmdat$updates_scale <- scale(lmdat$updates)
+
+emo_mod1 <- lmer(updates_scale ~ followers_scale + rawscore + 
+                   # AFRAID + AMUSED + ANGRY + ANNOYED + 
+                   # DONT_CARE + HAPPY + INSPIRED + SAD +
+                   (1|account_type),
+               data = lmdat)
+summary(emo_mod1)
+
+```
