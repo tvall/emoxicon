@@ -81,7 +81,7 @@ Introduction
 <!-- State Sponsored Disinformation and Russian Trolls -->
 <!-- ------------------------------------------------- -->
 
-The study of disinformation intersects a myriad of different fields, including psychology, sociology, politics, computer science, and engineering. These fields often converge on the topic of state sponsored disinformation campaigns and their detection, influences, and impacts. Though organized efforts to spread disinformation are not new, the rise of the internet and social media as major players in shaping public opinion have allowed such campaigns to be conducted at a scale that was previously impossible. Thus, modern text analysis techniques are necessary to understand and quantify these largely text-based disinformation campaigns. As emotion plays a critical role in human communication, so is the quantification of emotion in text critical in understanding how Russian-linked Twitter accounts spread disinformation. In this following sections, we will first briefly summarize what is known about the Russian troll accounts, the role of twitter in politics, and the role of emotion in spread (dis-)information. Following, we will introduce Emoxicon - a new method of extracting emotion from text using psychometric modeling, and its application to Russian-linked Twitter accounts around the time of the US 2016 presidential election. 
+The study of disinformation intersects a myriad of different fields, including psychology, sociology, politics, computer science, and engineering. These fields often converge on the topic of state sponsored disinformation campaigns and their detection, influences, and impacts. Though organized efforts to spread disinformation are not new, the rise of the internet and social media as major players in shaping public opinion have allowed such campaigns to be conducted at a scale that was previously impossible. Thus, modern text analysis techniques are necessary to understand and quantify these largely text-based disinformation campaigns. As emotion plays a critical role in human communication, so is the quantification of emotion in text critical in understanding how Russian-linked Twitter accounts spread disinformation. In the current paper, we will first briefly summarize what is known about the Russian troll accounts, the role of Twitter in politics, and the role of emotion in spreading (dis-)information. Following, we will introduce Emoxicon - a new method of extracting emotion from text using psychometric modeling, and its application to Russian-linked Twitter accounts around the time of the US 2016 presidential election. 
 
 
 
@@ -107,7 +107,7 @@ These actions eventually culminated in the indictment of thirteen Russian indivi
 [@wapoRussian2018]. The Internet Research Agency (IRA), a company based in St. Petersburg, Russia, was among the companies charged and has been a primary focus of investigations into state-sponsored Russian
 interference in U.S. politics [@schiff2018trolls]. The IRA, in particular, has been described as "a sophisticated marketing agency" using a budget of at least $25 million US dollars and one thousand employees to spread disinformation online in the United States[@diresta2019tactics]. 
 
-The IRA twitter data was made accessible by FiveThirtyEight and the researchers Linvill and Warren [@fivethirtyeight2018trolls; @linvill2019original].
+The IRA Twitter data was made accessible by FiveThirtyEight and the researchers Linvill and Warren [@fivethirtyeight2018trolls; @linvill2019original].
 The topics tweeted about by the Russian troll accounts ranges widely.
 @linvill2019original consolidated the data and documented four major categories of English-language accounts that were active before the 2016 election: right-wing trolls, left-wing trolls, news feed accounts, and hashtag gamers. In the current analysis, we focused on only tweets from right-wing and left-wing troll accounts. 
 
@@ -126,7 +126,7 @@ Understanding the roles that both Twitter and troll accounts play is critical in
 
 Social media has cemented itself as a major player in the American political process in less than two decades. In 2019, 69% of US adults used Facebook, with about 75% of users checking it at least once a day [@pew2019internet]. Political participation, protest activity, and voting have each been associated with social media behavior [@valenzuela2013protest; @skoric2016social; @min2018news; @halpern2017participation; @valenzuela2019paradox]. In conjunction, by 2018 every single US Congressional Representative and Senator had a Twitter account and only a handful lacked a Facebook and YouTube account [@straus2018congress]. Because of social media's role in politics and opinion formation, there is an extensive body of research describing how the websites are used and how users interact with each other.
 
-Though Twitter can be a highly valuable source of information for its users, its unmoderated content is not read and spread in unbiased manner. The results from @valenzuela2019paradox suggest that highly active social media users also tend to share more misinformation regardless of how (mis)informed these users actually are. As a whole, social media users tend to follow and interact with accounts that hold similar political beliefs, forming "echo chambers" online [@del2016spreading; @tornberg2018echo; @garrett2009echo]. Highly active social media users tend to be more polarized and to follow fewer sources of information [@schmidt2017anatomy; @bessi2015trend]. Politically active twitter users rarely retweet content from accounts or news sources from different political parties. In @boutet2012retweet the majority of all interactions on Twitter occurred between users with homologous political views. While users largely retweet homologous opinions, user-to-user mentions (i.e., tagging another user in a tweet) frequently cross political lines [@boutet2012retweet; @conover2011retweet]. This cross-over exposure may not reliably prevent polarization though, especially if users are interacting with opposing, polarizing content from either real or troll accounts [@karlsen2017echo; @yardi2010dynamic]. In fact, a handful of studies have found a "backfire" response where exposure to opposing views increases polarization [@bail2018exposure; @nyhan2010corrections]. 
+Though Twitter can be a highly valuable source of information for its users, its unmoderated content is not read and spread in unbiased manner. The results from @valenzuela2019paradox suggest that highly active social media users also tend to share more misinformation regardless of how (mis)informed these users actually are. As a whole, social media users tend to follow and interact with accounts that hold similar political beliefs, forming "echo chambers" online [@del2016spreading; @tornberg2018echo; @garrett2009echo]. Highly active social media users tend to be more polarized and to follow fewer sources of information [@schmidt2017anatomy; @bessi2015trend]. Politically active Twitter users rarely retweet content from accounts or news sources from different political parties. In @boutet2012retweet the majority of all interactions on Twitter occurred between users with homologous political views. While users largely retweet homologous opinions, user-to-user mentions (i.e., tagging another user in a tweet) frequently cross political lines [@boutet2012retweet; @conover2011retweet]. This cross-over exposure may not reliably prevent polarization though, especially if users are interacting with opposing, polarizing content from either real or troll accounts [@karlsen2017echo; @yardi2010dynamic]. In fact, a handful of studies have found a "backfire" response where exposure to opposing views increases polarization [@bail2018exposure; @nyhan2010corrections]. 
 
 Emotion plays a significant role in driving public opinion and online political discourse [@peng2017interplay; @gonzalez2012emotions; @mackuen2010civic]. @gonzalez2012emotions found that shifts in emotional arousal on a political discourse forum were linked to corresponding shifts in public opinion. On Twitter, influential users are more likely to tweet more negatively, and more emotional tweets are more likely to spread further and faster [@dang2013influentials; @brady2017emotion]. In @brady2017emotion, adding a single moral-emotional word to a tweet increased the expected sharing rate by 17%-24%, depending on the topic. The use of moral-emotional language is also associated with message spread from the political leaders to their followers [@brady2019ideological]. Similarly, politicians with extreme ideological positions also tend to have more Twitter followers [@hong2016politicalpolar]. 
 
@@ -134,9 +134,9 @@ Specific emotion categories have been identified as contributing to information 
 
 
 <!-- It is clear that emotion plays a critical role in shaping political thought online.  -->
-Current research on the activities of Russian IRA accounts suggests that they leveraged both the role of emotion and current echo chamber landscape to spread political disinformation. @zannettou2019disinformation showed that Russian troll tweets are more negative and less positive than tweets from random subset of one thousand twitter users with similar posting activity. In fact, some of the most popular IRA tweets were also the most racist and offensive [@freelon2020russian]. 
+Current research on the activities of Russian IRA accounts suggests that they leveraged both the role of emotion and current echo chamber landscape to spread political disinformation. @zannettou2019disinformation showed that Russian troll tweets are more negative and less positive than tweets from random subset of one thousand Twitter users with similar posting activity. In fact, some of the most popular IRA tweets were also the most racist and offensive [@freelon2020russian]. 
 
-Twitter estimates that by early 2018, approximately 1.4 million users (2% of active users) had interacted with IRA accounts [@twitter2018update]. @bail2020trolls surveyed 1,200 active twitter users who identified as either a Republican or a Democrat and found that 9% had interacted with IRA accounts and 11.3% directly engaged with them. These higher percentages suggest that partisans were more likely to interact with IRA accounts. In the same study, stronger political interest and more homologous social networks were also associated with higher likelihood of IRA interactions. Other research also suggests that troll accounts largely interacted with users already within their political cluster [@stewart2018retweet; @freelon2020russian]. In addition, conservatives may be more likely to retweet IRA content than liberals [@badawy2018analyzing; @bail2020trolls], though it is unclear if this is due to either the IRA's actions or user characteristics. 
+Twitter estimates that by early 2018, approximately 1.4 million users (2% of active users) had interacted with IRA accounts [@twitter2018update]. @bail2020trolls surveyed 1,200 active Twitter users who identified as either a Republican or a Democrat and found that 9% had interacted with IRA accounts and 11.3% directly engaged with them. These higher percentages suggest that partisans were more likely to interact with IRA accounts. In the same study, stronger political interest and more homologous social networks were also associated with higher likelihood of IRA interactions. Other research also suggests that troll accounts largely interacted with users already within their political cluster [@stewart2018retweet; @freelon2020russian]. In addition, conservatives may be more likely to retweet IRA content than liberals [@badawy2018analyzing; @bail2020trolls], though it is unclear if this is due to either the IRA's actions or user characteristics. 
 
 
 ### Evaluating Emotion in Text
@@ -244,7 +244,7 @@ Because the mean of either the person or item parameters of the Rasch model must
 
 To evaluate the ranks of the emotion categories in the individual models, we examined their distribution using Kolmogorov-Smirnov distribution and Welch t-tests [@corder2014nonparametric]. In addition, we evaluated the consistency of the item difficulties within the left-wing and right-wing troll groups using multiinformation (total correlation) from the R package infotheo [@meyer2008infotheo], and the diversity of the emotion labels using the Gini coefficient [@ong2018emodiversity].
 
-Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`. See Table\ \@ref(tab:tweetTab) for more information on the distribution of the final sample of tweets.
+Our final sample consisted of `r nrow(trolls)` tweets from `r table(unique(trolls[c("author", "account_type")])$account_type)[["Right"]]` right-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Right")`) and `r table(unique(trolls[c("author", "account_type")])$account_type)[["Left"]]` left-wing accounts ($n_{tweets}$ = `r sum(trolls$account_type == "Left")`). Among Twitter handles with at least 30 tweets, there were `r sum(catright)` right-wing accounts ($n_{tweets}$ = `r tweets30right`) and `r sum(catleft)` left-wing accounts ($n_{tweets}$ = `r tweets30left`). Tweets dated from `r stringi::stri_split_regex(min(trolls$publish_date), " ")[[1]][1]` to `r stringi::stri_split_regex(max(trolls$publish_date), " ")[[1]][1]`. See Table\ \@ref(tab:tweetTab) for more information on the distribution of the final sample of tweets.
 
 
 ```{r tweetTab}
@@ -366,7 +366,7 @@ Individual Rasch Models
 -----------------------
 
 ### Model Fit
-We fit `r length(trolls_models$group_models)` Rasch models for each of the individual twitter handles with at least 30 authored tweets. Among these models, there were `r table(err_models)[["HAPPY"]]` models with full zero responses for the category *Happy* and `r table(err_models)[["AFRAID"]]` model with full zero responses for the category *Afraid*. The average percentage of misfitting persons was 
+We fit `r length(trolls_models$group_models)` Rasch models for each of the individual Twitter handles with at least 30 authored tweets. Among these models, there were `r table(err_models)[["HAPPY"]]` models with full zero responses for the category *Happy* and `r table(err_models)[["AFRAID"]]` model with full zero responses for the category *Afraid*. The average percentage of misfitting persons was 
 `r mean(manymods_pmis_total[modsL])`% (SD = `r sd(manymods_pmis_total[modsL])`) for Left-wing accounts and 
 `r mean(manymods_pmis_total[!modsL])`% (SD = `r sd(manymods_pmis_total[!modsL])`) for Right-wing accounts. Item misfit was also generally low (Table\ \@ref(tab:ifittab)). The majority of items misfit in less than 6% of models, except for *Amused*, *Happy*, and *Inspired*. Overall, the measures of model fit were appropriate.
 
@@ -383,7 +383,7 @@ apa_table(ifittab,
 
 ### Category Ordering
 <!-- BY HAND -->
-Figure\ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Mean differences were evaluated by using *t*-tests. Distributional differences were evaluated with Kolmogorov-Smirnov Tests [@corder2014nonparametric].
+Figure\ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Mean differences were evaluated by using *t*-tests. Distributional differences were evaluated with Kolmogorov-Smirnov Tests [@corder2014nonparametric]. Differences in spread were evaluated using Levene's test with the median as the center (citation).
 Across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)*100`% of accounts. 
 There were significant mean and distributional differences between left-wing and right-wing trolls for the categories 
 *Angry* (*t*(`r ttests$ANGRY$parameter`) = `r ttests$ANGRY$statistic`, *p* < .001; D = `r kstests$ANGRY$statistic`, *p* = < .001), 
@@ -391,12 +391,20 @@ There were significant mean and distributional differences between left-wing and
 *Sad* (*t*(`r ttests$SAD$parameter`) = `r ttests$SAD$statistic`, *p* < .001; D = `r kstests$SAD$statistic`, *p* < .001), 
 and *Afraid* (*t*(`r ttests$AFRAID$parameter`) = `r ttests$AFRAID$statistic`, *p* < .001; D = `r kstests$AFRAID$statistic`, *p* < .001; see Table\ \@ref(tab:msdcat) for means and standard deviations). The category *Don't Care* showed distributional differences (D = `r kstests$DONT_CARE$statistic`, *p* = 0.049), but not mean differences. There were no differences in the item difficulty orders for the categories *Amused*, *Inspired*, or *Happy*.
 
+Differences in variance were found for the categories 
+*Angry* (*F*(`r lvtestsd$ANGRY$Df[2]`) = `r lvtestsd$ANGRY$`F value`[1]`, *p* < .001)
+, *Annoyed* (*F*(`r lvtestsd$ANNOYED$Df[2]`) = `r lvtestsd$ANNOYED$`F value`[1]`, *p* = .003)
+, and *Inspired* (*F*(`r lvtestsd$INSPIRED$Df[2]`) = `r lvtestsd$INSPIRED$`F value`[1]`, *p* < .001)
+, while *Amused* (*F*(`r lvtestsd$AMUSED$Df[2]`) = `r lvtestsd$AMUSED$`F value`[1]`, *p* = .054)
+approached statistical significance. The variance was always larger for the Right-wing trolls among these four categories, indicating higher spread and less interal cohesion around the median.
+
 
 ```{r msdcat}
 
 msdcat <- data.frame("Category" = c("Amused","Angry","Annoyed",
                                     "Don't Care","Inspired",
                                     "Sad", "Afraid", "Happy"),
+                     
                      "Mean (SD) - Right-Wing" = paste0(
                        format(round(colMeans(
                          trolls_models$category_order[catright,]),2), nsmall=2),
@@ -404,6 +412,7 @@ msdcat <- data.frame("Category" = c("Amused","Angry","Annoyed",
                        format(round(apply(
                          trolls_models$category_order[catright,],2,sd),2), nsmall=2),
                        ")"),
+                     
                      "Mean (SD) - Left-Wing" = paste0(
                        format(round(colMeans(
                          trolls_models$category_order[catleft,]),2), nsmall=2),
@@ -441,9 +450,9 @@ grid.arrange(catplotsR + theme(text = element_text(size=rel(8)),
 
 
 ### Gini Index (Emodiversity)
-Following @ong2018emodiversity's emodiversity method, we used the Gini coefficient to estimate the diversity in category usage between left-wing and right-wing trolls. High gini coefficient values indicate more diversity (more inequality) among emotion categories. 
+Following @ong2018emodiversity's emodiversity method, we used the Gini coefficient to estimate the diversity in category usage between left-wing and right-wing trolls. High Gini coefficient values indicate more less diversity (more inequality or unevenness) among emotion categories. 
 We used the raw emotion scores rather than the Rasch model dichotomized scores.
-Left-wing trolls showed more inequality among emotion categories than right-wing trolls when the gini coefficient was calculated either across all tweets 
+Left-wing trolls showed more inequality among emotion categories than right-wing trolls when the Gini coefficient was calculated either across all tweets 
 (left-wing = `r ginitweetresults$estimate["mean in group Left"]`, right-wing = `r ginitweetresults$estimate["mean in group Right"]`; 
 (*t*(`r ginitweetresults$parameter`) = `r ginitweetresults$statistic`, *p* < .001) 
 or within authors
@@ -471,6 +480,12 @@ Which emotions were most common? Does this link up to the previous research on v
 *Happy* was the hardest emotion category for both left-wing or right-wing trolls when examining the total number of tweets and the individual models. 
 
 Of note, the emotion categories with that showed misfit most often (*Amused*, *Happy*, and *Inspired*) were also the categories that generally did not show differences between Left-wing and Right-wing trolls.
+
+The higher inequality among left-wing troll tweets measured via the Gini ceofficient corresponded to the category order results. The distrubtion of emotions 
+
+The convergence of these two methods - something going on + validates the Emoxicon method.
+
+
 
 Interpretation
 --------------

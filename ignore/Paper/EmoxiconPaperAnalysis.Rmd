@@ -427,8 +427,6 @@ lvtestsd<-sapply(1:8, function(x){car::leveneTest( trolls_models$category_order[
 
 names(lvtestsd) <- colnames(trolls_models$category_order)
 
-which(lvtestsd[3,] < .05)
-
 sapply(1:length(colnames(trolls_models$category_order)), function(num){
   rbind(colnames(trolls_models$category_order)[num],
         round(lvtestsd[[num]]$`Pr(>F)`,3))
