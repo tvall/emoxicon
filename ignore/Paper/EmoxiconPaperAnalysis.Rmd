@@ -418,6 +418,24 @@ sapply(1:length(colnames(trolls_models$category_order)), function(num){
 
 ```
 
+
+We can do the same for the standard deviations using levene's test
+
+```{r}
+lvtestsd<-sapply(1:8, function(x){car::leveneTest( trolls_models$category_order[,x] ~ as.factor(catright))},
+                 simplify = F)
+
+names(lvtestsd) <- colnames(trolls_models$category_order)
+
+which(lvtestsd[3,] < .05)
+
+sapply(1:length(colnames(trolls_models$category_order)), function(num){
+  rbind(colnames(trolls_models$category_order)[num],
+        round(lvtestsd[[num]]$`Pr(>F)`,3))
+})
+
+```
+
 ## Mutual Information
 
 First, I ran a quick simulation to determine the minimum amount of mutual information (where higher values = less information). Then, I calculated MI for left and right trolls, and then bootstrapped confidence intervals. Looking at the information from the bootstrapping, the MI is slightly positively biased (approx. +.30).
