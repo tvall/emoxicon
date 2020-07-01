@@ -389,16 +389,29 @@ dat<- data.frame(
 aggregate(. ~ group,dat, FUN=mean) # false = right
 
 # t tests
-ttests<-lapply(colnames(trolls_models$category_order), function(i){
-  t.test(trolls_models$category_order[catright,i],
+# ttests<-lapply(colnames(trolls_models$category_order), function(i){
+#   t.test(trolls_models$category_order[catright,i],
+#          trolls_models$category_order[catleft,i])
+# })
+# names(ttests) <- colnames(trolls_models$category_order)
+# # pvalues
+# cat("\n pvalues for t test \n")
+# sapply(1:length(colnames(trolls_models$category_order)), function(num){
+#   rbind(colnames(trolls_models$category_order)[num],
+#         round(ttests[[num]]$p.value,3))
+# })
+
+# Mann–Whitney U tests
+utests<-lapply(colnames(trolls_models$category_order), function(i){
+  wilcox.test(trolls_models$category_order[catright,i],
          trolls_models$category_order[catleft,i])
 })
-names(ttests) <- colnames(trolls_models$category_order)
+names(utests) <- colnames(trolls_models$category_order)
 # pvalues
-cat("\n pvalues for t test \n")
+cat("\n pvalues for Mann–Whitney U test \n")
 sapply(1:length(colnames(trolls_models$category_order)), function(num){
   rbind(colnames(trolls_models$category_order)[num],
-        round(ttests[[num]]$p.value,3))
+        round(utests[[num]]$p.value,3))
 })
 
 
