@@ -1,6 +1,6 @@
 ---
 title             : "Russian Trolls & Emoxicon"
-shorttitle        : "Emoxicon"
+shorttitle        : "Emoxicon" 
 
 author: 
   - name          : "Tara L. Valladares"
@@ -58,7 +58,7 @@ library(citr)
 library(eRm) 
 
 # source("EmoxiconPaperAnalysis.Rmd")
-load("EmoxiconPaperAnalysis-May-21-2020-dat.RData") # for faster running for the draft
+load("EmoxiconPaperAnalysis-July-1-2020-dat.RData") # for faster running for the draft
 ```
 
 <!-- To look for numbers that are NOT called by the r script (and thus need to be double double checked), search for 'BY HAND' -->
@@ -105,7 +105,7 @@ During the 2016 U.S. presidential election, Russian-based Twitter accounts posed
 <!-- In contrast "bots" are automated accounts directed by a computer program.  -->
 These actions eventually culminated in the indictment of thirteen Russian individuals and three Russian entities by the United States Justice Department on charges relating to interference in the US presidential election
 [@wapoRussian2018]. The Internet Research Agency (IRA), a company based in St. Petersburg, Russia, was among the companies charged and has been a primary focus of investigations into state-sponsored Russian
-interference in U.S. politics [@schiff2018trolls]. The IRA, in particular, has been described as "a sophisticated marketing agency" using a budget of at least $25 million US dollars and one thousand employees to spread disinformation online in the United States[@diresta2019tactics]. 
+interference in U.S. politics [@schiff2018trolls]. The IRA, in particular, has been described as "a sophisticated marketing agency" using a budget of at least $25 million US dollars and one thousand employees to spread disinformation online in the United States [@diresta2019tactics]. 
 
 The IRA Twitter data was made accessible by FiveThirtyEight and the researchers Linvill and Warren [@fivethirtyeight2018trolls; @linvill2019original].
 The topics tweeted about by the Russian troll accounts varies widely.
@@ -124,7 +124,7 @@ Understanding the roles that both Twitter and troll accounts play is critical in
 
 ### The Role of Social Media and Emotion in Politics
 
-Social media has cemented itself as a major player in the American political process in less than two decades. In 2019, 69% of US adults used Facebook, with about 75% of users checking it at least once a day [@pew2019internet]. Political participation, protest activity, and voting have each been associated with social media behavior [@valenzuela2013protest; @skoric2016social; @min2018news; @halpern2017participation; @valenzuela2019paradox]. In conjunction, by 2018 every single US Congressional Representative and Senator had a Twitter account and only a handful lacked a Facebook and YouTube account [@straus2018congress]. Because of social media's role in politics and opinion formation, there is an extensive body of research describing how the websites are used and how users interact with each other.
+Social media has cemented itself as a major player in the American political process in less than two decades. In 2019, 69% of US adults used Facebook, with about 75% of users checking it at least once a day [@pew2019internet]. Political participation, protest activity, and voting have each been associated with social media behavior [@valenzuela2013protest; @skoric2016social; @min2018news; @halpern2017participation; @valenzuela2019paradox]. In conjunction, by 2018 every single US Congressional Representative and Senator had a Twitter account and only a handful lacked Facebook and YouTube accounts [@straus2018congress]. Because of social media's role in politics and opinion formation, there is an extensive body of research describing how the websites are used and how users interact with each other.
 
 Though Twitter can be a highly valuable source of information for its users, its unmoderated content is not read and spread in unbiased manner. The results from @valenzuela2019paradox suggest that highly active social media users also tend to share more misinformation regardless of how (mis)informed these users actually are. As a whole, social media users tend to follow and interact with accounts that hold similar political beliefs, forming "echo chambers" online [@del2016spreading; @tornberg2018echo; @garrett2009echo]. Highly active social media users tend to be more polarized and to follow fewer sources of information [@schmidt2017anatomy; @bessi2015trend]. Politically active Twitter users rarely retweet content from accounts or news sources from different political parties. In @boutet2012retweet the majority of all interactions on Twitter occurred between users with homologous political views. While users largely retweet homologous opinions, user-to-user mentions (i.e., tagging another user in a tweet) frequently cross political lines [@boutet2012retweet; @conover2011retweet]. This cross-over exposure may not reliably prevent polarization though, especially if users are interacting with opposing, polarizing content from either real or troll accounts [@karlsen2017echo; @yardi2010dynamic]. In fact, a handful of studies have found a "backfire" response where exposure to opposing views increases polarization [@bail2018exposure; @nyhan2010corrections]. 
 
@@ -138,30 +138,20 @@ Current research on the activities of Russian IRA accounts suggests that they le
 
 Twitter estimates that by early 2018, approximately 1.4 million users (2% of active users) had interacted with IRA accounts [@twitter2018update]. @bail2020trolls surveyed 1,200 active Twitter users who identified as either a Republican or a Democrat and found that 9% had interacted with IRA accounts and 11.3% directly engaged with them. These higher percentages suggest that partisans were more likely to interact with IRA accounts. In the same study, stronger political interest and more homologous social networks were also associated with higher likelihood of IRA interactions. Other research also suggests that troll accounts largely interacted with users already within their political cluster [@stewart2018retweet; @freelon2020russian]. In addition, conservatives may be more likely to retweet IRA content than liberals [@badawy2018analyzing; @bail2020trolls], though it is unclear if this is due to either the IRA's actions or user characteristics. 
 
-
-### Evaluating Emotion in Text
-
-
-
-
-because emotion is helpful, it can also be a tool
-
-We do not have a thorough understanding of the IRA accounts' use of emotion. 
-
-Because both typical human communication and disinformation campaigns
-commonly occur on mediums characterized by brief segments of texts
-(e.g., tweets), there is a great need for flexible, low-computation
-methods of emotion detection that reliably work on relatively short
-documents.
+Aims
+----
+<!-- ((Here, summarize, briefly, the aims of the study. We want to use Emoxicon to quantify the emotions present in troll tweets.)) -->
+Though emotion plays a critical role in shaping political thought online, we do not have a thorough understanding of how the IRA accounts' used emotion in their disinformation campaign. 
+The purpose of the current study is to introduce a novel method of emotion detection termed Emoxicon, and detail its application to the IRA Twitter accounts. Emoxicon combines lexicon scoring with Rasch modeling to understand the distribution and probability of emotion categories.
+Because so much of human communication now occurs on mediums characterized by brief segments of texts, there is a great need for flexible, low-computation methods of emotion detection that reliably work on relatively short documents.
+Using Emoxicon, we aim to map out the distribution of emotions and this differs between both Right-wing and Left-wing trolls and the accounts within these groups.
 
 
-The purpose of the current study is to introduce a novel method of
-emotion detection, termed Emoxicon, and detail its application to a
-dataset of tweets sent by IRA Twitter accounts. Emoxicon combines lexicon scoring with Rasch modeling to understand the distribution and probability of emotion categories.
-
+Methods
+=======
 
 Emoxicon
-========
+--------
 
 Emoxicon is a novel method of analyzing the emotional content of text. By combining lexicon-based scoring with Rasch modeling, Emoticon provides a low-computation analysis of the probability that different emotions categories appear within text. Lexicon-based analyses are already well-established methods used to identify emotion within text [@gonzalez2012emotions; @peng2017interplay; @brady2017emotion]. Our contribution lies in the use of Rasch models to quantify the distribution and likelihood of the co-occurrence of emotions and the "emotional voice" of the author. Emoxicon is a two part method that starts by scoring data using an emotion lexicon and then models the distribution of the emotion categories using the Rasch model.
 
@@ -181,8 +171,7 @@ $$\textit{P}(\textit{X}_{ij} = 1 | \theta_i, \beta_j) = \dfrac{exp(\theta_i - \b
 Where $\theta$ represents the trait level of person $i$ and $beta$
 represents the difficulty or location of item $j$. In Emoxicon, tweets take the place of persons and emotional scores are represented as items. Each tweet is scored based on how many words are present from each emotion category. A mean split was performed on the emotion word counts within each emotion category to dummy code each tweet as 1 (high) or 0 (low) for each category. For example, a tweet with a higher than average number of *Happy* words would receive a 1 for the *Happy* item. The dichotomized scores are run through the Rasch model to produce trait scores for the tweets and item locations for the emotion categories.
 
-Under the Rasch model, items receive estimates of their relative frequency of occurrence on the latent dimension, also known as item difficulty or location. An item with a high value on the latent dimension is traditionally described as a difficult item, indicating that it is rarer for this item to be passed. An item with a low value on the latent dimension is traditionally described as an easy item, indicating that it more common for this item to be passed. P
-Like items, persons also recieve a latent score on the same dimension. A high person score indicates that the person has and is likely to pass more items.
+Under the Rasch model, items receive estimates of their relative frequency of occurrence on the latent dimension, also known as item difficulty or location. An item with a high value on the latent dimension is traditionally described as a difficult item, indicating that it is rarer for this item to be passed. An item with a low value on the latent dimension is traditionally described as an easy item, indicating that it more common for this item to be passed. Like items, persons also recieve a latent score on the same dimension. A high person score indicates that the person is likely to pass more items.
 
 An underlying assumption of the Rasch model is unidimensionality, which is the requirement that there is only one underlying latent trait driving all responses. In standard applications of the Rasch model, this is a trait such as math ability. Here, we propose that the dimension that the texts are scored on is *emotional voice* of the author. If an author writes in a particular style with particular opinions, we propose that the use of emotion categories in their writing will not be random. Rather, particular authors will tend to express certain emotions more regularly than others. There will be a pattern to the expression of emotions that is consistent across writings that goes further than which emotions are common and which are uncommon.
 
@@ -192,20 +181,10 @@ Under the Rasch model, item estimates have meaningful order conditional on the l
 
 In summary for the Emoxicon application of the Rasch model, persons represent tweets and items represent the emotion categories from the DepecheMood++ lexicon. Item categories that have high trait estimations are less likely to appear in a given tweet. Tweets that recieve high trait estimates are more likely to contain many emotion words in many emotion categories. Poor model fit indicates that the emotion catgories are either unrelated to each other and there is no conditional order of the emotion catgories.
 
-Aims
-----
-
-Here, summarize, briefly, the aims of the study. We want to use Emoxicon to quantify the emotions present in troll tweets.
-
-One of the aims is just to map out the distribution of emotion.
-
-Methods
-=======
-
 Data Pre-processing
 -------------------
 
-The purpose of this analysis is to examine differences in tweets written by the IRA among the left-wing and the right-wing troll accounts. We will refer to such tweets as *authored* content. By removing non-authored tweets, we ensure that all the tweets support the goals of the accounts and do not belong to accounts with other "voices." To this end, we included only English-language troll accounts labeled as Left-wing (\"Left\") or Right-wing (\"Right\") by @linvill2019original. URLs, Retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
+The purpose of this analysis is to examine differences in tweets written by the IRA among the left-wing and the right-wing troll accounts. We will refer to such tweets as *authored* content. By removing non-authored tweets, we ensure that all the tweets support the goals of the accounts and do not belong to accounts with other "voices." To this end, we included only English-language troll accounts labeled as Left-wing (\"Left\") or Right-wing (\"Right\") by @linvill2019original. URLs, retweets, manual reposts (i.e., tweets that begin with \"rt\"), and duplicate tweets were removed. 
 
 Because the DepecheMood++ lexicon was sourced from news articles, it contains emotion associations for a number of politically relevant words, such as \"Hillary,\" \"Clinton,\" and \"Trump\". We removed a small set of topically relevant terms that we anticipated had different affective associations between the left-wing and right-wing accounts (see the Appendix for a full list of removed words). That is, left-wing and right-wing trolls may use the word \"Trump\" just as frequently, but that word does not have the same relationship to the tweets true emotional content for each group. As these words were used often, they also would artificially inflate their respective category frequency. Similarly, we did not split up multiword hashtags (e.g., "#blacklivesmatter") to prevent misleading category inflation; the emotional valence of the whole hashtag was likely not a sum of its parts. 
 
@@ -216,7 +195,7 @@ We ran two separate but complimentary applications of the *Emoxicon* method to t
 
 Each method used the same data scored with the DepecheMood++ lexicon [@araque2018depechemood]. Using the eight emotion catgories, raw scores ranged from 0 to 8. All models and fit statistics were produced using the R package eRm [@eRm2020]. Exact estimation of full zero/complete response patterns are not available with the eRm conditional maximum likelihood estimator. This is an acceptable trade off in exchange for unbiased person and item estimates [@mair2007cml] and because person estimates are not of direct interest in the Emoxicon method.
 
-The main variable of interest was the estimated item parameters produced by the Rasch model, specifically the item difficulties. In the overarching model, we used Andersen's likelihood ratio test in the eRm package to identify differences in item difficulties between left-wing and right-wing trolls [@andersen1973goodness; @eRm2020]. 
+The main variable of interest was the estimated item parameters produced by the Rasch model, specifically the item difficulties. In the omnibus model, we used Andersen's likelihood ratio test in the eRm package to identify differences in item difficulties between left-wing and right-wing trolls [@andersen1973goodness; @eRm2020]. 
 
 Because the mean of either the person or item parameters of the Rasch model must be set to zero before estimation to establish the scale and the individual models use separate data, item parameters are not directly comparable across individual Rasch models. Therefore to compare the relative difficulties between models, item parameters from the individual models were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. Ties in rank were broken randomly. The distribution of the ranks could then be examined for consistency within and differences between Right and Left trolls. If an individual account did not use any words from a specific emotion category, that emotion category was given the rank of 8 (hardest to endorse). 
 
@@ -291,7 +270,7 @@ apa_table(
 Results
 =======
 
-Overarching Rasch Model
+Omnibus Rasch Model
 -------------------
 <!-- BY HAND -->
 ### Model Fit
@@ -311,7 +290,7 @@ tweetsscores<-t.test(scores~account_type, scores)
 Right-wing tweets had slightly higher raw scores (M = `r mean(subset(scores, account_type == "Right")[["scores"]])`, SD = `r sd(subset(scores, account_type == "Right")[["scores"]])`) than Left-wing tweets M = `r mean(subset(scores, account_type == "Left")[["scores"]])`, SD = `r sd(subset(scores, account_type == "Left")[["scores"]])`;
  *t*(`r tweetsscores$parameter`) = `r tweetsscores$statistic`, *p* < .001
 ), though the difference was empirically small. 
-Under the model, items were generally well-matched to estimated tweet scores (Figure\ \@ref(fig:PImap)). 
+Under the model, estimated item difficulties were generally well-matched to estimated tweet scores (Figure\ \@ref(fig:PImap)). 
 In the Rasch model, *Don't Care* was the easiest item with the lowest trait estimates, while *Happy* was the item with the highest trait estimate. The locations of the other items were estimated to be relatively close to one another, indicating that the categories were used at relatively similar rates when both Left-wing and Right-wing trolls were combined.
 
 (ref:fig-PImap) There were `r (1-sum(table(pparameters$thetapar))/nrow(trolls))*100`%  tweets with full zero/complete response patterns. They are not included in the pictured person distribution.
@@ -363,26 +342,28 @@ apa_table(ifittab,
 ### Category Ordering
 <!-- BY HAND -->
 To compare the estimates between individual models, item parameters were transformed into ranks from 1 (easiest) to 8 (hardest) within each model. 
-Figure\ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Mean rank differences were evaluated by using the Wilcoxon rank sum test. Distributional differences were evaluated with Kolmogorov-Smirnov Tests [@corder2014nonparametric]. Differences in spread were evaluated using Levene's test with the median as the center (citation).
+Figure\ \@ref(fig:catplots) displays the distributions of the order of item difficulties for both left-wing and right-wing troll accounts. Mean rank differences were evaluated by using the Wilcoxon rank sum test. Distributional differences were evaluated with Kolmogorov-Smirnov Tests [@corder2014nonparametric]. Differences in spread were evaluated using Levene's test with the median as the center [@levene1960robust].
 Across both groups, the hardest category was *Happy* for `r table(trolls_models$category_order$HAPPY)[["8"]]/length(trolls_models$group_models)*100`% of accounts. 
 There were significant median and distributional differences between left-wing and right-wing trolls for the categories 
 *Angry* 
-(*U*(*n~Right*=`r sum(catright)`, *n~Left*=`r sum(catleft)`) = `r utests$ANGRY$statistic`, *p* < .001; D = `r kstests$ANGRY$statistic`, *p* = < .001), 
+(*U*(*n~R~*=`r sum(catright)`, *n~L~*=`r sum(catleft)`) = `r utests$ANGRY$statistic`, *p* < .001; D = `r kstests$ANGRY$statistic`, *p* = < .001), 
 *Annoyed* 
-(*U*(*n~Right*=`r sum(catright)`, *n~Left*=`r sum(catleft)`) =`r utests$ANNOYED$statistic`, *p* < .001; D = `r kstests$ANNOYED$statistic`, *p* < .001), 
+(*U*(*n~R~*=`r sum(catright)`, *n~L~*=`r sum(catleft)`) =`r utests$ANNOYED$statistic`, *p* < .001; D = `r kstests$ANNOYED$statistic`, *p* < .001), 
 *Sad* 
-(*U*(*n~Right*=`r sum(catright)`, *n~Left*=`r sum(catleft)`) = `r utests$SAD$statistic`, *p* < .001; D = `r kstests$SAD$statistic`, *p* < .001), 
+(*U*(*n~R~*=`r sum(catright)`, *n~L~*=`r sum(catleft)`) = `r utests$SAD$statistic`, *p* < .001; D = `r kstests$SAD$statistic`, *p* < .001), 
 and *Afraid* 
-(*U*(*n~Right*=`r sum(catright)`, *n~Left*=`r sum(catleft)`) = `r utests$AFRAID$statistic`, *p* < .001; D = `r kstests$AFRAID$statistic`, *p* < .001; 
+(*U*(*n~R~*=`r sum(catright)`, *n~L~*=`r sum(catleft)`) = `r utests$AFRAID$statistic`, *p* < .001; D = `r kstests$AFRAID$statistic`, *p* < .001; 
 see Table\ \@ref(tab:msdcat) for means and standard deviations). The category *Don't Care* showed distributional differences (D = `r kstests$DONT_CARE$statistic`, *p* = 0.049), but not median differences. 
-The category *Happy* showed a difference in medians (*U*(*n~Right*=`r sum(catright)`, *n~Left*=`r sum(catleft)`) = `r utests$HAPPY$statistic`, *p* = .031), but not distributions.
-There were no differences in the item difficulty orders for the categories *Amused* or *Inspired*. 
+The category *Happy* showed a difference in medians (*U*(*n~R~*=`r sum(catright)`, *n~L~*=`r sum(catleft)`) = `r utests$HAPPY$statistic`, *p* = .031) though the empirical mean difference was small.
+There were no median or distributional differences in the item difficulty orders for the categories *Amused* or *Inspired*. 
+Among Right-wing troll accounts, the categories *Annoyed* and *Afriad* were generally easier. 
+Among Left-wing troll accounts, the categories *Angry* and *Sad* were generally easier. 
 
 Differences in variance were found for the categories 
-*Angry* (*F*(`r lvtestsd$ANGRY$Df[2]`) = `r lvtestsd$ANGRY$`F value`[1]`, *p* < .001)
-, *Annoyed* (*F*(`r lvtestsd$ANNOYED$Df[2]`) = `r lvtestsd$ANNOYED$`F value`[1]`, *p* = .003)
-, and *Inspired* (*F*(`r lvtestsd$INSPIRED$Df[2]`) = `r lvtestsd$INSPIRED$`F value`[1]`, *p* < .001)
-, while *Amused* (*F*(`r lvtestsd$AMUSED$Df[2]`) = `r lvtestsd$AMUSED$`F value`[1]`, *p* = .054)
+*Angry* (*F*(`r lvtestsd$ANGRY$Df[2]`) = `r lvtestsd$ANGRY[2][1,1]`, *p* < .001)
+, *Annoyed* (*F*(`r lvtestsd$ANNOYED$Df[2]`) = `r lvtestsd$ANNOYED[2][1,1]`, *p* = .003)
+, and *Inspired* (*F*(`r lvtestsd$INSPIRED$Df[2]`) = `r lvtestsd$INSPIRED[2][1,1]`, *p* < .001)
+, while *Amused* (*F*(`r lvtestsd$AMUSED$Df[2]`) = `r lvtestsd$AMUSED[2][1,1]`, *p* = .054)
 approached statistical significance. The variance was always larger for the Right-wing trolls among these four categories, indicating higher spread and less interal cohesion around the median.
 
 
@@ -459,30 +440,30 @@ We also bootstrapped the average multiinformation among a random ordering of the
 Discussion
 ==========
 
-How did Emoxicon perform? Did this study support our claims that it is a good method?
+Topics to hit:
 
-
-Which emotions were most common? Does this link up to the previous research on virality and emotions?
+* How did Emoxicon perform? Did this study support our claims that it is a good method?
+* Which emotions were most common? 
+* Do these results link up to the previous research on virality and emotions?
+* The differences in emotion expression may be linked to different methods of eliciting emotion. Different purposes, topics eliciting different emotions?
 
 *Happy* was the hardest emotion category for both left-wing or right-wing trolls when examining the total number of tweets and the individual models. 
 
 Of note, the emotion categories with that showed misfit most often (*Amused*, *Happy*, and *Inspired*) were also the categories that generally did not show differences between Left-wing and Right-wing trolls.
 
-The higher inequality among left-wing troll tweets measured via the Gini ceofficient corresponded to the category order results. The distrubtion of emotions 
-
-The convergence of these two methods - something going on + validates the Emoxicon method.
+The higher inequality among Left-wing troll tweets measured via the Gini ceofficient corresponded to the category order results. The variance of the distrubtions of emotion category orders tended to be larger for the Right-wing trolls as compared to the Left-wing trolls. These larger variances imply more variety (evenness) in the difficulties of the emotion categories among the Right-wing accounts. The results of both the Gini coefficient and the category orders suggest that Right-wing troll accounts varied more in their emotional expression than the Left-wing accounts. 
 
 
 
-Interpretation
---------------
-
-The differences in emotion expression may be linked to different methods of eliciting emotion. Different purposes, topics eliciting different emotions
+<!-- Interpretation -->
+<!-- -------------- -->
 
 
 
-Future Directions
------------------
+
+
+<!-- Future Directions -->
+<!-- ----------------- -->
 
 Limitations
 -----------
@@ -492,8 +473,8 @@ It is critical to interpret the results of this study in context of its methods.
 We propose that differences in emotion expression in this study should rightly be interpreted as differences in how one, perhaps neutral, subset of readers may react. We do not believe that these differences are not true or present in reality - rather that it is an overstep to assume that every person who reads a left-wing troll tweet is more likely to react with anger than if they read a right-wing troll tweet.
 
 
-Conclusions
------------
+<!-- Conclusions -->
+<!-- ----------- -->
 
 
 Words removed from Lexicon
