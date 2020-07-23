@@ -9,7 +9,13 @@ output: html_document
 
 ```{r setup, include=FALSE}
 # library(knitr)
-# purl("ignore/Paper/EmoxiconPaperAnalysis.Rmd", output = "EmoxiconPaperAnalysis-April-30-2020.R", documentation = 0) # Extract R code from Rmd document and discard all text chunks
+# purl("ignore/Paper/EmoxiconPaperAnalysis.Rmd", output = "EmoxiconPaperAnalysis-July-13-2020.R", documentation = 0) # Extract R code from Rmd document and discard all text chunks
+
+modified_file <- "/Users/tara/Documents/emoxicon/ignore/Paper/EmoxiconPaper.Rmd"
+# reference_file <- system.file("/Users/tara/Desktop/Consulting/SODH/merge data/sdoh_data_creation.Rmd", package = "reviewer")
+
+result <- diff_rmd(current_file = modified_file)
+library(reviewer)
 library(papaja)
 library(emoxicon)
 library(eRm)
@@ -133,7 +139,7 @@ Now we can look at fit parameters.
 # Fit
 summary(trolls_models$full_model)
 
-pparameters <- eRm::person.parameter(trolls_models$full_model)
+pparameters <- eRm::person.parameter(trolls_models$full_model, extrapolated = TRUE)
 
 pfit <- eRm::personfit(pparameters)
 ifit <- eRm::itemfit(pparameters)
