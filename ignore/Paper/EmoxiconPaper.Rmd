@@ -57,10 +57,12 @@ library(emoxicon)
 library(citr)
 library(eRm) 
 
+### Run the source code
 # source("EmoxiconPaperAnalysis.Rmd")
-load("EmoxiconPaperAnalysis-July-1-2020-dat.RData") # for faster running for the draft
 
-# some random edits here.
+## OR just load the previously saved output for faster running for the draft
+load("EmoxiconPaperAnalysis-July-1-2020-dat.RData") 
+
 ```
 
 <!-- To look for numbers that are NOT called by the r script (and thus need to be double double checked), search for 'BY HAND' -->
