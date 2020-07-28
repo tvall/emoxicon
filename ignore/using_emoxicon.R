@@ -3,9 +3,7 @@
 library(emoxicon)
 
 # load data, make a smaller set for speed
-data(trolls)
-set.seed(1)
-tinyTrolls <- trolls[which(trolls$author%in%sample(unique(trolls$author), size=50)),]
+data(tinytrolls)
 
 # score the data
 t<-Sys.time()

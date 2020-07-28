@@ -4,7 +4,13 @@
 \alias{catplot}
 \title{Category plots}
 \usage{
-catplot(categorys, ...)
+catplot(categories, cat_labels, ...)
+}
+\arguments{
+\item{categories}{Category orders produced from \code{rasch}}
+
+\item{cat_labels}{Optional category labels in the style of c(`colname1` = "newlabel1", `colname2` = "newlabel2").
+If not specified, labels will be taken from the category column names}
 }
 \description{
 Category plots

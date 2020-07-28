@@ -4,12 +4,14 @@
 \name{weights}
 \alias{weights}
 \title{Emotion Weights Data}
-\format{A data frame with 175592 rows and 9 columns.
+\format{
+A data frame with 175592 rows and 9 columns.
 \describe{
    \item{word}{An entry in the lexicon, in English}
    \item{AFRAID, AMUSED, ANGRY, ANNOYED, DONT_CARE, HAPPY, INSPIRED, SAD}{The emotional category.
    Each column contains the probability weight of that category being associated with that word.}
-}}
+}
+}
 \usage{
 data(weights)
 }

@@ -4,7 +4,8 @@
 \name{trolls}
 \alias{trolls}
 \title{Russian Trolls Data}
-\format{A data frame with 476,215 rows and 6 columns.
+\format{
+A data frame with 476,215 rows and 6 columns.
 \describe{
    \item{content}{A tweet.}
    \item{author}{The name of the handle that authored the tweet.}
@@ -12,7 +13,8 @@
    \item{followers}{How many followers the handle had at the time of posting.}
    \item{updates}{How many interactions (including likes, tweets, retweets) the post garnered.}
    \item{account_type}{Left or Right}
-}}
+}
+}
 \usage{
 data(trolls)
 }

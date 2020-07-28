@@ -4,10 +4,12 @@
 \name{wapo}
 \alias{wapo}
 \title{Washington Post Data}
-\format{A data frame with 871 rows and 4 columns.
+\format{
+A data frame with 871 rows and 4 columns.
 \describe{
    \item{text}{Authored tweets from the Washington Post twitter account.}
-}}
+}
+}
 \usage{
 data(wapo)
 }

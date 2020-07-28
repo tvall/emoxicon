@@ -4,7 +4,7 @@
 \alias{rasch}
 \title{Estimation of Rasch Models for Emoxicon}
 \usage{
-rasch(scores, groups = NULL, return_models = TRUE, ...)
+rasch(scores, groups, return_models = TRUE, ...)
 }
 \arguments{
 \item{scores}{A dataframe containing the emotion scores}
@@ -12,7 +12,9 @@ rasch(scores, groups = NULL, return_models = TRUE, ...)
 \item{groups}{An optional vector of group identifers the same length as \code{scores}.
 If provided, individual Rasch models will be run by group.}
 
-\item{return_models}{logical. Should all models for the groups be returned?}
+\item{return_models}{logical. Should the model for each group be returned? Default is TRUE.
+Setting this value to FALSE will reduce object size, but only the category orders will
+be returned.}
 
 \item{...}{Additional arguments to be passed to \code{\link[eRm]{RM}}}
 }

@@ -42,3 +42,4 @@ usethis::use_data(trolls, overwrite = TRUE)
 
 set.seed(1)
 tinyTrolls <- trolls[which(trolls$author%in%sample(unique(trolls$author), size=50)),]
+usethis::use_data(tinytrolls, overwrite = TRUE)
