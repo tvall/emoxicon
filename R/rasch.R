@@ -13,7 +13,9 @@
 #' @param groups An optional vector of group identifers the same length as \code{scores}.
 #' If provided, individual Rasch models will be run by group.
 #'
-#' @param return_models logical. Should all models for the groups be returned?
+#' @param return_models Logical. Should the model for each group be returned? Default is TRUE.
+#' Setting this value to FALSE will reduce object size, but only the category orders will
+#' be returned.
 #'
 #' @param ... Additional arguments to be passed to \code{\link[eRm]{RM}}
 #'
