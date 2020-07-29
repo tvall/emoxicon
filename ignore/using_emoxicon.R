@@ -2,7 +2,7 @@
 
 library(emoxicon)
 
-# load data, make a smaller set for speed
+# load data
 data(tinytrolls)
 
 # score the data
@@ -17,15 +17,23 @@ t<-Sys.time()
 tt_rasch<- rasch(scores= tinyTrolls_scored, groups = tinyTrolls$author, return_models = TRUE)
 Sys.time()-t
 
-tt_rasch<- rasch(scores= tinyTrolls_scored)
-
-
 # look at a category plot
 catplot(tt_rasch$category_order)
 
 
 # Still to do:
-# model summary, item measures, fit measures, ability measures, item fit,
+# model summary
+# auto uses the eRm functions
+coef(tt_rasch$full_model)
+summary(tt_rasch$full_model)
+
+# item measures, ability measures
+
+# fit measures
+tt_fit<-rasch_fit(tt_rasch, groups = TRUE)
+
+tt_fit2 <- rasch_fit(tt_rasch, groups = FALSE)
+
 # the llr plot
 
 # force eRm to load alongside emoxicon

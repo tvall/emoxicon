@@ -1,6 +1,6 @@
-#' Return Rasch fit statistics
+#' Calculate Rasch fit statistics
 #'
-#' This function calculates Rasch model person and item fit statistics.
+#' This function calculates Rasch person and item fit statistics.
 #'
 #' @param model The object outputted by the \code{emoxicon} \code{rasch} function.
 #'
@@ -30,6 +30,10 @@ rasch_fit <- function(model, groups = FALSE){
 
   if(groups){
 
+    nom <- sapply(model$group_models, function(x){
+      x$group
+    })
+
     # Run fit functions on all models individually
     manymods_pparameters <- lapply(model$group_models, function(x){
       eRm::person.parameter(x$model)
@@ -38,52 +42,31 @@ rasch_fit <- function(model, groups = FALSE){
     manymods_pfit <- lapply(1:length(model$group_models), function(x){
       eRm::personfit(manymods_pparameters[[x]])
     })
+    names(manymods_pfit) <- nom
     manymods_ifit <- lapply(1:length(model$group_models), function(x){
       eRm::itemfit(manymods_pparameters[[x]])
     })
+    names(manymods_ifit) <- nom
     manymods_pmis <- lapply(1:length(model$group_models), function(x){
       eRm::PersonMisfit(manymods_pparameters[[x]])
     })
-    manymods_pmis_total <- list("P-Misfit by Model in Percents" = sapply(manymods_pmis, function(x){x$PersonMisfit}))
-
-    manymods_pmis_total
-
-    # save item names
-    z <- names(ifit$i.fit)
-
-    # look at misfitting items within individual models
-    manymods_ifit_total <- sapply(1:length(manymods_ifit), function(i){
-
-      p <- round(pchisq(manymods_ifit[[i]]$i.fit,
-                        df=manymods_ifit[[i]]$i.df-1, lower.tail=FALSE),3)
-
-      items <- as.data.frame(t(unlist(c(model$group_models[[i]]$group, p))),
-                             row.names = model$group_models[[i]]$group)
-      colnames(items)[1] <- "model"
-
-      if(ncol(items) < (length(z)+1)){
-        items[,z[which(!z%in% colnames(items))]]<-NA
-      }
-      items
-
-    }, simplify = F)
-
-    manymod_ifit_total<-do.call(rbind, manymods_ifit_total)
+    names(manymods_pmis) <- nom
 
     output <- list(
-      full_model = list(personfit = list(pfit_statistics = pfit,
-                           percent_pmisfit = pmis),
-          itemfit = ifit
+      full_model = list(personfit =  pfit,
+                        percent_pmisfit = pmis,
+                        itemfit = ifit
       ),
-      group_models = list(group_personfit = list(group_pfit_statistics = 1,
-                                                 percent_pmisfit = manymods_pmis_total),
-                          group_itemfit = 1)
+      group_models = list(personfit = manymods_ifit,
+                          percent_pmisfit = manymods_pmis,
+                          itemfit = manymods_ifit)
     )
   } else{
-    output <- list(personfit = list(pfit_statistics = pfit,
-                                    misfit = pmis),
+    output <- list(personfit = pfit,
+                   percent_pmisfit = pmis,
                    itemfit = ifit
     )
   }
 
+  output
 }

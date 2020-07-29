@@ -12,7 +12,7 @@ rasch(scores, groups, return_models = TRUE, ...)
 \item{groups}{An optional vector of group identifers the same length as \code{scores}.
 If provided, individual Rasch models will be run by group.}
 
-\item{return_models}{logical. Should the model for each group be returned? Default is TRUE.
+\item{return_models}{Logical. Should the model for each group be returned? Default is TRUE.
 Setting this value to FALSE will reduce object size, but only the category orders will
 be returned.}
 
