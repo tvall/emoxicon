@@ -3,12 +3,12 @@ Type: Package
 Title: Emoxicon: A New Tool for Emotional Analysis in Text
 Version: 0.0.9991
 Date: 2019-11-04
-Authors: c(person("Tara", "Valladares", 
+Author: c(person("Tara", "Valladares", 
                   email = "tls8vx@virginia.edu", role = c("aut","cre")),
                   person("Hudson", "Golino", email = "hfg9s@virginia.edu",
-                  role = c("aut")), )
+                  role = c("aut")))
 Maintainer: Tara Valladares <tls8vx@virginia.edu>
-Description: Analysis of text data using an emotion lexicon and Rasch models. 
+Description: Analysis of text data using Rasch models and emotion lexicons. 
 Depends: R (>= 3.5.0)
 License: GPL (>= 3.0)
 Encoding: UTF-8

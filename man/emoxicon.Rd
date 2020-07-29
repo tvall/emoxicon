@@ -4,7 +4,7 @@
 \alias{emoxicon}
 \title{Emoxicon}
 \usage{
-emoxicon(text, lexicon, exclude)
+emoxicon(text, lexicon = emotions, exclude)
 }
 \arguments{
 \item{text}{A dataframe containing texts to be scored (one text per row).}

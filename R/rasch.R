@@ -30,7 +30,7 @@
 #'
 #' @references
 #'
-#' @importFrom eRm RM
+#' @import eRm
 #' @importFrom stats na.omit
 #'
 #' @export

@@ -3,7 +3,7 @@
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #' @noRd
 #'
-#' @importFrom eRm RM
+#' @import eRm
 #' @importFrom stringr str_extract str_extract_all
 #'
 #'

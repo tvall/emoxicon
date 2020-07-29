@@ -2,19 +2,21 @@
 % Please edit documentation in R/rasch_fit.R
 \name{rasch_fit}
 \alias{rasch_fit}
-\title{Return Rasch fit statistics}
+\title{Calculate Rasch fit statistics}
 \usage{
 rasch_fit(model, groups = FALSE)
 }
 \arguments{
-\item{model}{The object outputted by the \code{emoxicon} \code{rasch} function.}
+\item{model}{The object outputted by the \code{\link{emoxicon}} \code{\link{rasch}} function.}
 
 \item{groups}{Logical. Should summary fit statistics be calculated across
 the individual group models, if present? The default is FALSE. Running fit statistics
 on many models can be slow.}
 }
 \description{
-This function calculates Rasch model person and item fit statistics.
+This function serves as a wrapper to
+calculate Rasch person and item fit statistics based
+on the \code{\link{eRm}} fit functions.
 }
 \author{
 Tara Valladares <tls8vx at virginia.edu>

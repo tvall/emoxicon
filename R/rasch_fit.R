@@ -1,8 +1,10 @@
 #' Calculate Rasch fit statistics
 #'
-#' This function calculates Rasch person and item fit statistics.
+#' This function serves as a wrapper to
+#' calculate Rasch person and item fit statistics based
+#' on the \code{\link{eRm}} fit functions.
 #'
-#' @param model The object outputted by the \code{emoxicon} \code{rasch} function.
+#' @param model The object outputted by the \code{\link{emoxicon}} \code{\link{rasch}} function.
 #'
 #' @param groups Logical. Should summary fit statistics be calculated across
 #' the individual group models, if present? The default is FALSE. Running fit statistics
@@ -11,7 +13,7 @@
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #'
-#' @importFrom eRm RM person.parameter personfit itemfit personMisfit
+#' @import eRm
 #'
 #'
 

@@ -11,6 +11,8 @@ catplot(categories, cat_labels, ...)
 
 \item{cat_labels}{Optional category labels in the style of c(`colname1` = "newlabel1", `colname2` = "newlabel2").
 If not specified, labels will be taken from the category column names}
+
+\item{\dots}{Other arguments to pass onto \code{\link{ggplot}}}
 }
 \description{
 Category plots
