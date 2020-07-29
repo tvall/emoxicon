@@ -45,11 +45,7 @@
 emoxicon <- function(text, lexicon = emotions, exclude) {
 
   if("emoxicon" %in% class(lexicon)) {
-    message("Using the default lexicon, 'emotions'")
     default.lexicon <- TRUE
-  }else if(lexicon == "weights") {
-        lexicon <- weights
-       default.lexicon <- TRUE}
   }else{default.lexicon <- FALSE}
 
   if(!missing(exclude)){
