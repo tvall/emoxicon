@@ -1,0 +1,100 @@
+---
+title: "Emoxicon - Extra Text"
+author: "Tara L. Valladares"
+date: "5/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Extra sources to look at:
+Anger Is More Influential than Joy: Sentiment Correlation in Weibo
+Rui Fan, Jichang Zhao, Yan Chen, Ke Xu
+https://journals.plos.org/plosone/article%3Fid%3D10.1371/journal.pone.0110184#references
+
+Good Friends, Bad News: Affect and Virality in Twitter
+Lars Kai Hansen, Adam Arvidsson, Finn Aarup Nielsen, Elanor Colleoni, Michael Etter
+https://research.cbs.dk/en/publications/good-friends-bad-news-affect-and-virality-in-twitter
+
+
+
+
+### Politics and emotion
+<!-- When given a choice, people tend to want to read opinion congruent rather than opinion challenging content [garrett2009echo]. -->
+Emotional language also heavily increases the likelihood that a political tweet is shared and viewed [@brady2017emotion].
+
+<!-- gonzalez2012emotions about emotions and presidential approval -->
+
+
+<!-- The actions of Russian trolls outside of the 2016 election suggest that their main purpose is sowing discord [@broniatowski2018vaccines]. -->
+
+
+
+
+<!-- After the Justice -->
+<!-- Department released the Twitter handles associated with the IRA, Clemson -->
+<!-- university researchers Darren Linvill and Patrick Warren downloaded all -->
+<!-- tweets associated with these accounts and made the dataset publicly -->
+<!-- available for researchers [@linvill2019original]. The full dataset -->
+<!-- consists of nearly 3 million tweets from 2,800 accounts. -->
+
+
+
+Brief history of emotion extraction
+-----------------------------------
+
+An enormous amount of work has been dedicated to extracting sentiment
+and emotion from text. As is common in many developing fields, the
+nomenclature of techniques can be unclear. Sentiment analysis is often
+used as a catchall term to describe the measurement of any feeling in
+text, no matter how complex. Here, we will separate the extraction of
+emotion from that of sentiment. Sentiment analysis is the process by
+which sentiment, i.e., positive and negative opinions, is extracted from
+text. Emotion detection focuses on the extraction of emotional
+categories, such as happiness, anger, or pride. The distinction between
+the sentiment and emotion can lie on a continuum, depending how features
+are extracted and utilized. Competing theories and methods may
+conceptualize emotions as distinct categories or as lying on related
+continuums. When categorical, the emotion categories generally include
+anger, disgust, fear, joy, sadness, and surprise, and sometimes trust
+and anticipation [@mohammad2016sentiment; @ekman1992emotions; @hirat2015survey; @strapparava2008learning]. When continuous, popular theories describe emotions as lying on three dimensional vectors constructed from arousal, valence, and dominance [@russell2003affect].
+
+### Emotion Lexicons
+
+Lexicons form the basis of most methods of emotion detection. Lexicons
+are dictionaries that contain features (such as words or punctuation),
+the category they belong to, and their designated score. Lexicons vary
+in their size, complexity, and focus. They may be manually created
+through annotation or created automatically through machine learning.
+
+Lexicon-based analyses are limited by the lexicon's size and complexity.
+In general, the larger the lexicon, the more robust the scoring. Smaller
+lexicons may be poor matches to a target text if there is little overlap
+in words. Significant bias can occur when a target text is poorly
+matched to the lexicon. For this reason, domain-specific lexicons can
+give better results than general lexicons, though the creation of
+lexicons for every domain and genre is a monumental task. The majority
+of lexicons are created or seeded through hand annotation
+[@mohammad2016sentiment]. While human generated lexicons have validity
+advantages, they will be naturally limited in size and by responder
+biases.
+
+### Bag-of-words
+
+Bag-of-words (BOW) is a method of cleaning and organizing text that is
+commonly used alongside lexicons. In BOW, all grammar and word placement
+is discarded to create an orderless "bag" of word counts. BOW is thus a
+method of extracting the word frequency. Lexicon-scored and frequency
+data can be analyzed through simple sum scores or with more complex
+methods. While BOW and lexicons can serve in standalone analyses,
+machine learning frequently makes use of BOW and lexicons to create
+features.
+
+Though relatively crude, bag-of-words can produce compelling results on
+its own or in combination with machine learning techniques.
+[@dasilva2014tweet] found that BOW combined with standard machine
+learning algorithms produced accuracy rates of tweet sentiment
+classification around 70-80%. There, the addition of sentiment lexicons
+always improved classification rates.
