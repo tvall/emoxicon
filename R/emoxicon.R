@@ -42,17 +42,12 @@
 #' @export
 #'
 #'
-emoxicon <- function(text, lexicon, exclude) {
+emoxicon <- function(text, lexicon = emotions, exclude) {
 
-  if(missing(lexicon)) {
-    lexicon <- emotions
+  if("emoxicon" %in% class(lexicon)) {
     message("Using the default lexicon, 'emotions'")
     default.lexicon <- TRUE
-  }else if(length(lexicon)==1){
-      if(lexicon == "emotions") {
-        lexicon <- emotions
-        default.lexicon <- TRUE
-     }else if(lexicon == "weights") {
+  }else if(lexicon == "weights") {
         lexicon <- weights
        default.lexicon <- TRUE}
   }else{default.lexicon <- FALSE}

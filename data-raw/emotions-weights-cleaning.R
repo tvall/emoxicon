@@ -7,4 +7,7 @@ weights<- weights[c("X", "AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "H
 colnames(weights) <- c("word", "AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
                                 "INSPIRED", "SAD")
 
+
+class(weights) <- append(class(weights),"emoxicon")
+
 usethis::use_data(weights, overwrite = TRUE)

@@ -18,4 +18,6 @@ colnames(emotions) <- c("word","emotion","value")
 emotions<-reshape2::dcast(emotions, word~ emotion, value.var = "value")
 emotions[is.na(emotions)] <- 0
 
+class(emotions) <- append(class(emotions),"emoxicon")
+
 usethis::use_data(emotions, overwrite = TRUE)
