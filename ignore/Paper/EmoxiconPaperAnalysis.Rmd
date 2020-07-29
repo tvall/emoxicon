@@ -135,7 +135,7 @@ Now we can look at fit parameters.
 # Fit
 summary(trolls_models$full_model)
 
-pparameters <- eRm::person.parameter(trolls_models$full_model, extrapolated = TRUE)
+pparameters <- eRm::person.parameter(trolls_models$full_model)
 
 pfit <- eRm::personfit(pparameters)
 ifit <- eRm::itemfit(pparameters)
@@ -149,26 +149,27 @@ pmis
 Low levels of misfit across persons. It does not seem to be influenced by raw score.
 
 ```{r}
-# infit/outfit plots by theta-----
-plotdat <- data.frame(theta = as.factor(pparameters$thetapar[[1]]),
-                      infitZ =pfit$p.infitZ,
-                      outfitZ =pfit$p.outfitZ,
-                      se = pparameters$se.theta$NAgroup1)
-levels(plotdat$theta) <- round(as.numeric(levels(plotdat$theta)),2)
-
-ggplot(data = plotdat, aes(x = theta, y=infitZ)) +
-  # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
-  geom_violin() + geom_hline(yintercept = c(2,-2), col="#D55E00") +
-  ylim(-3,3) + ggtitle("Standardized Infit")
-
-ggplot(data = plotdat, aes(x = theta, y=outfitZ)) +
-  # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
-  geom_violin() + geom_hline(yintercept = c(2,-2), col="#D55E00") +
-  ylim(-3,3) + ggtitle("Standardized Outfit")
-
-ggplot(data = unique(plotdat), aes(x = theta, y=se)) +
-  # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
-  geom_point() + ggtitle("Standard Error of the Estimate")
+# Unused in paper
+# # infit/outfit plots by theta-----
+# plotdat <- data.frame(theta = as.factor(pparameters$thetapar[[1]]),
+#                       infitZ =pfit$p.infitZ,
+#                       outfitZ =pfit$p.outfitZ,
+#                       se = pparameters$se.theta$NAgroup1)
+# levels(plotdat$theta) <- round(as.numeric(levels(plotdat$theta)),2)
+# 
+# ggplot(data = plotdat, aes(x = theta, y=infitZ)) +
+#   # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
+#   geom_violin() + geom_hline(yintercept = c(2,-2), col="#D55E00") +
+#   ylim(-3,3) + ggtitle("Standardized Infit")
+# 
+# ggplot(data = plotdat, aes(x = theta, y=outfitZ)) +
+#   # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
+#   geom_violin() + geom_hline(yintercept = c(2,-2), col="#D55E00") +
+#   ylim(-3,3) + ggtitle("Standardized Outfit")
+# 
+# ggplot(data = unique(plotdat), aes(x = theta, y=se)) +
+#   # geom_jitter(aes(x = theta, y=infitZ),height = .1, width = .1)
+#   geom_point() + ggtitle("Standard Error of the Estimate")
 ```
 
 ## DIF, overall model
@@ -464,6 +465,13 @@ n<-length(trolls_models$group_models)
 ranMi <- matrix(nrow=n, ncol=8)
 for(i in 1:n){
   ranMi[i,] <- sample(1:8, 8,replace = FALSE)}
+
+# bootstrap CI for mutual information
+mi <- function(data, indices) {
+  d <- data[indices,] # allows boot to select sample
+  mi<- multiinformation(data[indices,])
+  return((mi))
+}
 
 boot.random <- boot(ranMi,
                     statistic = mi, R=1000)
