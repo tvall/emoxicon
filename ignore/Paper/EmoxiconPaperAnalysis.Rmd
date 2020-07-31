@@ -504,7 +504,6 @@ boot.right
 bci.right<-boot.ci(boot.right, conf = .95, type = "norm")
 
 
-
 # plot
 
 plotdat2 <- data.frame(
