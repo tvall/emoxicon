@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' # Load the tinytrolls data
-#' data(tinytrolls)
+#' data(tinyTrolls)
 #'
 #' # Use the emoxicon function
 #' \dontrun{

@@ -29,7 +29,7 @@ compiled by Araque, Gatti, Staiano, and Guerini (2018).
 }
 \examples{
 # Load the tinytrolls data
-data(tinytrolls)
+data(tinyTrolls)
 
 # Use the emoxicon function
 \dontrun{

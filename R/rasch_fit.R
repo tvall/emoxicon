@@ -1,8 +1,7 @@
 #' Calculate Rasch fit statistics
 #'
-#' This function serves as a wrapper to
-#' calculate Rasch person and item fit statistics based
-#' on the \code{\link{eRm}} fit functions.
+#' @description This function serves as a wrapper to calculate Rasch person and item fit statistics based
+#' on the \code{\link[eRm]{person.parameter}} fit functions.
 #'
 #' @param model The object outputted by the \code{\link{emoxicon}} \code{\link{rasch}} function.
 #'
@@ -12,26 +11,31 @@
 #'
 #' @examples
 #' # Load the tinytrolls data
-#' data(tinytrolls)
+#' data(tinyTrolls)
 #'
 #' # Use the emoxicon function
 #' \dontrun{
 #' emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
 #' # Recode the variables to 0 (below mean) or 1 (equal to or above mean)
-#' emotions.rasch <- as.data.frame(apply(emotions.tinytrolls[,-c(1:2)],2,function(x) ifelse(x<mean(x),0,1)))
+#' emotions.rasch <- as.data.frame(apply(emotions.tinytrolls[,-c(1:2)],2,
+#' function(x) ifelse(x<mean(x),0,1)))
 #' # Apply the Rasch Model
 #' rm.tinytrolls <- rasch(scores = emotions.tinytrolls)
 #' # Use the rasch_fit function
 #' fit.tinytrolls <- rasch_fit(rm.tinytrolls)
 #' }
 #'
+#' @references
+#' Mair, P., & Hatzinger, R. (2007).
+#' Extended Rasch modeling: The eRm package for the application of IRT models in R.
+#' \emph{Journal of Statistical Software}, \emph{20(9)},1-20.
+#' doi:\href{http://www.jstatsoft.org/v20/i09}{10.18637/jss.v020.i09}
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>
 #'
-#' @import eRm
-#'
-#'
-
+#' @export
+# Rasch Function:
+# Updated 04.06.2020
 rasch_fit <- function(model, groups = FALSE){
 
   if(!inherits(model, what = "emoxrasch")){
