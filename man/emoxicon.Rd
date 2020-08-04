@@ -16,7 +16,7 @@ If another custom lexicon is used, the first column of the lexicon should contai
 and the subsequent columns contain the scoring categories.}
 
 \item{exclude}{A vector listing terms that should be excluded from the lexicon.
-Words specifed in \code{exclude} will not
+Words specified in \code{exclude} will not
 influence document scoring. Users should consider excluding 'red herring' words
 that are more closely related to the topics of the documents,
 rather than the documents' emotional content.
