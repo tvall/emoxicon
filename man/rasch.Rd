@@ -27,16 +27,23 @@ When the data is generated using \code{emoxicon} and the default emotions lexico
 the entire emoxicon object can be entered.
 }
 \examples{
+# Load the tinytrolls data
+data(tinytrolls)
 
-\donttest{
-#examples here
+# Use the emoxicon function
+\dontrun{
+emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
+# Recode the variables to 0 (below mean) or 1 (equal to or above mean)
+emotions.rasch <- as.data.frame(apply(emotions.tinytrolls[,-c(1:2)],2,function(x) ifelse(x<mean(x),0,1)))
+# Apply the Rasch Model
+rm.tinytrolls <- rasch(scores = emotions.tinytrolls)
 }
 }
 \references{
 
 }
 \seealso{
-\code{\link{emoxicon}}, where the emotion scores are generated.
+\code{\link{emoxicon}}, where the emotion scores are generated and \code{\link{rasch_fit}} to calculate Rasch fit statistics.
 }
 \author{
 Tara Valladares <tls8vx at virginia.edu>, Hudson F. Golino <hfg9s at virginia.edu>

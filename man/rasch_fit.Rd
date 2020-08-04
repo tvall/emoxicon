@@ -18,6 +18,23 @@ This function serves as a wrapper to
 calculate Rasch person and item fit statistics based
 on the \code{\link{eRm}} fit functions.
 }
+\examples{
+# Load the tinytrolls data
+data(tinytrolls)
+
+# Use the emoxicon function
+\dontrun{
+emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
+# Recode the variables to 0 (below mean) or 1 (equal to or above mean)
+emotions.rasch <- as.data.frame(apply(emotions.tinytrolls[,-c(1:2)],2,function(x) ifelse(x<mean(x),0,1)))
+# Apply the Rasch Model
+rm.tinytrolls <- rasch(scores = emotions.tinytrolls)
+# Use the rasch_fit function
+fit.tinytrolls <- rasch_fit(rm.tinytrolls)
+}
+
+
+}
 \author{
 Tara Valladares <tls8vx at virginia.edu>
 }

@@ -25,9 +25,12 @@
 #' @author Tara Valladares <tls8vx at virginia.edu>, Hudson F. Golino <hfg9s at virginia.edu>
 #'
 #' @examples
+#' # Load the tinytrolls data
+#' data(tinytrolls)
 #'
-#' \donttest{
-#' #examples here
+#' # Use the emoxicon function
+#' \dontrun{
+#' emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
 #' }
 #' @seealso \code{\link{emotions}}, where we describe how we modified the original DepecheMood++ lexicon.
 #'
@@ -42,6 +45,8 @@
 #' @export
 #'
 #'
+# Emoxicon Function
+# Updated 04.06.2020
 emoxicon <- function(text, lexicon = emotions, exclude) {
 
   if("emoxicon" %in% class(lexicon)) {

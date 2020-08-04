@@ -3,6 +3,7 @@
 export(catplot)
 export(emoxicon)
 export(rasch)
+export(tryCatch.W.E)
 import(eRm)
 import(ggplot2)
 importFrom(dplyr,left_join)

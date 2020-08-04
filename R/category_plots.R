@@ -1,7 +1,7 @@
 #' Category plots
-#'
+#' @description Plot function for the categories produced from \code{rasch}
 #' @param categories Category orders produced from \code{rasch}
-#' @param cat_labels Optional category labels in the style of c(`colname1` = "newlabel1", `colname2` = "newlabel2").
+#' @param cat_labels Optional category labels in the style of c(colname1 = "newlabel1", colname2 = "newlabel2").
 #' If not specified, labels will be taken from the category column names
 #' @param \dots Other arguments to pass onto \code{\link{ggplot}}
 #'

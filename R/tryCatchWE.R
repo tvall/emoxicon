@@ -1,11 +1,23 @@
 #' Catch errors and warnings
 #'
-#' Catch any errors and warnings and then rerun the function if necessary.
-#' The returns all messages and the function output.
+#' @description Catch any errors and warnings and then rerun the function if necessary.
+#' The function returns all messages and the function output.
 #'
+#' @param expr R expression to evaluate.
+#'
+#' @return The function returns all warning and error messages and the function output.
+#'
+#' @examples
+#' # Load the tinytrolls data
+#' data(tinytrolls)
+#'
+#' # Use the emoxicon function
+#' \dontrun{
+#' warns.errs.tinytrolls <- tryCatch.W.E(emoxicon(text = tinyTrolls$content, lexicon = emotions))
+#' }
 #' @author Tara Valladares <tls8vx at virginia.edu>
-#' @noRd
-
+#' @export
+# Function to catch errors and warnings
 tryCatch.W.E <- function(expr)
 {
   W <- NULL

@@ -28,9 +28,12 @@ Calculates emotion scores in texts using a bag-of-words approach. The default le
 compiled by Araque, Gatti, Staiano, and Guerini (2018).
 }
 \examples{
+# Load the tinytrolls data
+data(tinytrolls)
 
-\donttest{
-#examples here
+# Use the emoxicon function
+\dontrun{
+emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
 }
 }
 \references{
