@@ -451,7 +451,7 @@ apa_table(
 ```
 
 
-(ref:fig-catplots) The distributions of emotion categories within accounts when ordered from 1 (easiest) to 8 (hardest). A `r knitr::asis_output("\u002A"` indicates significant differences between left-wing and right-wing accounts based on Wilcoxon rank-sum tests. A `r knitr::asis_output("\u2020")` indicates significant differences based on Kolmogorov-Smirnov distribution tests.
+(ref:fig-catplots) The distributions of emotion categories within accounts when ordered from 1 (easiest) to 8 (hardest). A `r knitr::asis_output("\u002A")` indicates significant differences between left-wing and right-wing accounts based on Wilcoxon rank-sum tests. A `r knitr::asis_output("\u2020")` indicates significant differences based on Kolmogorov-Smirnov distribution tests.
 
 
 ```{r catplots, fig.cap = "(ref:fig-catplots)", fig.height=5.5}
