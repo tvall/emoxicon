@@ -1,0 +1,16 @@
+citHeader("To cite emoxicon in publications use:")
+
+bibentry(
+	bibtype	= "manual",
+	key	= "emoxicon2020",
+	title	= "Emoxicon: A New Tool for Emotional Analysis in Text",
+	author	= c(person("Valladares", "Tara"),
+		    person("Golino,", "Hudson")),
+	year	= "2020",
+	note    = "R package version 0.0.1",
+
+  textVersion  =
+  paste0("Valladares, T., & Golino, H. (2020).",
+        "Emoxicon: A New Tool for Emotional Analysis in Text.",
+	      "R package version 0.1. ")
+)

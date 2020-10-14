@@ -1,8 +1,8 @@
 Package: emoxicon
 Type: Package
 Title: Emoxicon: A New Tool for Emotional Analysis in Text
-Version: 0.0.9991
-Date: 2019-11-04
+Version: 0.0.1
+Date: 2020-06-04
 Author: c(person("Tara", "Valladares", 
                   email = "tls8vx@virginia.edu", role = c("aut","cre")),
                   person("Hudson", "Golino", email = "hfg9s@virginia.edu",

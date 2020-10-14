@@ -13,7 +13,7 @@
 #' and the subsequent columns contain the scoring categories.
 #'
 #' @param exclude A vector listing terms that should be excluded from the lexicon.
-#' Words specifed in \code{exclude} will not
+#' Words specified in \code{exclude} will not
 #' influence document scoring. Users should consider excluding 'red herring' words
 #' that are more closely related to the topics of the documents,
 #' rather than the documents' emotional content.
@@ -25,9 +25,12 @@
 #' @author Tara Valladares <tls8vx at virginia.edu>, Hudson F. Golino <hfg9s at virginia.edu>
 #'
 #' @examples
+#' # Load the tinytrolls data
+#' data(tinyTrolls)
 #'
-#' \donttest{
-#' #examples here
+#' # Use the emoxicon function
+#' \dontrun{
+#' emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
 #' }
 #' @seealso \code{\link{emotions}}, where we describe how we modified the original DepecheMood++ lexicon.
 #'
@@ -42,6 +45,8 @@
 #' @export
 #'
 #'
+# Emoxicon Function
+# Updated 04.06.2020
 emoxicon <- function(text, lexicon = emotions, exclude) {
 
   if("emoxicon" %in% class(lexicon)) {

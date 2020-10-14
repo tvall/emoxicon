@@ -9,13 +9,13 @@ catplot(categories, cat_labels, ...)
 \arguments{
 \item{categories}{Category orders produced from \code{rasch}}
 
-\item{cat_labels}{Optional category labels in the style of c(`colname1` = "newlabel1", `colname2` = "newlabel2").
+\item{cat_labels}{Optional category labels in the style of c(colname1 = "newlabel1", colname2 = "newlabel2").
 If not specified, labels will be taken from the category column names}
 
 \item{\dots}{Other arguments to pass onto \code{\link{ggplot}}}
 }
 \description{
-Category plots
+Plot function for the categories produced from \code{rasch}
 }
 \author{
 Tara Valladares <tls8vx at virginia.edu>

@@ -8,7 +8,7 @@
 #'
 #'
 #'
-#' @name tinytrolls
+#' @name tinyTrolls
 #'
 #' @docType data
 #'

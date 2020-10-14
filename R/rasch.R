@@ -1,6 +1,6 @@
 #' Estimation of Rasch Models for Emoxicon
 #'
-#' Runs a Rasch model using the emotion scores from \code{emoxicon}.
+#' @description Runs a Rasch model using the emotion scores from \code{emoxicon}.
 #' If the data is not already dichotomous, a mean split will be performed.
 #'
 #' @details
@@ -21,23 +21,33 @@
 #'
 #' @author Tara Valladares <tls8vx at virginia.edu>, Hudson F. Golino <hfg9s at virginia.edu>
 #'
-#' @examples
+##' @examples
+#' # Load the tinytrolls data
+#' data(tinyTrolls)
 #'
-#' \donttest{
-#' #examples here
+#' # Use the emoxicon function
+#' \dontrun{
+#' emotions.tinytrolls <- emoxicon(text = tinyTrolls$content, lexicon = emotions)
+#' # Recode the variables to 0 (below mean) or 1 (equal to or above mean)
+#' emotions.rasch <- as.data.frame(apply(emotions.tinytrolls[,-c(1:2)],2,
+#' function(x) ifelse(x<mean(x),0,1)))
+#' # Apply the Rasch Model
+#' rm.tinytrolls <- rasch(scores = emotions.tinytrolls)
 #' }
-#' @seealso \code{\link{emoxicon}}, where the emotion scores are generated.
+#' @seealso \code{\link{emoxicon}}, where the emotion scores are generated and \code{\link{rasch_fit}} to calculate Rasch fit statistics.
 #'
 #' @references
 #'
-#' @import eRm
+#' Mair, P., & Hatzinger, R. (2007).
+#' Extended Rasch modeling: The eRm package for the application of IRT models in R.
+#' \emph{Journal of Statistical Software}, \emph{20(9)},1-20.
+#' doi:\href{http://www.jstatsoft.org/v20/i09}{10.18637/jss.v020.i09}
+#'
 #' @importFrom stats na.omit
 #'
 #' @export
-#'
-#'
-
-
+# Rasch Function:
+# Updated 04.06.2020
 rasch <- function(scores, groups, return_models = TRUE,...) {
 
   errors <- vector("list")
