@@ -1,14 +1,14 @@
 #' Russian Trolls Data - Small Version
 #'
-#' A matrix containing a smaller subset of tweets from the \code{trolls} dataset.
+#' A matrix containing a smaller subset of tweets from the \code{trolls} dataset, useful for test purposes.
 #' There are approximately 20,000 tweets from 50 authors.
-#' This dataset includes only authored tweets; retweets, reposts, and repetitions have been removed.
+#' This dataset includes only authored tweets by each account; retweets, reposts, and repeated tweets have been removed.
 #' The original data was provided by FiveThirtyEight and Clemson University researchers Darren Linvill and Patrick Warren.
-#' For more invormation visit https://github.com/fivethirtyeight/russian-troll-tweets
+#' For more information, visit https://github.com/fivethirtyeight/russian-troll-tweets
 #'
 #'
 #'
-#' @name tinyTrolls
+#' @name tinytrolls
 #'
 #' @docType data
 #'
