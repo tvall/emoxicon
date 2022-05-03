@@ -1,12 +1,9 @@
 ## code to prepare `weights` dataset
 
-weights <- read.table("data-raw/DepecheMood_english_lemma_full.tsv", sep="\t", header=TRUE, comment.char = "", stringsAsFactors = FALSE)
-
-weights<- weights[c("X", "AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
-                                      "INSPIRED", "SAD")]
-colnames(weights) <- c("word", "AFRAID", "AMUSED", "ANGRY", "ANNOYED", "DONT_CARE", "HAPPY",
-                                "INSPIRED", "SAD")
-
+weights <- read.table("DepecheMood_english_token_full_2022.tsv", sep="\t",
+                                    header=TRUE, comment.char = "", stringsAsFactors = FALSE)
+weights <- weights %>%
+  dplyr::rename(word = X)
 
 class(weights) <- append(class(weights),"emoxicon")
 
