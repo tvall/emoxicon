@@ -1,10 +1,10 @@
 #' Emotions Data
 #'
 #' A matrix containing words (n = 175,592) and the emotion category most frequently associated with each word.
-#' This dataset is a modified version of the 'DepecheMood++' lexicon developed by
+#' This dataset is a dichotomized version of the 'DepecheMood++' token lexicon developed by
 #' Araque, Gatti, Staiano, and Guerini (2018). For proper scoring, text should not be
-#' stemmed prior to using this lexicon. This version of the lexicon does not
-#' rely on part of speech tagging.
+#' stemmed prior to using this lexicon.
+#' As this is the token lexicon, it does not require part of speech tagging.
 #'
 #'
 #'
